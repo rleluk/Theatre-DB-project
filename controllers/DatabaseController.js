@@ -1,12 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'u7leluk',
-  host: 'pascal',
-  database: 'u7leluk',
-  password: '7leluk',
-  port: 5432,
-});
-
+const pool = require('../config/connection');
 exports.getData = (req, res) => {
     pool.query('SELECT * FROM test.test_table', (error, results) => {
       if (error) {
@@ -15,5 +7,6 @@ exports.getData = (req, res) => {
       res.status(200).json(results.rows)
     })
 };
+
 
 
