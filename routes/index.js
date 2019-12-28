@@ -3,10 +3,9 @@ const router = express.Router();
 
 const PagesController = require('../controllers/PagesController');
 const DatabaseController = require('../controllers/DatabaseController');
-const LogInController = require('../controllers/LoggingController');
 
 router.get('/', PagesController.home);
-router.post('/testdb', DatabaseController.getData);
-router.post('/login', LoggingController.logIn);
+router.get('/wtf', PagesController.wtf);
+router.get('/testdb', DatabaseController.getData);
 
 module.exports = router;
