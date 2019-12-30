@@ -1,7 +1,24 @@
 doctype html
-html
+html(lang="pl")
     head
-    body
-        p ADMIN PANEL
-        form(action="/admin/logout", method="GET")
-            button(type="submit") Logout
+        meta(charset="utf-8")
+        block css
+            link(rel="stylesheet", type="text/css", href="/css/admin-dashboard.css")
+        block js
+            script(src="/js/admin-dashboard.js")
+    body()
+        .nav-bar
+            a(id="performance-btn", href="/admin/performance") Spektakle
+            a(id="director-btn", href="/admin/director") Reżyserzy
+            a(id="scriptwriter-btn", href="/admin/scriptwriter") Scenarzyści
+            a(id="actor-btn", href="/admin/actor") Aktorzy
+            a(id="technician-btn", href="/admin/technician") Technicy teatralni
+            a(id="hall-btn", href="/admin/hall") Sale
+            a.logout-btn(href="/admin/logout") Logout
+
+        block content
+            p ADMIN PANEL
+
+        footer
+
+        
