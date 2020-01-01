@@ -276,3 +276,9 @@ ADD unique(nazwa);
 
 ALTER TABLE Typ_biletu 
 ADD unique(nazwa);
+
+ALTER TABLE Aktor ADD Data_urodzenia DATE NOT NULL;
+
+ALTER TABLE Rezyser ADD Data_urodzenia DATE NOT NULL;
+
+ALTER TABLE Scenarzysta ADD Data_urodzenia DATE NOT NULL;

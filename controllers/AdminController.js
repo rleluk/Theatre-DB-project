@@ -1,4 +1,4 @@
-const {check, validationResult} = require('express-validator')
+const {validationResult} = require('express-validator')
 const pool = require('../config/connection');
 
 exports.sessionChecker = (req, res, next) => {
@@ -12,11 +12,6 @@ exports.home = (req, res) => {
     res.redirect('/admin/dashboard');
   else res.render('admin-home');
 };
-
-exports.validateAdmin = [
-  check('login').trim().isLength({min: 1}).withMessage('Login is required.'),
-  check('password').trim().isLength({min: 1}).withMessage('Password is required')
-]
 
 exports.checkAdminValidation = (req, res, next) => {
   const errors = validationResult(req);
@@ -63,19 +58,10 @@ exports.logout = (req, res) => {
 
 ////////////////////////////////////////////////////////////
 
-exports.validatePerson = [
-  check('name').isLength({min: 1, max: 20}).withMessage('Nieprawidłowe imię.'),
-  check('name').isAlpha('pl-PL').withMessage('Pole powinno zawierać wyłącznie litery.'),
-  check('surname').isLength({min: 1, max: 20}).withMessage('Nieprawidłowe nazwisko.'),
-  check('surname').isAlpha('pl-PL').withMessage('Pole powinno zawierać wyłącznie litery.')
-]
-
 exports.checkDashboardValidation = (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
-    return res.render('admin-dashboard', {
-      errors: errors.mapped()
-    });
+    return res.status(400).send(errors.mapped());
   }
   next();
 };
@@ -89,19 +75,38 @@ exports.actor = (req, res) => {
 exports.addActor = (req, res) => {
   let name = req.body.name;
   let surname = req.body.surname;
-  pool.query(`INSERT INTO Teatr.Aktor(imie, nazwisko) VALUES('${name}', '${surname}')`, (error, results) => {
+  let bday = req.body.bday;
+  pool.query(`INSERT INTO Teatr.Aktor(imie, nazwisko, data_urodzenia) VALUES('${name}', '${surname}', '${bday}')`, (error, results) => {
     if(error) 
       throw error;
-    // res.send(results);
+    res.json({msg: 'Dane zostały wprowadzone pomyślnie.'});
   });
 };
 
-exports.getActor = (req, res) => {
-  let id = parseInt(req.params.id);
-  pool.query(`SELECT * FROM Teatr.Aktor WHERE id = ${id}`, (error, results) => {
+exports.searchActor = (req, res) => {
+  let name = req.query.name;
+  let surname = req.query.surname;
+  pool.query(`SELECT * FROM Teatr.Aktor WHERE LOWER(Imie) LIKE LOWER('%${name}%') AND LOWER(Nazwisko) LIKE LOWER('%${surname}%')`, (error, results) => {
     if(error)
       throw error;
-    res.render('');
+    res.send(results.rows);
+  });
+};
+
+exports.getAllActors = (req, res) => {
+  pool.query('SELECT * FROM Teatr.Aktor', (error, results) => {
+    if(error)
+      throw error;
+    res.send(results.rows);
+  }); 
+};
+
+exports.deleteActor = (req, res) => {
+  let id = req.params.id;
+  pool.query(`DELETE FROM Teatr.Aktor WHERE aktor_id = '${id}'`, (error, results) => {
+    if(error) 
+      throw error;
+    res.json({msg: 'Dane zostały pomyślnie usunięte.'});
   });
 };
 
