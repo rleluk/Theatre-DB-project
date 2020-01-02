@@ -3,3 +3,38 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/scriptwriter-panel.css")
 
 block content
+    button(onclick="showAddForm()") Dodaj scenarzystę
+    button(onclick="showSearchForm()") Wyszukaj scenarzystę
+    form#addForm.invisible(name="addForm")
+        #addFormAlert
+        input(type="text", name="name")
+        br
+        input(type="text", name="surname")
+        br
+        input(type="date" name="bday")
+        br
+        input(type="text" name="description")
+        br
+        button(type="submit") Dodaj 
+    form#searchForm.invisible(name="searchForm")
+        #searchFormAlert
+        input(type="text", name="name")
+        br
+        input(type="text", name="surname")
+        br
+        button(type="submit") Szukaj 
+    form#editForm.invisible(name="editForm")
+        #editFormAlert
+        input(type="text", name="id", disabled)
+        br
+        input(type="text", name="name")
+        br
+        input(type="text", name="surname")
+        br
+        input(type="date" name="bday")
+        br
+        input(type="text" name="description")
+        br
+        button(type="submit") Edytuj 
+    #dataContainer
+    script(src="/js/scriptwriter-panel.js")

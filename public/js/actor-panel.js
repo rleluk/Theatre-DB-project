@@ -40,15 +40,13 @@ async function searchData(url) {
                     return;
                 }
                 let content = '';
-                content = '<table> <tr> <th> ID </th> <th> Imię </th> <th> Nazwisko </th> <th> Data urodzenia </th>';
-                content += '<th> Akcja </th>';
-                content += '</tr>';
+                content = '<table> <tr> <th> ID </th> <th> Imię </th> <th> Nazwisko </th> <th> Data urodzenia </th> <th> Akcja </th> </tr>';
                 data.forEach(record => {
-                    content += `<tr> <td> ${record.aktor_id} </td>`; 
-                    content += `<td> ${record.imie} </td>` ;
-                    content += `<td> ${record.nazwisko} </td>`;
-                    content += `<td> ${record.data_urodzenia.split('T')[0]} </td>`
-                    content += `<td> <button onclick='deleteActor(${record.aktor_id})'> Usuń </button> </td> </tr>`
+                    content += `<tr> <td> ${record.aktor_id} </td>`
+                            + `<td> ${record.imie} </td>`
+                            + `<td> ${record.nazwisko} </td>`
+                            + `<td> ${record.data_urodzenia.split('T')[0]} </td>`
+                            + `<td> <button onclick='deleteActor(${record.aktor_id})'> Usuń </button> </td> </tr>`;
                 });
                 content += '</table>'
                 document.getElementById('dataContainer').innerHTML = content;

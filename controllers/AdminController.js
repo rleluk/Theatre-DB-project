@@ -1,5 +1,5 @@
 const {validationResult} = require('express-validator');
-const peopleModels = require('../models/peopleModels');
+const models = require('../models/peopleModels');
 const adminModel = require('../models/adminModel');
 
 exports.sessionChecker = (req, res, next) => {
@@ -61,7 +61,7 @@ exports.checkDashboardValidation = (req, res, next) => {
   next();
 };
 
-////////////// actor
+//////////////////////////////////////////////////////////// ACTOR
 
 exports.actor = (req, res) => {
   res.render('actor-panel');
@@ -69,7 +69,7 @@ exports.actor = (req, res) => {
 
 exports.addActor = async (req, res) => {
   try {
-    let result = await peopleModels.Actor.add(req.body.name, req.body.surname, req.body.bday);
+    let result = await models.Actor.add(req.body.name, req.body.surname, req.body.bday);
     res.send(result);
   } catch(err) {
     console.log(err);
@@ -79,7 +79,7 @@ exports.addActor = async (req, res) => {
 
 exports.searchActor = async (req, res) => {
   try {
-    let result = await peopleModels.Actor.search(req.query.name, req.query.surname);
+    let result = await models.Actor.search(req.query.name, req.query.surname);
     res.send(result);
   } catch(err) {
     console.log("Błąd bazy danych.", err);
@@ -89,7 +89,7 @@ exports.searchActor = async (req, res) => {
 
 exports.deleteActor = async (req, res) => {
   try {
-    let result = await peopleModels.Actor.delete(req.params.id);
+    let result = await models.Actor.delete(req.params.id);
     res.send(result);
   } catch(err) {
     console.log("Błąd bazy danych.", err);
@@ -97,31 +97,133 @@ exports.deleteActor = async (req, res) => {
   }
 };
 
-////////////// performance
+//////////////////////////////////////////////////////////// PERFORMANCE 
 
 exports.performance = (req, res) => {
   res.render('performance-panel');
 };
 
-////////////// director
+//////////////////////////////////////////////////////////// DIRECTOR
 
 exports.director = (req, res) => {
   res.render('director-panel');
 };
 
-////////////// scriptwriter
+exports.addDirector = async (req, res) => {
+  try {
+    let result = await models.Director.add(req.body.name, req.body.surname, req.body.bday, req.body.description);
+    res.send(result);
+  } catch(err) {
+    console.log(err);
+    res.status(400).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+  }
+};
+
+exports.searchDirector = async (req, res) => {
+  try {
+    let result = await models.Director.search(req.query.name, req.query.surname);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+};
+
+exports.deleteDirector = async (req, res) => {
+  try {
+    let result = await models.Director.delete(req.params.id);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+};
+
+exports.updateDirector = async (req, res) => {
+  try {
+    let result = await models.Director.update(req.body.id, req.body.name,
+       req.body.surname, req.body.bday, req.body.description);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+}
+
+exports.getDirector = async (req, res) => {
+  try {
+    let result = await models.Director.get(req.params.id);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+}
+
+//////////////////////////////////////////////////////////// SCRIPTWRITER
 
 exports.scriptwriter = (req, res) => {
   res.render('scriptwriter-panel');
 };
 
-////////////// technician
+exports.addScriptwriter = async (req, res) => {
+  try {
+    let result = await models.Scriptwriter.add(req.body.name, req.body.surname, req.body.bday, req.body.description);
+    res.send(result);
+  } catch(err) {
+    console.log(err);
+    res.status(400).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+  }
+};
+
+exports.searchScriptwriter = async (req, res) => {
+  try {
+    let result = await models.Scriptwriter.search(req.query.name, req.query.surname);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+};
+
+exports.deleteScriptwriter = async (req, res) => {
+  try {
+    let result = await models.Scriptwriter.delete(req.params.id);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+};
+
+exports.updateScriptwriter = async (req, res) => {
+  try {
+    let result = await models.Scriptwriter.update(req.body.id, req.body.name,
+       req.body.surname, req.body.bday, req.body.description);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+}
+
+exports.getScriptwriter = async (req, res) => {
+  try {
+    let result = await models.Scriptwriter.get(req.params.id);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
+}
+
+//////////////////////////////////////////////////////////// TECHNICIAN
 
 exports.technician = (req, res) => {
   res.render('technician-panel');
 };
 
-////////////// hall
+//////////////////////////////////////////////////////////// HALL
 
 exports.hall = (req, res) => {
   res.render('hall-panel');
