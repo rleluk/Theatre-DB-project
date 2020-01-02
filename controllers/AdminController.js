@@ -1,5 +1,6 @@
-const {validationResult} = require('express-validator')
-const pool = require('../config/connection');
+const {validationResult} = require('express-validator');
+const peopleModels = require('../models/peopleModels');
+const adminModel = require('../models/adminModel');
 
 exports.sessionChecker = (req, res, next) => {
   if(!req.session.user || !req.cookies.user_sid) 
@@ -23,37 +24,31 @@ exports.checkAdminValidation = (req, res, next) => {
   next();
 };
 
-exports.login = (req, res) => {
-  var login = req.body.login;
-  var password = req.body.password;
-  pool.query(`SELECT * FROM Teatr.admins WHERE login='${login}' AND password='${password}'`, (error, results) => {
-    if (error) 
-      throw error;
-
-    if(results.rows.length == 1) {
-      req.session.user = login;
+exports.login = async (req, res) => {
+  try {
+    let result = await adminModel.checkCredentials(req.body.login, req.body.password);
+    if(result.length == 1) {
+      req.session.user = req.body.login;
       res.redirect('/admin/dashboard');
     } else {
       res.render('admin-home', {
         notFound: true
       });
     }
-  })
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+  } 
 };
 
 exports.dashboard = (req, res) => {
-  if (req.session.user && req.cookies.user_sid) 
-    res.render('admin-dashboard');
-  else res.redirect('/admin');
+  res.render('admin-dashboard');
 };
 
 exports.logout = (req, res) => {
   if(req.session.user && req.cookies.user_sid) {
     res.clearCookie('user_sid');
-    res.redirect('/');
-  } else {
-    res.redirect('/admin');
-  }
+  } 
+  res.redirect('/admin');
 };
 
 ////////////////////////////////////////////////////////////
@@ -72,42 +67,34 @@ exports.actor = (req, res) => {
   res.render('actor-panel');
 };
 
-exports.addActor = (req, res) => {
-  let name = req.body.name;
-  let surname = req.body.surname;
-  let bday = req.body.bday;
-  pool.query(`INSERT INTO Teatr.Aktor(imie, nazwisko, data_urodzenia) VALUES('${name}', '${surname}', '${bday}')`, (error, results) => {
-    if(error) 
-      throw error;
-    res.json({msg: 'Dane zostały wprowadzone pomyślnie.'});
-  });
+exports.addActor = async (req, res) => {
+  try {
+    let result = await peopleModels.Actor.add(req.body.name, req.body.surname, req.body.bday);
+    res.send(result);
+  } catch(err) {
+    console.log(err);
+    res.status(400).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+  }
 };
 
-exports.searchActor = (req, res) => {
-  let name = req.query.name;
-  let surname = req.query.surname;
-  pool.query(`SELECT * FROM Teatr.Aktor WHERE LOWER(Imie) LIKE LOWER('%${name}%') AND LOWER(Nazwisko) LIKE LOWER('%${surname}%')`, (error, results) => {
-    if(error)
-      throw error;
-    res.send(results.rows);
-  });
+exports.searchActor = async (req, res) => {
+  try {
+    let result = await peopleModels.Actor.search(req.query.name, req.query.surname);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
 };
 
-exports.getAllActors = (req, res) => {
-  pool.query('SELECT * FROM Teatr.Aktor', (error, results) => {
-    if(error)
-      throw error;
-    res.send(results.rows);
-  }); 
-};
-
-exports.deleteActor = (req, res) => {
-  let id = req.params.id;
-  pool.query(`DELETE FROM Teatr.Aktor WHERE aktor_id = '${id}'`, (error, results) => {
-    if(error) 
-      throw error;
-    res.json({msg: 'Dane zostały pomyślnie usunięte.'});
-  });
+exports.deleteActor = async (req, res) => {
+  try {
+    let result = await peopleModels.Actor.delete(req.params.id);
+    res.send(result);
+  } catch(err) {
+    console.log("Błąd bazy danych.", err);
+    res.status(400).send("Błąd bazy danych.");
+  }
 };
 
 ////////////// performance

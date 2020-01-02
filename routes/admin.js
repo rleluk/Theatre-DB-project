@@ -16,11 +16,22 @@ router.post('/',
     AdminController.login
 );
 
-router.get('/dashboard', AdminController.dashboard);
+router.get('/dashboard',
+    AdminController.sessionChecker,
+    AdminController.dashboard
+);
 
-router.get('/logout', AdminController.logout);
+router.get('/logout', 
+    AdminController.sessionChecker,    
+    AdminController.logout
+);
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////// ACTOR
+
+router.get('/actor',
+    AdminController.sessionChecker,
+    AdminController.actor
+);
 
 router.post('/actor/add', 
     AdminController.sessionChecker,
@@ -51,11 +62,6 @@ router.get('/actor/search',
     AdminController.searchActor
 );
 
-router.get('/actor/all',
-    AdminController.sessionChecker,
-    AdminController.getAllActors
-);
-
 router.delete('/actor/delete/:id',
     AdminController.sessionChecker,
     [
@@ -66,6 +72,7 @@ router.delete('/actor/delete/:id',
 );
 
 //////////////////////////////////////////////////////
+
 router.get('/performance',
     AdminController.sessionChecker,
     AdminController.performance
@@ -81,10 +88,7 @@ router.get('/scriptwriter',
     AdminController.scriptwriter
 );
 
-router.get('/actor',
-    AdminController.sessionChecker,
-    AdminController.actor
-);
+
 
 router.get('/technician',
     AdminController.sessionChecker,

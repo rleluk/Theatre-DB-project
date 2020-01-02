@@ -14,15 +14,6 @@ function showSearchForm() {
     document.getElementById('addForm').style.display = 'none';
 }
 
-// document.getElementById('showListBtn').addEventListener('click', async event => {
-//     document.getElementById('searchForm').style.display = 'none';
-//     document.getElementById('addForm').style.display = 'none';
-//     await fetch('http://pascal.fis.agh.edu.pl:3046/admin/actor/all')
-//         .then(res => res.json())
-//         .then(data => makeTable(data))
-//         .catch(error => console.log(error));
-// });
-
 async function deleteActor(actorID) {
     await fetch('http://pascal.fis.agh.edu.pl:3046/admin/actor/delete/' + actorID, {method: 'DELETE'})
         .then(res => res.json())
@@ -41,6 +32,7 @@ async function searchData(url) {
             if(res.status === 400) {
                 lastSearch.name = '';
                 lastSearch.surname = '';
+                console.log(data);
                 document.getElementById('searchFormAlert').innerHTML = "Pola powinny zawierać wyłącznie litery.";
             } else {
                 if(data.length < 1) {
@@ -96,13 +88,13 @@ document.getElementById('addForm').addEventListener('submit', async event => {
             let json = await res.json();
             let alertContent = '';
             if(res.status === 400) {
-                console.log(json);
                 if(json.name)
                     alertContent += json.name.msg + '<br>';
                 if(json.surname)
                     alertContent += json.surname.msg + '<br>';
                 if(json.bday)
                     alertContent += json.bday.msg;
+                console.log(json);
             } else {
                 alertContent = json.msg;
             }
