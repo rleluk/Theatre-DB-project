@@ -3,10 +3,17 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+
 const routes = require('./routes/index');
-const admin = require('./routes/admin')
+const admin = require('./routes/admin');
+const actor = require('./routes/actor');
+const director = require('./routes/director');
+const scriptwriter = require('./routes/scriptwriter');
+
+
 const app = express();
 
+// config
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -30,8 +37,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// routes
 app.use('/', routes);
 app.use('/admin', admin);
+app.use('/admin/actor', actor);
+app.use('/admin/director', director);
+app.use('/admin/scriptwriter', scriptwriter);
 
 app.use((req, res, next) => {
     res.status(404).render('404');

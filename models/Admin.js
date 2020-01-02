@@ -6,4 +6,4 @@ async function checkCredentials(login, password) {
     return rows;
 }
 
-module.exports.checkCredentials = checkCredentials;
+module.exports = checkCredentials;
