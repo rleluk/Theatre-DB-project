@@ -17,6 +17,7 @@
     "express-validator": "^6.3.0",
     "nodemon": "^2.0.2",
     "pg": "^7.15.1",
+    "pg-error-constants": "^1.0.0",
     "pug": "^2.0.4"
   }
 }

@@ -1,26 +1,21 @@
 var lastSearch = {name: '', surname: ''};
 
-function showAddForm() {
-    document.getElementById('addFormAlert').innerHTML = '';
+function changeForm(id) {
+    let navs = document.getElementsByClassName('nav');
+    Array.prototype.forEach.call(navs, element => element.style.display = 'none');
+    document.getElementById('alert').innerHTML = '';
     document.getElementById('dataContainer').innerHTML = '';
-    document.getElementById('addForm').style.display = 'block';
-    document.getElementById('searchForm').style.display = 'none';
-}
-
-function showSearchForm() {
-    document.getElementById('searchFormAlert').innerHTML = '';
-    document.getElementById('dataContainer').innerHTML = '';
-    document.getElementById('searchForm').style.display = 'block';
-    document.getElementById('addForm').style.display = 'none';
+    let form = document.getElementById(id);
+    if(form) form.style.display = "block";
 }
 
 async function deleteActor(actorID) {
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/actor/delete/' + actorID, {method: 'DELETE'})
+    await fetch('/admin/actor/delete/' + actorID, {method: 'DELETE'})
         .then(res => res.json())
         .then(json => {
             console.log(json);
             let queryStr = `?name=${lastSearch.name}&surname=${lastSearch.surname}`;
-            searchData('http://pascal.fis.agh.edu.pl:3046/admin/actor/search' + queryStr);
+            searchData('/admin/actor/search' + queryStr);
         });
 }
 
@@ -28,15 +23,14 @@ async function searchData(url) {
     await fetch(url)
         .then(async res => {
             let data = await res.json();
-            let alertContent = '';
             if(res.status === 400) {
                 lastSearch.name = '';
                 lastSearch.surname = '';
                 console.log(data);
-                document.getElementById('searchFormAlert').innerHTML = "Pola powinny zawierać wyłącznie litery.";
+                document.getElementById('alert').innerHTML = "Pola powinny zawierać wyłącznie litery.";
             } else {
                 if(data.length < 1) {
-                    document.getElementById('searchFormAlert').innerHTML = "Nie znaleziono takiego aktora.";
+                    document.getElementById('alert').innerHTML = "Nie znaleziono takiego aktora.";
                     return;
                 }
                 let content = '';
@@ -55,27 +49,27 @@ async function searchData(url) {
         .catch(error => console.log(error));
 };
 
-document.getElementById('searchForm').addEventListener('submit', event => {
+document.getElementById('searchActorForm').addEventListener('submit', event => {
     event.preventDefault();
-    document.getElementById('searchFormAlert').innerHTML = '';
+    document.getElementById('alert').innerHTML = '';
     document.getElementById('dataContainer').innerHTML = '';
-    lastSearch.name = document.searchForm.name.value;
-    lastSearch.surname = document.searchForm.surname.value;
+    lastSearch.name = document.searchActorForm.name.value;
+    lastSearch.surname = document.searchActorForm.surname.value;
     let queryStr = `?name=${lastSearch.name}&surname=${lastSearch.surname}`;
-    searchData('http://pascal.fis.agh.edu.pl:3046/admin/actor/search' + queryStr);
+    searchData('/admin/actor/search' + queryStr);
 });
 
-document.getElementById('addForm').addEventListener('submit', async event => {
+document.getElementById('addActorForm').addEventListener('submit', async event => {
     event.preventDefault();
-    document.getElementById('addFormAlert').innerHTML = '';
+    document.getElementById('alert').innerHTML = '';
 
     const formData = {
-        name: document.addForm.name.value,
-        surname: document.addForm.surname.value,
-        bday: document.addForm.bday.value
+        name: document.addActorForm.name.value,
+        surname: document.addActorForm.surname.value,
+        bday: document.addActorForm.bday.value
     }
 
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/actor/add', {
+    await fetch('/admin/actor/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -96,7 +90,7 @@ document.getElementById('addForm').addEventListener('submit', async event => {
             } else {
                 alertContent = json.msg;
             }
-            document.getElementById('addFormAlert').innerHTML = alertContent;
+            document.getElementById('alert').innerHTML = alertContent;
         })
         .catch(error => console.log(error));
 });

@@ -3,10 +3,10 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/actor-panel.css")
 
 block content
-    button(onclick="showAddForm()") Dodaj aktora
-    button(onclick="showSearchForm()") Wyszukaj aktora
-    form#addForm.invisible(name="addForm")
-        #addFormAlert
+    button(onclick="changeForm('addActorForm')") Dodaj aktora
+    button(onclick="changeForm('searchActorForm')") Wyszukaj aktora
+    #alert
+    form#addActorForm.nav.invisible(name="addActorForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")
@@ -14,8 +14,7 @@ block content
         input(type="date" name="bday")
         br
         button(type="submit") Dodaj 
-    form#searchForm.invisible(name="searchForm")
-        #searchFormAlert
+    form#searchActorForm.nav.invisible(name="searchActorForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")

@@ -3,10 +3,10 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/director-panel.css")
 
 block content
-    button(onclick="showAddForm()") Dodaj reżysera
-    button(onclick="showSearchForm()") Wyszukaj reżysera
-    form#addForm.invisible(name="addForm")
-        #addFormAlert
+    button(onclick="changeForm('addDirectorForm')") Dodaj reżysera
+    button(onclick="changeForm('searchDirectorForm')") Wyszukaj reżysera
+    #alert
+    form#addDirectorForm.nav.invisible(name="addDirectorForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")
@@ -16,15 +16,13 @@ block content
         input(type="text" name="description")
         br
         button(type="submit") Dodaj 
-    form#searchForm.invisible(name="searchForm")
-        #searchFormAlert
+    form#searchDirectorForm.nav.invisible(name="searchDirectorForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")
         br
         button(type="submit") Szukaj 
-    form#editForm.invisible(name="editForm")
-        #editFormAlert
+    form#editDirectorForm.nav.invisible(name="editDirectorForm")
         input(type="text", name="id", disabled)
         br
         input(type="text", name="name")

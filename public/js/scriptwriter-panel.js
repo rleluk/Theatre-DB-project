@@ -1,62 +1,50 @@
 var lastSearch = {name: '', surname: ''};
 
-function showAddForm() {
-    document.getElementById('addFormAlert').innerHTML = '';
+function changeForm(id) {
+    let navs = document.getElementsByClassName('nav');
+    Array.prototype.forEach.call(navs, element => element.style.display = 'none');
+    document.getElementById('alert').innerHTML = '';
     document.getElementById('dataContainer').innerHTML = '';
-    document.getElementById('addForm').style.display = 'block';
-    document.getElementById('searchForm').style.display = 'none';
-    document.getElementById('editForm').style.display = 'none';
-}
-
-function showSearchForm() {
-    document.getElementById('searchFormAlert').innerHTML = '';
-    document.getElementById('dataContainer').innerHTML = '';
-    document.getElementById('searchForm').style.display = 'block';
-    document.getElementById('addForm').style.display = 'none';
-    document.getElementById('editForm').style.display = 'none';
+    let form = document.getElementById(id);
+    if(form) form.style.display = "block";
 }
 
 async function deleteScriptwriter(id) {
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/delete/' + id, {method: 'DELETE'})
+    await fetch('/admin/scriptwriter/delete/' + id, {method: 'DELETE'})
         .then(res => res.json())
         .then(json => {
             console.log(json);
             let queryStr = `?name=${lastSearch.name}&surname=${lastSearch.surname}`;
-            searchData('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/search' + queryStr);
+            searchData('/admin/scriptwriter/search' + queryStr);
         });
 }
 
 async function editScriptwriter(id) {
-    document.getElementById('editFormAlert').innerHTML = '';
-    document.getElementById('addFormAlert').innerHTML = '';
-    document.getElementById('dataContainer').innerHTML = '';
-    document.getElementById('addForm').style.display = 'none';
-    document.getElementById('searchForm').style.display = 'none';
-    document.getElementById('editForm').style.display = 'block';
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/' + id, {method: 'GET'})
+    changeForm('editScriptwriterForm');
+    await fetch('/admin/scriptwriter/' + id, {method: 'GET'})
         .then(res => res.json())
         .then(record => {
-            document.editForm.id.value = id;
-            document.editForm.name.value = record[0].imie;
-            document.editForm.surname.value = record[0].nazwisko;
-            document.editForm.bday.value = record[0].data_urodzenia.split('T')[0];
-            document.editForm.description.value = record[0].opis;
+            document.editScriptwriterForm.id.value = id;
+            document.editScriptwriterForm.name.value = record[0].imie;
+            document.editScriptwriterForm.surname.value = record[0].nazwisko;
+            document.editScriptwriterForm.bday.value = record[0].data_urodzenia.split('T')[0];
+            document.editScriptwriterForm.description.value = record[0].opis;
         });
 }
 
-document.getElementById('editForm').addEventListener('submit', async event => {
+document.getElementById('editScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
-    document.getElementById('editFormAlert').innerHTML = '';
+    document.getElementById('alert').innerHTML = '';
 
     const formData = {
-        id: document.editForm.id.value,
-        name: document.editForm.name.value,
-        surname: document.editForm.surname.value,
-        bday: document.editForm.bday.value,
-        description: document.editForm.description.value
+        id: document.editScriptwriterForm.id.value,
+        name: document.editScriptwriterForm.name.value,
+        surname: document.editScriptwriterForm.surname.value,
+        bday: document.editScriptwriterForm.bday.value,
+        description: document.editScriptwriterForm.description.value
     }
 
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/update', {
+    await fetch('/admin/scriptwriter/update', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -77,7 +65,7 @@ document.getElementById('editForm').addEventListener('submit', async event => {
             } else {
                 alertContent = json.msg;
             }
-            document.getElementById('editFormAlert').innerHTML = alertContent;
+            document.getElementById('alert').innerHTML = alertContent;
         })
         .catch(error => console.log(error));
 });
@@ -91,10 +79,10 @@ async function searchData(url) {
                 lastSearch.name = '';
                 lastSearch.surname = '';
                 console.log(data);
-                document.getElementById('searchFormAlert').innerHTML = "Pola powinny zawierać wyłącznie litery.";
+                document.getElementById('alert').innerHTML = "Pola powinny zawierać wyłącznie litery.";
             } else {
                 if(data.length < 1) {
-                    document.getElementById('searchFormAlert').innerHTML = "Nie znaleziono takiego scenarzysty.";
+                    document.getElementById('alert').innerHTML = "Nie znaleziono takiego scenarzysty.";
                     return;
                 }
                 let content = '';
@@ -117,28 +105,28 @@ async function searchData(url) {
         .catch(error => console.log(error));
 };
 
-document.getElementById('searchForm').addEventListener('submit', event => {
+document.getElementById('searchScriptwriterForm').addEventListener('submit', event => {
     event.preventDefault();
-    document.getElementById('searchFormAlert').innerHTML = '';
+    document.getElementById('alert').innerHTML = '';
     document.getElementById('dataContainer').innerHTML = '';
-    lastSearch.name = document.searchForm.name.value;
-    lastSearch.surname = document.searchForm.surname.value;
+    lastSearch.name = document.searchScriptwriterForm.name.value;
+    lastSearch.surname = document.searchScriptwriterForm.surname.value;
     let queryStr = `?name=${lastSearch.name}&surname=${lastSearch.surname}`;
-    searchData('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/search' + queryStr);
+    searchData('/admin/scriptwriter/search' + queryStr);
 });
 
-document.getElementById('addForm').addEventListener('submit', async event => {
+document.getElementById('addScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
-    document.getElementById('addFormAlert').innerHTML = '';
+    document.getElementById('alert').innerHTML = '';
 
     const formData = {
-        name: document.addForm.name.value,
-        surname: document.addForm.surname.value,
-        bday: document.addForm.bday.value,
-        description: document.addForm.description.value
+        name: document.addScriptwriterForm.name.value,
+        surname: document.addScriptwriterForm.surname.value,
+        bday: document.addScriptwriterForm.bday.value,
+        description: document.addScriptwriterForm.description.value
     }
 
-    await fetch('http://pascal.fis.agh.edu.pl:3046/admin/scriptwriter/add', {
+    await fetch('/admin/scriptwriter/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -159,7 +147,7 @@ document.getElementById('addForm').addEventListener('submit', async event => {
             } else {
                 alertContent = json.msg;
             }
-            document.getElementById('addFormAlert').innerHTML = alertContent;
+            document.getElementById('alert').innerHTML = alertContent;
         })
         .catch(error => console.log(error));
 });

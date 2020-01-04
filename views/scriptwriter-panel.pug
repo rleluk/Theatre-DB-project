@@ -3,10 +3,10 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/scriptwriter-panel.css")
 
 block content
-    button(onclick="showAddForm()") Dodaj scenarzystę
-    button(onclick="showSearchForm()") Wyszukaj scenarzystę
-    form#addForm.invisible(name="addForm")
-        #addFormAlert
+    button(onclick="changeForm('addScriptwriterForm')") Dodaj scenarzystę
+    button(onclick="changeForm('searchScriptwriterForm')") Wyszukaj scenarzystę
+    #alert
+    form#addScriptwriterForm.nav.invisible(name="addScriptwriterForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")
@@ -16,15 +16,13 @@ block content
         input(type="text" name="description")
         br
         button(type="submit") Dodaj 
-    form#searchForm.invisible(name="searchForm")
-        #searchFormAlert
+    form#searchScriptwriterForm.nav.invisible(name="searchScriptwriterForm")
         input(type="text", name="name")
         br
         input(type="text", name="surname")
         br
         button(type="submit") Szukaj 
-    form#editForm.invisible(name="editForm")
-        #editFormAlert
+    form#editScriptwriterForm.nav.invisible(name="editScriptwriterForm")
         input(type="text", name="id", disabled)
         br
         input(type="text", name="name")

@@ -10,8 +10,8 @@ router.get('/',
 
 router.post('/', 
     [
-        check('login').trim().isLength({min: 1}).withMessage('Login is required.'),
-        check('password').trim().isLength({min: 1}).withMessage('Password is required')
+        check('login').isLength({min: 1}).withMessage('Login is required.'),
+        check('password').isLength({min: 1}).withMessage('Password is required')
     ], 
     AdminController.checkAdminValidation, 
     AdminController.login
@@ -35,11 +35,6 @@ router.get('/performance',
 );
 
 ////////////////////////////////////////////////////// 
-
-router.get('/technician',
-    utils.sessionChecker,
-    AdminController.technician
-);
 
 router.get('/hall',
     utils.sessionChecker,

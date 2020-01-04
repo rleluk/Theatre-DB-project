@@ -3,3 +3,30 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/technician-panel.css")
 
 block content
+    button(onclick="changeForm('addTechnicianForm')") Dodaj technika teatralnego
+    button(onclick="changeForm('searchTechnicianForm')") Wyszukaj technika teatralnego
+    button(onclick="changeForm('addProfessionForm')") Dodaj profesję
+    button(onclick="viewProfessions()") Wyświetl dostępne profesje
+    #alert
+    form#addTechnicianForm.nav.invisible(name="addTechnicianForm")
+        input(type="text", name="name")
+        br
+        input(type="text", name="surname")
+        br
+        select#professionSelect
+        br
+        button(type="submit") Dodaj 
+    form#searchTechnicianForm.nav.invisible(name="searchTechnicianForm")
+        input(type="text", name="name")
+        br
+        input(type="text", name="surname")
+        br
+        input(type="text", name="profession")
+        br
+        button(type="submit") Szukaj 
+    form#addProfessionForm.nav.invisible(name="addProfessionForm")
+        input(type="text", name="name")
+        br
+        button(type="submit") Dodaj 
+    #dataContainer
+    script(src="/js/technician-panel.js")
