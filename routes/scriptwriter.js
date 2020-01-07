@@ -13,14 +13,14 @@ router.post('/add',
     utils.sessionChecker,
     [
         check('name')
-            .isAlpha('pl-PL').withMessage('Imię powinno zawierać wyłącznie litery.')
-            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowe imię.'),
+            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość imienia.').bail()
+            .isAlpha('pl-PL').withMessage('Imię powinno zawierać wyłącznie litery.'),
         check('surname')
-            .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.')
-            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowe nazwisko.'),
-        check('bday').isISO8601().withMessage('Nie podano daty urodzenia.'),
+            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość nazwiska.').bail()
+            .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.'),
+        check('bday').isISO8601().withMessage('Nie podano daty urodzenia.')
     ],
-    utils.checkDashboardValidation,
+    utils.checkValidationVerbose,
     ScriptwriterController.addScriptwriter
 );
 
@@ -34,7 +34,7 @@ router.get('/search',
         check('surname').trim().not().exists({checkFalsy: true}),
         check('surname').trim().exists({checkFalsy: true}).isAlpha('pl-PL')
     ]),
-    utils.checkDashboardValidation,
+    utils.checkValidation,
     ScriptwriterController.searchScriptwriter
 );
 
@@ -43,7 +43,7 @@ router.delete('/delete/:id',
     [
         check('id').isInt()
     ],
-    utils.checkDashboardValidation,
+    utils.checkValidation,
     ScriptwriterController.deleteScriptwriter
 );
 
@@ -52,7 +52,7 @@ router.get('/:id',
     [
         check('id').isInt()
     ],
-    utils.checkDashboardValidation,
+    utils.checkValidation,
     ScriptwriterController.getScriptwriter
 );
 
@@ -60,14 +60,14 @@ router.put('/update',
     utils.sessionChecker,
     [
         check('name')
-            .isAlpha('pl-PL').withMessage('Imię powinno zawierać wyłącznie litery.')
-            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowe imię.'),
+            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość imienia.').bail()
+            .isAlpha('pl-PL').withMessage('Imię powinno zawierać wyłącznie litery.'),
         check('surname')
-            .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.')
-            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowe nazwisko.'),
+            .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość nazwiska.').bail()
+            .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.'),
         check('bday').isISO8601().withMessage('Nie podano daty urodzenia.'),
     ],
-    utils.checkDashboardValidation,
+    utils.checkValidationVerbose,
     ScriptwriterController.updateScriptwriter
 );
 

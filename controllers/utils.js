@@ -6,10 +6,24 @@ exports.sessionChecker = (req, res, next) => {
     else next();
 };
   
-exports.checkDashboardValidation = (req, res, next) => {
+exports.checkValidationVerbose = (req, res, next) => {
     const errors = validationResult(req);
+
     if(!errors.isEmpty()) {
-      return res.status(400).send(errors.mapped());
+        let result = {msg: ''};
+
+        for(element of errors.array()) 
+            result.msg += element.msg + '<br/>';
+
+        return res.status(400).send(result);
     }
+
     next();
 };
+
+exports.checkValidation = (req, res, next) => {
+    if(!validationResult(req).isEmpty()) 
+        return res.status(400).send({msg: 'Wprowadzono nieprawidłowe dane.'});
+
+    next();
+}

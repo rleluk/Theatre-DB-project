@@ -23,12 +23,16 @@ CREATE TABLE Teatr.Technik_teatralny (
 
 ALTER SEQUENCE Teatr.technik_teatralny_technik_id_seq OWNED BY Teatr.Technik_teatralny.technik_id;
 
+CREATE SEQUENCE Teatr.typ_biletu_typ_biletu_id_seq_1;
+
 CREATE TABLE Teatr.Typ_biletu (
-                typ_biletu_id INTEGER NOT NULL,
+                typ_biletu_id INTEGER NOT NULL DEFAULT nextval('Teatr.typ_biletu_typ_biletu_id_seq_1'),
                 Nazwa VARCHAR NOT NULL,
                 CONSTRAINT typ_biletu_id PRIMARY KEY (typ_biletu_id)
 );
 
+
+ALTER SEQUENCE Teatr.typ_biletu_typ_biletu_id_seq_1 OWNED BY Teatr.Typ_biletu.typ_biletu_id;
 
 CREATE SEQUENCE Teatr.sala_sala_id_seq;
 
@@ -41,14 +45,18 @@ CREATE TABLE Teatr.Sala (
 
 ALTER SEQUENCE Teatr.sala_sala_id_seq OWNED BY Teatr.Sala.sala_id;
 
+CREATE SEQUENCE Teatr.miejsce_miejsce_id_seq_1;
+
 CREATE TABLE Teatr.Miejsce (
-                Miejsce_id INTEGER NOT NULL,
+                Miejsce_id INTEGER NOT NULL DEFAULT nextval('Teatr.miejsce_miejsce_id_seq_1'),
                 Numer_siedzenia VARCHAR NOT NULL,
                 Rzad VARCHAR NOT NULL,
                 sala_id INTEGER NOT NULL,
                 CONSTRAINT miejsce_pk PRIMARY KEY (Miejsce_id)
 );
 
+
+ALTER SEQUENCE Teatr.miejsce_miejsce_id_seq_1 OWNED BY Teatr.Miejsce.Miejsce_id;
 
 CREATE SEQUENCE Teatr.rezyser_rezyser_id_seq_1;
 
@@ -120,8 +128,10 @@ CREATE TABLE Teatr.Spektakl_Technik (
 );
 
 
+CREATE SEQUENCE Teatr.wystawienie_spektaklu_wystawienie_id_seq_1;
+
 CREATE TABLE Teatr.Wystawienie_spektaklu (
-                wystawienie_id INTEGER NOT NULL,
+                wystawienie_id INTEGER NOT NULL DEFAULT nextval('Teatr.wystawienie_spektaklu_wystawienie_id_seq_1'),
                 Data_wystawienia DATE NOT NULL,
                 spektakl_id INTEGER NOT NULL,
                 sala_id INTEGER NOT NULL,
@@ -129,6 +139,8 @@ CREATE TABLE Teatr.Wystawienie_spektaklu (
                 CONSTRAINT wystawienie_spektaklul_pk PRIMARY KEY (wystawienie_id)
 );
 
+
+ALTER SEQUENCE Teatr.wystawienie_spektaklu_wystawienie_id_seq_1 OWNED BY Teatr.Wystawienie_spektaklu.wystawienie_id;
 
 CREATE SEQUENCE Teatr.bilet_bilet_id_seq;
 
@@ -268,17 +280,37 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE Profesja 
+----------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE Teatr.Sala
 ADD unique(nazwa);
 
-ALTER TABLE Gatunek
+ALTER TABLE Teatr.Profesja 
 ADD unique(nazwa);
 
-ALTER TABLE Typ_biletu 
+ALTER TABLE Teatr.Gatunek
 ADD unique(nazwa);
 
-ALTER TABLE Aktor ADD Data_urodzenia DATE NOT NULL;
+ALTER TABLE Teatr.Typ_biletu 
+ADD unique(nazwa);
 
-ALTER TABLE Rezyser ADD Data_urodzenia DATE NOT NULL;
+ALTER TABLE Teatr.Aktor ADD Data_urodzenia DATE NOT NULL;
 
-ALTER TABLE Scenarzysta ADD Data_urodzenia DATE NOT NULL;
+ALTER TABLE Teatr.Rezyser ADD Data_urodzenia DATE NOT NULL;
+
+ALTER TABLE Teatr.Scenarzysta ADD Data_urodzenia DATE NOT NULL;
+
+CREATE TABLE Teatr.Admin (
+                admin_id INTEGER NOT NULL,
+                login VARCHAR(20) NOT NULL UNIQUE,
+                haslo VARCHAR(20) NOT NULL
+);
+
+ALTER TABLE Teatr.Miejsce
+DROP CONSTRAINT sala_miejsce_fk;
+
+ALTER TABLE Teatr.Miejsce 
+ADD CONSTRAINT sala_miejsce_fk
+FOREIGN KEY (sala_id)
+REFERENCES Teatr.Sala (sala_id)
+ON DELETE CASCADE;

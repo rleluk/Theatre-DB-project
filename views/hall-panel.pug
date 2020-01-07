@@ -3,3 +3,24 @@ append css
     link(rel="stylesheet", type="text/css", href="/css/hall-panel.css")
 
 block content
+    button(onclick="changeForm('addHallForm')") Dodaj salę
+    button(onclick="changeForm('searchHallForm')") Wyszukaj salę
+    #alert
+    form#addHallForm.nav.invisible(name="addHallForm")
+        label Nazwa sali: <br>
+        input(type="text", name="name") 
+        br
+        label Ilość rzędów: <br>
+        input(type="text", name="numberOfRows")
+        br
+        label Ilość siedzeń w rzędzie: <br>
+        input(type="text" name="seatsInRow")
+        br
+        button(type="submit") Dodaj <br>
+    form#searchHallForm.nav.invisible(name="searchHallForm")
+        label Nazwa sali: <br>
+        input(type="text", name="name")
+        br
+        button(type="submit") Szukaj 
+    #dataContainer
+    script(src="/js/hall-panel.js")

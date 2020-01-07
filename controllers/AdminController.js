@@ -43,19 +43,3 @@ exports.logout = (req, res) => {
   } 
   res.redirect('/admin');
 };
-
-//////////////////////////////////////////////////////////// PERFORMANCE 
-
-exports.performance = (req, res) => {
-  res.render('performance-panel');
-};
-
-//////////////////////////////////////////////////////////// TECHNICIAN
-
-
-
-//////////////////////////////////////////////////////////// HALL
-
-exports.hall = (req, res) => {
-  res.render('hall-panel');
-};

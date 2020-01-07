@@ -6,7 +6,7 @@ block content
     button(onclick="changeForm('addTechnicianForm')") Dodaj technika teatralnego
     button(onclick="changeForm('searchTechnicianForm')") Wyszukaj technika teatralnego
     button(onclick="changeForm('addProfessionForm')") Dodaj profesję
-    button(onclick="viewProfessions()") Wyświetl dostępne profesje
+    button#viewProfessions Wyświetl dostępne profesje
     #alert
     form#addTechnicianForm.nav.invisible(name="addTechnicianForm")
         input(type="text", name="name")

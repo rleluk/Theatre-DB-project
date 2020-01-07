@@ -27,18 +27,4 @@ router.get('/logout',
     AdminController.logout
 );
 
-////////////////////////////////////////////////////// PERFORMANCE
-
-router.get('/performance',
-    utils.sessionChecker,
-    AdminController.performance
-);
-
-////////////////////////////////////////////////////// 
-
-router.get('/hall',
-    utils.sessionChecker,
-    AdminController.hall
-);
-
 module.exports = router;

@@ -10,6 +10,8 @@ const actor = require('./routes/actor');
 const director = require('./routes/director');
 const scriptwriter = require('./routes/scriptwriter');
 const technician = require('./routes/technician');
+const hall = require('./routes/hall')
+const performance = require('./routes/performance')
 
 const app = express();
 
@@ -44,6 +46,8 @@ app.use('/admin/actor', actor);
 app.use('/admin/director', director);
 app.use('/admin/scriptwriter', scriptwriter);
 app.use('/admin/technician', technician);
+app.use('/admin/hall', hall);
+app.use('/admin/performance', performance);
 
 app.use((req, res, next) => {
     res.status(404).render('404');
