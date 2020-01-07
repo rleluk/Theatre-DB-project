@@ -4,15 +4,18 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
+// routers
 const routes = require('./routes/index');
 const admin = require('./routes/admin');
 const actor = require('./routes/actor');
 const director = require('./routes/director');
 const scriptwriter = require('./routes/scriptwriter');
 const technician = require('./routes/technician');
-const hall = require('./routes/hall')
-const performance = require('./routes/performance')
+const hall = require('./routes/hall');
+const performance = require('./routes/performance');
+const ticket = require('./routes/ticket');
 
+// app
 const app = express();
 
 // config
@@ -48,6 +51,7 @@ app.use('/admin/scriptwriter', scriptwriter);
 app.use('/admin/technician', technician);
 app.use('/admin/hall', hall);
 app.use('/admin/performance', performance);
+app.use('/admin/ticket', ticket);
 
 app.use((req, res, next) => {
     res.status(404).render('404');

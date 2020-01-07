@@ -1,24 +1,29 @@
 extends admin-dashboard.pug
-append css
-    link(rel="stylesheet", type="text/css", href="/css/actor-panel.css")
 
 block content
     button(onclick="changeForm('addActorForm')") Dodaj aktora
     button(onclick="changeForm('searchActorForm')") Wyszukaj aktora
+
     #alert
-    form#addActorForm.nav.invisible(name="addActorForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
-        input(type="date" name="bday")
-        br
+
+    form#addActorForm.input-form.invisible(name="addActorForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Data urodzenia:
+            input(type="date" name="bday")
         button(type="submit") Dodaj 
-    form#searchActorForm.nav.invisible(name="searchActorForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
+
+    form#searchActorForm.input-form.invisible(name="searchActorForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
         button(type="submit") Szukaj 
+
     #dataContainer
+    
     script(src="/js/actor-panel.js")

@@ -1,38 +1,45 @@
 extends admin-dashboard.pug
-append css
-    link(rel="stylesheet", type="text/css", href="/css/scriptwriter-panel.css")
 
 block content
     button(onclick="changeForm('addScriptwriterForm')") Dodaj scenarzystę
     button(onclick="changeForm('searchScriptwriterForm')") Wyszukaj scenarzystę
+
     #alert
-    form#addScriptwriterForm.nav.invisible(name="addScriptwriterForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
-        input(type="date" name="bday")
-        br
-        input(type="text" name="description")
-        br
+
+    form#addScriptwriterForm.input-form.invisible(name="addScriptwriterForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Data urodzenia:
+            input(type="date" name="bday")
+            label Opis:
+            input(type="text" name="description")
         button(type="submit") Dodaj 
-    form#searchScriptwriterForm.nav.invisible(name="searchScriptwriterForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
+
+    form#searchScriptwriterForm.input-form.invisible(name="searchScriptwriterForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
         button(type="submit") Szukaj 
-    form#editScriptwriterForm.nav.invisible(name="editScriptwriterForm")
-        input(type="text", name="id", disabled)
-        br
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
-        input(type="date" name="bday")
-        br
-        input(type="text" name="description")
-        br
+
+    form#editScriptwriterForm.input-form.invisible(name="editScriptwriterForm")
+        .input-wrapper
+            label ID:
+            input(type="text", name="id", disabled)
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Data urodzenia:
+            input(type="date" name="bday")
+            label Opis:
+            input(type="text" name="description")
         button(type="submit") Edytuj 
+
     #dataContainer
+
     script(src="/js/scriptwriter-panel.js")

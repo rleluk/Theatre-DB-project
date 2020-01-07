@@ -6,9 +6,19 @@ var clearAlert = () => document.getElementById('alert').innerHTML = '';
 
 var clearDataContainer = () => document.getElementById('dataContainer').innerHTML = '';
 
+function setVisibleNav(currentNav) {
+    const navBar = document.querySelector('.nav-bar');
+    const navs = navBar.querySelectorAll('a.nav-item');
+
+    for (let nav of navs) 
+        nav.classList.remove('active-nav');
+
+    currentNav.classList.add('active-nav');
+}
+
 function changeForm(id) {
-    let navs = document.getElementsByClassName('nav');
-    Array.prototype.forEach.call(navs, element => element.style.display = 'none');
+    let forms = document.getElementsByClassName('input-form');
+    Array.prototype.forEach.call(forms, element => element.style.display = 'none');
 
     clearAlert();
     clearDataContainer();
@@ -94,7 +104,7 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
     let table = document.createElement('table');
-    console.log(data);
+    
     if(res.status != 200) {
         sendAlert(data.msg);
     } else if(data.length < 1) {

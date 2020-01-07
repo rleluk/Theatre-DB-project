@@ -1,3 +1,7 @@
+window.onload = () => {
+    setVisibleNav(document.getElementById('hall-btn'));
+}
+
 document.getElementById('addHallForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearAlert();

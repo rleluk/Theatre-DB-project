@@ -1,0 +1,46 @@
+body, html {
+    margin: 0 auto;
+    padding: 0;
+    color: #fff;
+    background-color: #06203a;
+}
+
+.active-nav {
+    background-color: #06203a;
+    border: 2px solid #ebc934;
+}
+
+.nav-bar {
+    padding: 20px;
+    padding: 0px;
+    text-transform: uppercase;
+    background-color: #222930;
+}
+
+.nav-bar a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.nav-bar a:hover {
+    color: #ebc934;
+}
+
+.logout-btn {
+    float: right;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper input, .input-wrapper select {
+    width: 150px;
+}
+
+.invisible {
+    display: none;
+}

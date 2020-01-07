@@ -1,32 +1,39 @@
 extends admin-dashboard.pug
-append css
-    link(rel="stylesheet", type="text/css", href="/css/technician-panel.css")
 
 block content
     button(onclick="changeForm('addTechnicianForm')") Dodaj technika teatralnego
     button(onclick="changeForm('searchTechnicianForm')") Wyszukaj technika teatralnego
     button(onclick="changeForm('addProfessionForm')") Dodaj profesję
     button#viewProfessions Wyświetl dostępne profesje
+
     #alert
-    form#addTechnicianForm.nav.invisible(name="addTechnicianForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
-        select#professionSelect
-        br
+
+    form#addTechnicianForm.input-form.invisible(name="addTechnicianForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Profesja:
+            select#professionSelect
         button(type="submit") Dodaj 
-    form#searchTechnicianForm.nav.invisible(name="searchTechnicianForm")
-        input(type="text", name="name")
-        br
-        input(type="text", name="surname")
-        br
-        input(type="text", name="profession")
-        br
+
+    form#searchTechnicianForm.input-form.invisible(name="searchTechnicianForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Profesja:
+            input(type="text", name="profession")
         button(type="submit") Szukaj 
-    form#addProfessionForm.nav.invisible(name="addProfessionForm")
-        input(type="text", name="name")
-        br
+
+    form#addProfessionForm.input-form.invisible(name="addProfessionForm")
+        .input-wrapper
+            label Nazwa profesji:
+            input(type="text", name="name")
         button(type="submit") Dodaj 
+
     #dataContainer
+
     script(src="/js/technician-panel.js")

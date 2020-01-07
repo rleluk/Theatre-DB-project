@@ -1,4 +1,7 @@
-window.onload = updateProfessionSelect;
+window.onload = () => {
+    setVisibleNav(document.getElementById('technician-btn'));
+    updateProfessionSelect;
+}
 
 async function updateProfessionSelect() {
     let data = await getData('/admin/technician/profession/getall');

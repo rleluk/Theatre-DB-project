@@ -2,23 +2,24 @@ doctype html
 html(lang="pl")
     head
         meta(charset="utf-8")
+
+        link(rel="stylesheet", type="text/css", href="/css/main.css")
         block css
-            link(rel="stylesheet", type="text/css", href="/css/admin-dashboard.css")
+
+        script(src="/js/utils.js")
         block js
-            script(src="/js/admin-dashboard.js")
-    body(onload="")
+
+    body
         .nav-bar
-            a(id="performance-btn", href="/admin/performance") Spektakle
-            a(id="director-btn", href="/admin/director") Reżyserzy
-            a(id="scriptwriter-btn", href="/admin/scriptwriter") Scenarzyści
-            a(id="actor-btn", href="/admin/actor") Aktorzy
-            a(id="technician-btn", href="/admin/technician") Technicy teatralni
-            a(id="hall-btn", href="/admin/hall") Sale
+            a#performance-btn.nav-item(href="/admin/performance") Spektakle
+            a#ticket-btn.nav-item(href="/admin/ticket") Bilety
+            a#hall-btn.nav-item(href="/admin/hall") Sale
+            a#actor-btn.nav-item(href="/admin/actor") Aktorzy
+            a#director-btn.nav-item(href="/admin/director") Reżyserzy
+            a#scriptwriter-btn.nav-item(href="/admin/scriptwriter") Scenarzyści
+            a#technician-btn.nav-item(href="/admin/technician") Technicy teatralni
+
             a.logout-btn(href="/admin/logout") Logout
 
         block content
-            p ADMIN PANEL
-
-        footer
-
         

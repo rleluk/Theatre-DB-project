@@ -28,6 +28,7 @@ CREATE SEQUENCE Teatr.typ_biletu_typ_biletu_id_seq_1;
 CREATE TABLE Teatr.Typ_biletu (
                 typ_biletu_id INTEGER NOT NULL DEFAULT nextval('Teatr.typ_biletu_typ_biletu_id_seq_1'),
                 Nazwa VARCHAR NOT NULL,
+                Cena REAL NOT NULL,
                 CONSTRAINT typ_biletu_id PRIMARY KEY (typ_biletu_id)
 );
 
@@ -147,7 +148,6 @@ CREATE SEQUENCE Teatr.bilet_bilet_id_seq;
 CREATE TABLE Teatr.Bilet (
                 bilet_id INTEGER NOT NULL DEFAULT nextval('Teatr.bilet_bilet_id_seq'),
                 typ_biletu_id INTEGER NOT NULL,
-                Cena REAL NOT NULL,
                 Miejsce_id INTEGER NOT NULL,
                 wystawienie_id INTEGER NOT NULL,
                 CONSTRAINT bilet_id PRIMARY KEY (bilet_id)

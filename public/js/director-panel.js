@@ -1,3 +1,7 @@
+window.onload = () => {
+    setVisibleNav(document.getElementById('director-btn'));
+}
+
 async function editButton(id) {
     changeForm('editDirectorForm');
     let record = await getData('/admin/director/' + id);

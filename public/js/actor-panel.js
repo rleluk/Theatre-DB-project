@@ -1,3 +1,7 @@
+window.onload = () => {
+    setVisibleNav(document.getElementById('actor-btn'));
+}
+
 document.getElementById('searchActorForm').addEventListener('submit', event => {
     event.preventDefault();
     clearDataContainer();

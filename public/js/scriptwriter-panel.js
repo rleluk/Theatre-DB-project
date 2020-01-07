@@ -1,3 +1,7 @@
+window.onload = () => {
+    setVisibleNav(document.getElementById('scriptwriter-btn'));
+}
+
 async function editButton(id) {
     changeForm('editScriptwriterForm');
     let record = await getData('/admin/scriptwriter/' + id);
