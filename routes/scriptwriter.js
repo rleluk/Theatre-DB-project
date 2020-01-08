@@ -47,6 +47,11 @@ router.delete('/delete/:id',
     ScriptwriterController.deleteScriptwriter
 );
 
+router.get('/all',
+    utils.sessionChecker,
+    ScriptwriterController.getAllScriptwriters
+);
+
 router.get('/:id',
     utils.sessionChecker,
     [

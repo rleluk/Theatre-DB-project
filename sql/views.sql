@@ -9,6 +9,11 @@ FROM Teatr.Sala s JOIN Teatr.Miejsce m ON s.sala_id = m.sala_id
 GROUP BY s.sala_id, s.nazwa
 ORDER BY s.sala_id; 
 
-
-
-
+CREATE VIEW Teatr.Lista_spektakli AS
+SELECT s.spektakl_id, s.tytul, g.nazwa AS gatunek, 
+    r.imie AS imie_rezysera, r.nazwisko AS nazwisko_rezysera,  
+    sc.imie AS imie_scenarzysty, sc.nazwisko AS nazwisko_scenarzysty, s.opis
+FROM Teatr.Spektakl s 
+    JOIN Teatr.Gatunek g ON s.gatunek_id = g.gatunek_id 
+    JOIN Teatr.Scenarzysta sc ON s.scenarzysta_id = sc.scenarzysta_id
+    JOIN Teatr.Rezyser r ON s.rezyser_id = r.rezyser_id; 

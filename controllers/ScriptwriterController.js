@@ -54,3 +54,14 @@ exports.getScriptwriter = async (req, res) => {
       res.status(500).send({msg: 'Błąd bazy danych.'});
     }
 }
+
+exports.getAllScriptwriters = async (req, res) => {
+  try {
+      let result = await Scriptwriter.getAll();
+      res.status(200).send(result);
+  } catch(err) {
+      console.log(err);
+      res.status(500).send({msg: 'Błąd bazy danych.'});
+  }
+};
+

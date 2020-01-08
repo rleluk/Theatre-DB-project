@@ -23,6 +23,11 @@ class Director {
         return rows;
     }
 
+    static async getAll() {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Rezyser');
+        return rows;
+    }
+
     static async delete(id) {
         await pool.query('DELETE FROM Teatr.Rezyser WHERE Rezyser_id = $1', [id]);
         return {msg: 'Dane zostały pomyślnie usunięte.'};

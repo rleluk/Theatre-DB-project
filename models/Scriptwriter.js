@@ -23,6 +23,11 @@ class Scriptwriter {
         return rows;
     }
 
+    static async getAll() {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Scenarzysta');
+        return rows;
+    }
+
     static async delete(id) {
         await pool.query('DELETE FROM Teatr.Scenarzysta WHERE Scenarzysta_id = $1', [id]);
         return {msg: 'Dane zostały pomyślnie usunięte.'};

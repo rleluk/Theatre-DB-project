@@ -31,7 +31,7 @@ exports.deleteTicketType = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         if(err.code === FOREIGN_KEY_VIOLATION)
-            res.status(409).send({msg: 'Podana profesja ma wciąż odwołanie w tabeli "Bilet".'});
+            res.status(409).send({msg: 'Wybrany typ biletu ma wciąż odwołanie w tabeli "Bilet".'});
         else {
             console.log(err);
             res.status(500).send({msg: 'Błąd bazy danych.'});

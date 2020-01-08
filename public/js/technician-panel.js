@@ -1,34 +1,15 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('technician-btn'));
-    updateProfessionSelect;
-}
-
-async function updateProfessionSelect() {
-    let data = await getData('/admin/technician/profession/getall');
-    let select = document.getElementById('professionSelect');
-
-    for (a in select.options) { 
-        select.options.remove(0); 
-    }
-
-    if(data.length < 1) {
-        return;
-    }
-    
-    data.forEach(record => {
-        let option = document.createElement('option');
-        option.text = record.nazwa;
-        select.add(option);
-    });
+    updateNameSelect('professionSelect', '/admin/technician/profession/all');
 }
 
 document.getElementById('viewProfessions').addEventListener('click', event => {
     changeForm(null);
 
-    getSimpleTable('/admin/technician/profession/getall', '/admin/technician/profession/delete/', 
+    getSimpleTable('/admin/technician/profession/all', '/admin/technician/profession/delete/', 
         ['ID', 'Nazwa'], 
         ['profesja_id', 'nazwa'],
-        updateProfessionSelect
+        () => updateNameSelect('professionSelect', '/admin/technician/profession/all')
     );
 });
 
@@ -41,7 +22,7 @@ document.getElementById('addProfessionForm').addEventListener('submit', async ev
         name: document.addProfessionForm.name.value
     });
 
-    updateProfessionSelect();
+    updateNameSelect('professionSelect', '/admin/technician/profession/all');
 });
 
 document.getElementById('addTechnicianForm').addEventListener('submit', event => {

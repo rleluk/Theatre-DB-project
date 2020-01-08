@@ -47,6 +47,11 @@ router.delete('/delete/:id',
     DirectorController.deleteDirector
 );
 
+router.get('/all',
+    utils.sessionChecker,
+    DirectorController.getAllDirectors
+);
+
 router.get('/:id',
     utils.sessionChecker,
     [

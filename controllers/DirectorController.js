@@ -54,3 +54,13 @@ exports.getDirector = async (req, res) => {
         res.status(500).send({msg: 'Błąd bazy danych.'});
     }
 }
+
+exports.getAllDirectors = async (req, res) => {
+    try {
+        let result = await Director.getAll();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Błąd bazy danych.'});
+    }
+  };

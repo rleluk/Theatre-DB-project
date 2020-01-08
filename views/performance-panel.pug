@@ -1,6 +1,32 @@
 extends admin-dashboard.pug
 
 block content
+    button(onclick="changeForm('addGenreForm')") Dodaj gatunek sztuk teatralnych
+    button#viewGenres Wyświetl dostępne gatunki
+
+    button(onclick="changeForm('addPerformanceForm')") Dodaj spektakl
+
     #alert
+
+    form#addGenreForm.input-form.invisible(name="addGenreForm")
+        .input-wrapper
+            label Nazwa gatunku:
+            input(type="text", name="name")
+        button(type="submit") Dodaj 
+
+    form#addPerformanceForm.input-form.invisible(name="addPerformanceForm")
+        .input-wrapper
+            label Tytuł spektaklu:
+            input(type="text", name="title")
+            label Gatunek:
+            select#genreSelect
+            label Reżyser:
+            select#directorSelect
+            label Scenarzysta:
+            select#scriptwriterSelect
+            label Opis:
+            input(type="text", name="description")
+        button(type="submit") Dodaj 
+
     #dataContainer
     script(src="/js/performance-panel.js")

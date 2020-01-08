@@ -63,7 +63,7 @@ router.delete('/profession/delete/:id',
     TechnicianController.deleteProfession
 );
 
-router.get('/profession/getall',
+router.get('/profession/all',
     utils.sessionChecker,
     TechnicianController.getAllProfessions
 );

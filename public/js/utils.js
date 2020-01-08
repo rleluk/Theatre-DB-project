@@ -81,7 +81,7 @@ async function searchData(url, makeTable = null, lastSearch = null) {
 async function getData(url) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
-    
+
     if(res.status !== 200) {
         sendAlert(data.msg);
         return null;
@@ -98,6 +98,25 @@ async function deleteRecord(url, tableBody, rowIndex) {
         tableBody.deleteRow(rowIndex);
 
     sendAlert(data.msg);
+}
+
+async function updateNameSelect(selectID, url) {
+    let data = await getData(url);
+    let select = document.getElementById(selectID);
+
+    for (a in select.options) { 
+        select.options.remove(0); 
+    }
+
+    if(data == null ||  data.length < 1) {
+        return;
+    }
+    
+    data.forEach(record => {
+        let option = document.createElement('option');
+        option.text = record.nazwa;
+        select.add(option);
+    });
 }
 
 async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, deleteAction = null) {
