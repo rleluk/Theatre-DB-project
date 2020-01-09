@@ -10,7 +10,7 @@ exports.addActor = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -20,7 +20,7 @@ exports.searchActor = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -30,6 +30,6 @@ exports.deleteActor = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };

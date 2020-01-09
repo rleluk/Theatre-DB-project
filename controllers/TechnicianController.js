@@ -11,7 +11,7 @@ exports.addTechnician = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -21,7 +21,7 @@ exports.searchTechnician = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -31,7 +31,17 @@ exports.deleteTechnician = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
+exports.getTechnician = async (req, res) => {
+    try {
+        let result = await Technician.get(req.params.profession);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -41,7 +51,7 @@ exports.getAllProfessions = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -54,7 +64,7 @@ exports.addProfession = async (req, res) => {
             res.status(412).send({msg: 'Wprowadzona profesja już znajduje się w bazie danych.'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
     }
 };
@@ -68,7 +78,7 @@ exports.deleteProfession = async (req, res) => {
             res.status(409).send({msg: 'Wybrana profesja ma wciąż odwołanie w tabeli "Technik teatralny".'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
     }
 };

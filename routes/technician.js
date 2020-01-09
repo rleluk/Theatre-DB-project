@@ -42,23 +42,38 @@ router.get('/search',
     TechnicianController.searchTechnician
 );
 
+router.get('/:profession',
+    utils.sessionChecker,
+    [
+        check('profession').isAlpha('pl-PL')
+    ],
+    utils.checkValidation,
+    TechnicianController.getTechnician
+);
+
 router.delete('/delete/:id',
     utils.sessionChecker,
-    [check('id').isInt()],
+    [
+        check('id').isInt()
+    ],
     utils.checkValidation,
     TechnicianController.deleteTechnician
 );
 
 router.post('/profession/add',
     utils.sessionChecker,
-    [check('name').trim().isAlpha('pl-PL').withMessage('Nazwa profesji powinna zawierać wyłącznie litery.')],
+    [
+        check('name').trim().isAlpha('pl-PL').withMessage('Nazwa profesji powinna zawierać wyłącznie litery.')
+    ],
     utils.checkValidationVerbose,
     TechnicianController.addProfession
 );
 
 router.delete('/profession/delete/:id',
     utils.sessionChecker,
-    [check('id').isInt()],
+    [
+        check('id').isInt()
+    ],
     utils.checkValidation,
     TechnicianController.deleteProfession
 );

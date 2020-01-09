@@ -10,8 +10,12 @@ exports.addTicketType = async (req, res) => {
         let result = await TicketType.add(req.body.name, req.body.price);
         res.status(200).send(result);
     } catch(err) {
-        console.log(err);
-        res.status(500).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+        if (err.code === UNIQUE_VIOLATION)
+            res.status(412).send({msg: 'Wprowadzony typ biletu już znajduje się w bazie danych.'});
+        else {
+            console.log(err);
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
+        }
     }
 };
 
@@ -21,7 +25,7 @@ exports.getAllTicketTypes = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -34,7 +38,7 @@ exports.deleteTicketType = async (req, res) => {
             res.status(409).send({msg: 'Wybrany typ biletu ma wciąż odwołanie w tabeli "Bilet".'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
     }
 };

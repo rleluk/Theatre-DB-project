@@ -1,3 +1,6 @@
+DROP SCHEMA IF EXISTS Teatr CASCADE;
+CREATE SCHEMA Teatr;
+SET SEARCH_PATH TO Teatr;
 
 CREATE SEQUENCE Teatr.profesja_profesja_id_seq;
 
@@ -27,8 +30,8 @@ CREATE SEQUENCE Teatr.typ_biletu_typ_biletu_id_seq_1;
 
 CREATE TABLE Teatr.Typ_biletu (
                 typ_biletu_id INTEGER NOT NULL DEFAULT nextval('Teatr.typ_biletu_typ_biletu_id_seq_1'),
-                Nazwa VARCHAR NOT NULL,
                 Cena REAL NOT NULL,
+                Nazwa VARCHAR NOT NULL,
                 CONSTRAINT typ_biletu_id PRIMARY KEY (typ_biletu_id)
 );
 
@@ -66,6 +69,7 @@ CREATE TABLE Teatr.Rezyser (
                 Nazwisko VARCHAR NOT NULL,
                 Imie VARCHAR NOT NULL,
                 Opis VARCHAR NOT NULL,
+                Data_urodzenia DATE NOT NULL,
                 CONSTRAINT rezyser_id PRIMARY KEY (rezyser_id)
 );
 
@@ -79,6 +83,7 @@ CREATE TABLE Teatr.Scenarzysta (
                 Imie VARCHAR NOT NULL,
                 Nazwisko VARCHAR NOT NULL,
                 Opis VARCHAR NOT NULL,
+                Data_urodzenia DATE NOT NULL,
                 CONSTRAINT scenarzysta_id PRIMARY KEY (scenarzysta_id)
 );
 
@@ -91,6 +96,7 @@ CREATE TABLE Teatr.Aktor (
                 aktor_id INTEGER NOT NULL DEFAULT nextval('Teatr.aktor_aktor_id_seq'),
                 Imie VARCHAR NOT NULL,
                 Nazwisko VARCHAR NOT NULL,
+                Data_urodzenia DATE NOT NULL,
                 CONSTRAINT aktor_id PRIMARY KEY (aktor_id)
 );
 
@@ -163,17 +169,12 @@ CREATE TABLE Teatr.Rola (
                 Nazwa VARCHAR NOT NULL,
                 spektakl_id INTEGER NOT NULL,
                 Opis VARCHAR NOT NULL,
+                aktor_id INTEGER NOT NULL,
                 CONSTRAINT rola_id PRIMARY KEY (rola_id)
 );
 
 
 ALTER SEQUENCE Teatr.rola_rola_id_seq OWNED BY Teatr.Rola.rola_id;
-
-CREATE TABLE Teatr.Obsada (
-                rola_id INTEGER NOT NULL,
-                aktor_id INTEGER NOT NULL
-);
-
 
 ALTER TABLE Teatr.Technik_teatralny ADD CONSTRAINT zajecie_technik_teatralny_fk
 FOREIGN KEY (profesja_id)
@@ -231,7 +232,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE Teatr.Obsada ADD CONSTRAINT aktor_rola_aktor_fk
+ALTER TABLE Teatr.Rola ADD CONSTRAINT aktor_rola_fk
 FOREIGN KEY (aktor_id)
 REFERENCES Teatr.Aktor (aktor_id)
 ON DELETE NO ACTION
@@ -273,13 +274,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE Teatr.Obsada ADD CONSTRAINT rola_rola_aktor_fk
-FOREIGN KEY (rola_id)
-REFERENCES Teatr.Rola (rola_id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ----------------------------------------------------------------------------------------------------------------
 
 ALTER TABLE Teatr.Sala
@@ -293,12 +287,6 @@ ADD unique(nazwa);
 
 ALTER TABLE Teatr.Typ_biletu 
 ADD unique(nazwa);
-
-ALTER TABLE Teatr.Aktor ADD Data_urodzenia DATE NOT NULL;
-
-ALTER TABLE Teatr.Rezyser ADD Data_urodzenia DATE NOT NULL;
-
-ALTER TABLE Teatr.Scenarzysta ADD Data_urodzenia DATE NOT NULL;
 
 CREATE TABLE Teatr.Admin (
                 admin_id INTEGER NOT NULL,

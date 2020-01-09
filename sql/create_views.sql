@@ -17,3 +17,12 @@ FROM Teatr.Spektakl s
     JOIN Teatr.Gatunek g ON s.gatunek_id = g.gatunek_id 
     JOIN Teatr.Scenarzysta sc ON s.scenarzysta_id = sc.scenarzysta_id
     JOIN Teatr.Rezyser r ON s.rezyser_id = r.rezyser_id; 
+
+CREATE VIEW Teatr.Rozszerzona_lista_spektakli AS
+SELECT s.spektakl_id, s.tytul, g.nazwa AS gatunek, 
+    r.rezyser_id, r.imie AS imie_rezysera, r.nazwisko AS nazwisko_rezysera,  
+    sc.scenarzysta_id, sc.imie AS imie_scenarzysty, sc.nazwisko AS nazwisko_scenarzysty, s.opis
+FROM Teatr.Spektakl s 
+    JOIN Teatr.Gatunek g ON s.gatunek_id = g.gatunek_id 
+    JOIN Teatr.Scenarzysta sc ON s.scenarzysta_id = sc.scenarzysta_id
+    JOIN Teatr.Rezyser r ON s.rezyser_id = r.rezyser_id; 

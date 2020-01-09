@@ -16,12 +16,25 @@ function setVisibleNav(currentNav) {
     currentNav.classList.add('active-nav');
 }
 
+function clearInputs() {
+    let inputs = document.querySelectorAll('input');
+    inputs.forEach(element => {
+        element.value = '';
+    });
+    
+    let selects = document.querySelectorAll('select');
+    selects.forEach(element => {
+        element.value = 'Wybierz';
+    });
+}
+
 function changeForm(id) {
     let forms = document.getElementsByClassName('input-form');
     Array.prototype.forEach.call(forms, element => element.style.display = 'none');
 
-    clearAlert();
     clearDataContainer();
+    clearAlert();
+    clearInputs();
 
     let form = document.getElementById(id);
     if(form) form.style.display = "block";
@@ -38,6 +51,8 @@ async function editRecord(url, dataToSend) {
 
     let data = await res.json();
     sendAlert(data.msg);
+    
+    return (res.status === 200);
 }
 
 async function addRecord(url, dataToSend) {
@@ -51,32 +66,9 @@ async function addRecord(url, dataToSend) {
 
     let data = await res.json();
     sendAlert(data.msg);
+
+    return (res.status === 200);
 }
-
-async function searchData(url, makeTable = null, lastSearch = null) {
-    let res = await fetch(url, {method: 'GET'});
-    let data = await res.json();
-
-    if(res.status !== 200) {
-        sendAlert(data.msg);
-
-        if(lastSearch) {
-            for(let key in lastSearch) 
-                lastSearch[key] = '';
-        }
-
-        return null;
-    }
-
-    if(data.length < 1) {
-        sendAlert('Nie znaleziono żadnego rekordu.');
-        clearDataContainer();
-        return null;
-    }
-
-    if(makeTable) 
-        setDataContainer(makeTable(data));
-};
 
 async function getData(url) {
     let res = await fetch(url, {method: 'GET'});
@@ -90,31 +82,37 @@ async function getData(url) {
     return data;
 };
 
-async function deleteRecord(url, tableBody, rowIndex) {
+async function deleteRecord(url, container) {
     let res = await fetch(url, {method: 'DELETE'});
     let data = await res.json();
 
     if(res.status === 200) 
-        tableBody.deleteRow(rowIndex);
+        container.parentNode.removeChild(container);
 
     sendAlert(data.msg);
 }
 
-async function updateNameSelect(selectID, url) {
+async function updateSelect(select, url, format) {
     let data = await getData(url);
-    let select = document.getElementById(selectID);
 
     for (a in select.options) { 
         select.options.remove(0); 
     }
 
-    if(data == null ||  data.length < 1) {
+    if(data == null || data.length < 1) {
         return;
     }
-    
+
+    let option = document.createElement('option');
+    option.disabled = true;
+    option.selected = true;
+    option.hidden = true;
+    option.value = undefined;
+    select.add(option);
+
     data.forEach(record => {
-        let option = document.createElement('option');
-        option.text = record.nazwa;
+        option = document.createElement('option');
+        option.text = format(record);
         select.add(option);
     });
 }
@@ -131,7 +129,7 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
     } else {
         // THEAD
         let thead = table.createTHead();
-        let headerRow = thead.insertRow(0);
+        let headerRow = thead.insertRow(-1);
         
         let cell;
         for(let element of tableColumns) {
@@ -157,7 +155,7 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
             button.type = 'button';
             button.innerHTML = 'Usuń';
             button.classList.add('action-btn');
-            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], tbody, i));
+            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], tableRow));
 
             if(deleteAction != null) 
                 button.addEventListener('click', deleteAction.bind(this));
@@ -173,13 +171,14 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
 async function getComplexTable(url, deleteUrl, tableColumns, recordColumns, editAction) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
-    let tableContainer = document.createElement('table');
+    let tableContainer = document.getElementById('dataContainer');
 
     if(res.status != 200) {
         sendAlert(data.msg);
     } else if(data.length < 1) {
         sendAlert('Nie znaleziono żadnych rekordów.');
     } else {
+        clearDataContainer();
         for(let i = 0; i < data.length; i++) {
             let table = document.createElement('table');
 
@@ -223,7 +222,7 @@ async function getComplexTable(url, deleteUrl, tableColumns, recordColumns, edit
             button.type = 'button';
             button.innerHTML = 'Usuń';
             button.classList.add('action-btn');
-            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], tableContainer, i));
+            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], table));
             cell.appendChild(button);
 
             // edit button
@@ -231,14 +230,11 @@ async function getComplexTable(url, deleteUrl, tableColumns, recordColumns, edit
             button.type = 'button';
             button.innerHTML = 'Edytuj';
             button.classList.add('action-btn');
+            // console.log(row[recordColumns[0]]);
             button.addEventListener('click', editAction.bind(this, row[recordColumns[0]]));
             cell.appendChild(button);
 
-            let tableContainerRow = tableContainer.insertRow(-1);
-            tableContainerRow.appendChild(table);
+            tableContainer.appendChild(table);
         }
-
-        clearDataContainer();
-        document.getElementById('dataContainer').appendChild(tableContainer);
     }
 }

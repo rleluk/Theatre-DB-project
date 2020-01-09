@@ -10,7 +10,7 @@ exports.addDirector = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -20,7 +20,7 @@ exports.searchDirector = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -30,7 +30,7 @@ exports.deleteDirector = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -41,7 +41,7 @@ exports.updateDirector = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 }
 
@@ -51,7 +51,7 @@ exports.getDirector = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 }
 
@@ -61,6 +61,6 @@ exports.getAllDirectors = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
   };

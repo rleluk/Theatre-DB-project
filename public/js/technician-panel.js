@@ -1,15 +1,17 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('technician-btn'));
-    updateNameSelect('professionSelect', '/admin/technician/profession/all');
+    let select = document.getElementById('professionSelect');
+    updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
 }
 
 document.getElementById('viewProfessions').addEventListener('click', event => {
     changeForm(null);
 
+    let select = document.getElementById('professionSelect');
     getSimpleTable('/admin/technician/profession/all', '/admin/technician/profession/delete/', 
         ['ID', 'Nazwa'], 
         ['profesja_id', 'nazwa'],
-        () => updateNameSelect('professionSelect', '/admin/technician/profession/all')
+        () => updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`)
     );
 });
 
@@ -22,7 +24,8 @@ document.getElementById('addProfessionForm').addEventListener('submit', async ev
         name: document.addProfessionForm.name.value
     });
 
-    updateNameSelect('professionSelect', '/admin/technician/profession/all');
+    let select = document.getElementById('professionSelect');
+    updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
 });
 
 document.getElementById('addTechnicianForm').addEventListener('submit', event => {

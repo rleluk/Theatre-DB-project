@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
       });
     }
   } catch(err) {
-    console.log("Błąd bazy danych.", err);
+    console.log("Coś poszło nie tak...", err);
   } 
 };
 

@@ -24,11 +24,9 @@ body, html {
 .logout-btn {
   float: right; }
 
-.input-wrapper {
-  display: flex;
-  flex-direction: column; }
-  .input-wrapper input, .input-wrapper select {
-    width: 150px; }
+.input-wrapper input, .input-wrapper select, .input-wrapper button, .input-wrapper label {
+  display: block;
+  width: 150px; }
 
 .invisible {
   display: none; }

@@ -11,7 +11,7 @@ exports.getAllGenres = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -24,7 +24,7 @@ exports.addGenre = async (req, res) => {
             res.status(412).send({msg: 'Wprowadzony gatunek już znajduje się w bazie danych.'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
     }
 };
@@ -38,18 +38,29 @@ exports.deleteGenre = async (req, res) => {
             res.status(409).send({msg: 'Wybrany gatunek ma wciąż odwołanie w tabeli "Spektakl".'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
+    }
+};
+
+exports.searchPerformance = async (req, res) => {
+    try {
+      let result = await Performance.search(req.query.title, req.query.genre,
+         req.query.director_name, req.query.director_surname, req.query.scriptwriter_name, req.query.scriptwriter_surname);
+      res.status(200).send(result);
+    } catch(err) {
+      console.log(err);
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
 exports.addPerformance = async (req, res) => {
     try {
-        let result = await Performance.add(req.body.description, req.body.title, req.body.genre_name, req.body.director_id, req.body.scriptwriter_id);
+        let result = await Performance.add(req.body.description, req.body.title, req.body.genre, req.body.director_id, req.body.scriptwriter_id);
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
-        res.status(500).send({msg: 'Błąd bazy danych.'});
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -62,7 +73,27 @@ exports.deletePerformance = async (req, res) => {
             res.status(409).send({msg: 'Wybrany spektakl ma wciąż odwołanie w innych tabelach'});
         else {
             console.log(err);
-            res.status(500).send({msg: 'Błąd bazy danych.'});
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
+    }
+};
+
+exports.addTechnician = async (req, res) => {
+    try {
+        let result = await Performance.add(req.body.performance_id, req.body.technician_id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
+exports.getPerformance = async (req, res) => {
+    try {
+        let result = await Performance.get(req.params.id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };

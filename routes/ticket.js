@@ -21,7 +21,9 @@ router.post('/type/add',
 
 router.delete('/type/delete/:id',
     utils.sessionChecker,
-    [check('id').isInt()],
+    [
+        check('id').isInt()
+    ],
     utils.checkValidation,
     TicketController.deleteTicketType
 );

@@ -3,10 +3,10 @@ window.onload = () => {
 }
 
 async function editButton(id) {
-    changeForm('editScriptwriterForm');
     let record = await getData('/admin/scriptwriter/' + id);
-
+    
     if(record != null) {
+        changeForm('editScriptwriterForm');
         document.editScriptwriterForm.id.value = id;
         document.editScriptwriterForm.name.value = record[0].imie;
         document.editScriptwriterForm.surname.value = record[0].nazwisko;

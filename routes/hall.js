@@ -32,7 +32,9 @@ router.get('/search',
 
 router.delete('/delete/:id',
     utils.sessionChecker,
-    [check('id').isInt()],
+    [
+        check('id').isInt()
+    ],
     utils.checkValidation,
     HallController.deleteHall
 );

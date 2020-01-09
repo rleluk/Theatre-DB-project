@@ -1,10 +1,13 @@
 extends admin-dashboard.pug
 
+block css
+    link(rel="stylesheet", type="text/css", href="/css/performance-panel.css")
+
 block content
     button(onclick="changeForm('addGenreForm')") Dodaj gatunek sztuk teatralnych
     button#viewGenres Wyświetl dostępne gatunki
-
     button(onclick="changeForm('addPerformanceForm')") Dodaj spektakl
+    button(onclick="changeForm('searchPerformanceForm')") Wyszukaj spektakl
 
     #alert
 
@@ -19,14 +22,71 @@ block content
             label Tytuł spektaklu:
             input(type="text", name="title")
             label Gatunek:
-            select#genreSelect
+            select.genreSelect
             label Reżyser:
-            select#directorSelect
+            select.directorSelect
             label Scenarzysta:
-            select#scriptwriterSelect
+            select.scriptwriterSelect
             label Opis:
             input(type="text", name="description")
         button(type="submit") Dodaj 
+
+    form#searchPerformanceForm.input-form.invisible(name="searchPerformanceForm")
+        .input-wrapper
+            label Tytuł spektaklu:
+            input(type="text", name="title")
+            label Gatunek:
+            input(type="text", name="genre")
+            .additional-options.invisible
+                h3 Reżyser 
+                label Imię: 
+                input(text="text", name="director_name")
+                label Nazwisko:
+                input(text="text", name="director_surname")
+                h3 Scenarzysta
+                label Imię: 
+                input(type="text", name="scriptwriter_name")
+                label Nazwisko: 
+                input(type="text", name="scriptwriter_surname")
+            button.additionalSearch-btn(type="button") Dodatkowe opcje wyszukiwania
+        button(type="submit") Szukaj
+
+    #editContainer.input-form.invisible
+        form#editPerformanceForm(name="editPerformanceForm")
+            .input-wrapper
+                label Tytuł spektaklu:
+                input(type="text", name="title")
+                label Gatunek:
+                select.genreSelect
+                label Reżyser:
+                select.directorSelect
+                label Scenarzysta:
+                select.scriptwriterSelect
+                label Opis:
+                input(type="text", name="description")
+            button(type="submit") Edytuj
+
+        #technicianContainer
+            button#addTechnician-btn(type="button") Dodaj technika
+
+            form#addTechnicianForm.invisible
+                .input-wrapper
+                    label Profesja:
+                    select.professionSelect
+                    label Technik:
+                    select.technicianSelect
+                button(type="submit") Dodaj 
+
+        #roleContainer
+            button#addRole-btn(type="button") Dodaj rolę
+
+            form#addRoleForm.invisible
+                .input-wrapper
+                    label Rola:
+                    input(type="text", name="role") 
+                    label ID:
+                    input(type="text", name="actor")
+                button(type="submit") Dodaj 
 
     #dataContainer
     script(src="/js/performance-panel.js")

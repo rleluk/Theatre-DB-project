@@ -33,10 +33,10 @@ body, html {
 }
 
 .input-wrapper {
-    display: flex;
-    flex-direction: column;
+    // flex-direction: column;
 
-    input, select {
+    input, select, button, label {
+        display: block;
         width: 150px;
     }
 }

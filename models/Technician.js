@@ -36,16 +36,11 @@ class Technician {
         return rows;
     }
 
-    // static async update(id, name, surname, profession_id) {
-    //     let result = await pool.query('UPDATE Teatr.Technik_teatralny SET Imie = $1, Nazwisko = $2, Profesja_id = $3 WHERE Technik_id = $4',
-    //         [name, surname, profession_id, id]);
-    //     return {msg: 'Dane zostały pomyślnie zmienione.'};
-    // }   
-
-    // static async get(id) {
-    //     let {rows} = await pool.query('SELECT * FROM Teatr.Scenarzysta WHERE Technik_id = $1', [id]);
-    //     return rows;
-    // }   
+    static async get(profession) {
+        let profession_id = await Profession.getID(profession);
+        let {rows} = await pool.query('SELECT * FROM Teatr.Technik_teatralny WHERE profesja_id = $1', [profession_id]);
+        return rows;
+    }   
 
     static async delete(id) {
         await pool.query('DELETE FROM Teatr.Technik_teatralny WHERE Technik_id = $1', [id]);

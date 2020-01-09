@@ -10,7 +10,7 @@ exports.addScriptwriter = async (req, res) => {
       res.status(200).send(result);
     } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Wystąpił błąd przez co dane nie zostały pomyślnie wprowadzone do bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
   
@@ -20,7 +20,7 @@ exports.searchScriptwriter = async (req, res) => {
       res.status(200).send(result);
     } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Błąd bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
   
@@ -30,7 +30,7 @@ exports.deleteScriptwriter = async (req, res) => {
       res.status(200).send(result);
     } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Błąd bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
   
@@ -41,7 +41,7 @@ exports.updateScriptwriter = async (req, res) => {
       res.status(200).send(result);
     } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Błąd bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 }
   
@@ -51,7 +51,7 @@ exports.getScriptwriter = async (req, res) => {
       res.status(200).send(result);
     } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Błąd bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 }
 
@@ -61,7 +61,7 @@ exports.getAllScriptwriters = async (req, res) => {
       res.status(200).send(result);
   } catch(err) {
       console.log(err);
-      res.status(500).send({msg: 'Błąd bazy danych.'});
+      res.status(500).send({msg: 'Coś poszło nie tak...'});
   }
 };
 
