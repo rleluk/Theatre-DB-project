@@ -302,3 +302,6 @@ ADD CONSTRAINT sala_miejsce_fk
 FOREIGN KEY (sala_id)
 REFERENCES Teatr.Sala (sala_id)
 ON DELETE CASCADE;
+
+ALTER TABLE Teatr.Spektakl_technik
+  ADD CONSTRAINT unique_spektakl_technik UNIQUE(spektakl_id, technik_id);

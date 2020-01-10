@@ -56,7 +56,19 @@ exports.searchPerformance = async (req, res) => {
 
 exports.addPerformance = async (req, res) => {
     try {
-        let result = await Performance.add(req.body.description, req.body.title, req.body.genre, req.body.director_id, req.body.scriptwriter_id);
+        let result = await Performance.add(req.body.description, req.body.title, 
+            req.body.genre, req.body.director_id, req.body.scriptwriter_id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
+exports.updatePerformance = async (req, res) => {
+    try {
+        let result = await Performance.update(req.body.performance_id, req.body.description, 
+            req.body.title, req.body.genre, req.body.director_id, req.body.scriptwriter_id);
         res.status(200).send(result);
     } catch(err) {
         console.log(err);
@@ -70,21 +82,11 @@ exports.deletePerformance = async (req, res) => {
         res.status(200).send(result);
     } catch(err) {
         if(err.code === FOREIGN_KEY_VIOLATION)
-            res.status(409).send({msg: 'Wybrany spektakl ma wciąż odwołanie w innych tabelach'});
+            res.status(409).send({msg: 'Wybrany spektakl ma wciąż odwołanie w innych tabelach.'});
         else {
             console.log(err);
             res.status(500).send({msg: 'Coś poszło nie tak...'});
         }
-    }
-};
-
-exports.addTechnician = async (req, res) => {
-    try {
-        let result = await Performance.add(req.body.performance_id, req.body.technician_id);
-        res.status(200).send(result);
-    } catch(err) {
-        console.log(err);
-        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 
@@ -97,3 +99,39 @@ exports.getPerformance = async (req, res) => {
         res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
+
+exports.addTechnician = async (req, res) => {
+    try {
+        let result = await Performance.addTechnician(req.body.performance_id, req.body.technician_id);
+        res.status(200).send(result);
+    } catch(err) {
+        if(err.code == UNIQUE_VIOLATION) 
+            res.status(409).send({msg: 'Wybrany technik już jest przypisany do tego spektaklu.'});
+        else {
+            console.log(err);
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
+        }
+    }
+};
+
+exports.deleteTechnician = async (req, res) => {
+    try {
+        let result = await Performance.deleteTechnician(req.query.performance_id, req.query.technician_id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+}
+
+exports.getTechnicians = async (req, res) => {
+    try {
+        let result = await Performance.getTechnicians(req.params.performance_id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+}
+
+

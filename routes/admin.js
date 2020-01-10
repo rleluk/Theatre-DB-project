@@ -9,11 +9,11 @@ router.get('/',
 );
 
 router.post('/', 
-    [
-        check('login').isLength({min: 1}).withMessage('Login is required.'),
-        check('password').isLength({min: 1}).withMessage('Password is required')
-    ], 
-    AdminController.checkAdminValidation, 
+    // [
+    //     check('login').isLength({min: 1}).withMessage('Login is required.'),
+    //     check('password').isLength({min: 1}).withMessage('Password is required')
+    // ], 
+    // AdminController.checkAdminValidation, 
     AdminController.login
 );
 

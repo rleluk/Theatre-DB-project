@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes/index');
 const admin = require('./routes/admin');
 const actor = require('./routes/actor');
+const role = require('./routes/role');
 const director = require('./routes/director');
 const scriptwriter = require('./routes/scriptwriter');
 const technician = require('./routes/technician');
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/', routes);
+app.use('/admin/role', role);
 app.use('/admin', admin);
 app.use('/admin/actor', actor);
 app.use('/admin/director', director);

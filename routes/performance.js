@@ -24,14 +24,19 @@ router.post('/add',
     PerformanceController.addPerformance
 );
 
-router.post('/technician',
+router.put('/update',
     utils.sessionChecker,
     [
-        check('performance_id').isInt(),
-        check('technician_id').isInt()
+        check('title')
+            .isLength({min: 1, max: 30}).withMessage('Nieprawidłowy tytuł').bail()
+            .isAlpha('pl-PL').withMessage('Tytuł powinien zawierać wyłącznie litery.'),
+        check('genre')
+            .isAlpha('pl-PL').withMessage('Gatunek powinien zawierać wyłącznie litery.'),
+        check('director_id').isInt().withMessage('Nieprawidłowe id reżysera.'),
+        check('scriptwriter_id').isInt().withMessage('Nieprawidłowe id scenarzysty.')
     ],
-    utils.checkValidation,
-    PerformanceController.addTechnician
+    utils.checkValidationVerbose,
+    PerformanceController.updatePerformance
 );
 
 router.get('/search', 
@@ -82,6 +87,7 @@ router.delete('/delete/:id',
     PerformanceController.deletePerformance
 );
 
+/************************************** GENRE ENDPOINTS  **************************************/
 router.post('/genre/add',
     utils.sessionChecker,
     [
@@ -103,6 +109,36 @@ router.delete('/genre/delete/:id',
 router.get('/genre/all',
     utils.sessionChecker,
     PerformanceController.getAllGenres
+);
+
+/************************************** TECHNICIAN ENDPOINTS  **************************************/
+router.post('/technician/add',
+    utils.sessionChecker,
+    [
+        check('performance_id').isInt().withMessage('Niepoprawne id spektaklu.'),
+        check('technician_id').isInt().withMessage('Niepoprawne id technika.')
+    ],
+    utils.checkValidation,
+    PerformanceController.addTechnician
+);
+
+router.delete('/technician/delete',
+    utils.sessionChecker,
+    [
+        check('performance_id').isInt(),
+        check('technician_id').isInt()
+    ],
+    utils.checkValidation,
+    PerformanceController.deleteTechnician
+);
+
+router.get('/technicians/:performance_id',
+    utils.sessionChecker,
+    [
+        check('performance_id').isInt()
+    ],
+    utils.checkValidation,
+    PerformanceController.getTechnicians
 );
 
 module.exports = router;

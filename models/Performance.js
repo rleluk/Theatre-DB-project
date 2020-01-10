@@ -16,20 +16,14 @@ class Genre {
         await pool.query('DELETE FROM Teatr.Gatunek WHERE gatunek_id = $1', [id]);
         return {msg: 'Dane zostały pomyślnie usunięte.'};
     }
-
-    static async getID(name) {
-        let {rows} = await pool.query('SELECT gatunek_id FROM Teatr.Gatunek WHERE nazwa = $1', [name]);
-        return rows[0].gatunek_id;
-    }
 }
 
 class Performance {
     static async add(description, title, genre, director_id, scriptwriter_id) {
-        let genre_id = await Genre.getID(genre);
-        let res = await pool.query('INSERT INTO Teatr.Spektakl(opis, tytul, gatunek_id, rezyser_id, scenarzysta_id) VALUES($1, $2, $3, $4, $5)',
-                [description, title, genre_id, director_id, scriptwriter_id]);
-        console.log(res);
-        return {msg: 'Dane zostały wprowadzone pomyślnie.'};
+        let {rows} = await pool.query('SELECT Teatr.Dodaj_spektakl($1, $2, $3, $4, $5)',
+                [description, title, genre, director_id, scriptwriter_id]);
+
+        return {msg: 'Dane zostały wprowadzone pomyślnie.', id: rows[0].dodaj_spektakl};
     }
 
     static async search(title, genre, director_name, director_surname, scriptwriter_name, scriptwriter_surname) {
@@ -42,10 +36,12 @@ class Performance {
         return rows;
     }
 
-    static async addTechnician(performance_id, technician_id) {
-        await pool.query('INSERT INTO Teatr.Spektakl_Technik(spektakl_id, technik_id) VALUES($1, $2)', [performance_id, technician_id]);
-        return rows;
-    }
+    static async update(performance_id, description, title, genre, director_id, scriptwriter_id) {
+        await pool.query('SELECT Teatr.Zmien_spektakl($1, $2, $3, $4, $5, $6)',
+                [performance_id, description, title, genre, director_id, scriptwriter_id]);
+
+        return {msg: 'Dane zostały pomyślnie zmienione.'};
+    }  
 
     static async get(id) {
         let {rows} = await pool.query('SELECT * FROM Teatr.Rozszerzona_lista_spektakli WHERE spektakl_id = $1', [id]);
@@ -55,6 +51,21 @@ class Performance {
     static async delete(id) {
         await pool.query('DELETE FROM Teatr.Spektakl WHERE spektakl_id = $1', [id]);
         return {msg: 'Dane zostały pomyślnie usunięte.'};
+    }
+
+    static async addTechnician(performance_id, technician_id) {
+        await pool.query('INSERT INTO Teatr.Spektakl_Technik(spektakl_id, technik_id) VALUES($1, $2)', [performance_id, technician_id]);
+        return {msg: 'Dane zostały wprowadzone pomyślnie.'};
+    }
+
+    static async deleteTechnician(performance_id, technician_id) {
+        await pool.query('DELETE FROM Teatr.Spektakl_Technik WHERE spektakl_id = $1 AND technik_id = $2', [performance_id, technician_id]);
+        return {msg: 'Dane zostały pomyślnie usunięte.'};
+    }
+
+    static async getTechnicians(performance_id) {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Technicy_w_spektaklach WHERE spektakl_id = $1', [performance_id]);
+        return rows;
     }
 }
 

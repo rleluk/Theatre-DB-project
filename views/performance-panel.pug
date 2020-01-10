@@ -54,6 +54,8 @@ block content
     #editContainer.input-form.invisible
         form#editPerformanceForm(name="editPerformanceForm")
             .input-wrapper
+                label ID:
+                input(type="text", name="id", disabled)
                 label Tytuł spektaklu:
                 input(type="text", name="title")
                 label Gatunek:
@@ -67,9 +69,19 @@ block content
             button(type="submit") Edytuj
 
         #technicianContainer
-            button#addTechnician-btn(type="button") Dodaj technika
+            table#listOfTechnicians
+                thead
+                    tr 
+                        th(colspan="4") TECHNIK
+                    tr
+                        th ID
+                        th Imię
+                        th Nazwisko
+                        th Profesja
+                tbody
 
-            form#addTechnicianForm.invisible
+            button#addTechnician-btn(type="button") Dodaj technika
+            form#addTechnicianForm.invisible(name="addTechnicianForm")
                 .input-wrapper
                     label Profesja:
                     select.professionSelect
@@ -78,15 +90,36 @@ block content
                 button(type="submit") Dodaj 
 
         #roleContainer
-            button#addRole-btn(type="button") Dodaj rolę
+            table#listOfRoles
+                thead
+                    tr
+                        th(colspan="2") ROLA
+                        th(colspan="3") AKTOR
+                    tr
+                        th ID 
+                        th Nazwa
+                        th ID
+                        th Nazwisko
+                        th Profesja
+                tbody
 
-            form#addRoleForm.invisible
+            button#addRole-btn(type="button") Dodaj rolę
+            form#addRoleForm.invisible(name="addRoleForm")
                 .input-wrapper
-                    label Rola:
+                    label Nazwa roli:
                     input(type="text", name="role") 
-                    label ID:
-                    input(type="text", name="actor")
+                    label ID aktora:
+                    input(type="text", name="actor_id")
                 button(type="submit") Dodaj 
+
+        h3 Wyszukaj aktora
+        form#searchActorForm(name="searchActorForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+            button(type="submit") Szukaj 
 
     #dataContainer
     script(src="/js/performance-panel.js")

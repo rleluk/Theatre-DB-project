@@ -48,3 +48,25 @@ body, html {
 .jurek {
     background-color: red;
 }
+
+table {
+    border-radius: 5px;
+}
+
+tr {
+    color: #06203a;
+}
+
+tr:nth-child(even) {
+    background-color: #aaa934;
+}
+
+tr:nth-child(odd) {
+    background-color: #ebc934;
+}
+
+th {
+    padding: 5px;
+    background-color: #777934;
+    color: #06203a;
+}

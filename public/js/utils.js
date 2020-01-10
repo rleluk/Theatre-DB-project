@@ -22,10 +22,10 @@ function clearInputs() {
         element.value = '';
     });
     
-    let selects = document.querySelectorAll('select');
-    selects.forEach(element => {
-        element.value = 'Wybierz';
-    });
+    // let selects = document.querySelectorAll('select');
+    // selects.forEach(element => {
+    //     element.value = undefined;
+    // });
 }
 
 function changeForm(id) {
@@ -40,6 +40,32 @@ function changeForm(id) {
     if(form) form.style.display = "block";
 }
 
+async function updateSelect(select, url, format) {
+    let data = await getData(url);
+
+    for (a in select.options) { 
+        select.options.remove(0); 
+    }
+
+    if(data == null || data.length < 1) {
+        return;
+    }
+
+    let option = document.createElement('option');
+    // option.disabled = true;
+    // option.selected = true;
+    // option.hidden = true;
+    // option.value = undefined;
+    // select.add(option);
+
+    data.forEach(record => {
+        option = document.createElement('option');
+        option.text = format(record);
+        select.add(option);
+    });
+}
+
+/************************************** FETCHES - FUNCTIONS **************************************/
 async function editRecord(url, dataToSend) {
     let res = await fetch(url, {
         method: 'PUT',
@@ -85,44 +111,20 @@ async function getData(url) {
 async function deleteRecord(url, container) {
     let res = await fetch(url, {method: 'DELETE'});
     let data = await res.json();
-
+    
     if(res.status === 200) 
         container.parentNode.removeChild(container);
 
     sendAlert(data.msg);
 }
 
-async function updateSelect(select, url, format) {
-    let data = await getData(url);
-
-    for (a in select.options) { 
-        select.options.remove(0); 
-    }
-
-    if(data == null || data.length < 1) {
-        return;
-    }
-
-    let option = document.createElement('option');
-    option.disabled = true;
-    option.selected = true;
-    option.hidden = true;
-    option.value = undefined;
-    select.add(option);
-
-    data.forEach(record => {
-        option = document.createElement('option');
-        option.text = format(record);
-        select.add(option);
-    });
-}
-
+/************************************** FETCH DATA AND CREATE TABLES - FUNCTIONS **************************************/
 async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, deleteAction = null) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
     let table = document.createElement('table');
     
-    if(res.status != 200) {
+    if(res.status !== 200) {
         sendAlert(data.msg);
     } else if(data.length < 1) {
         sendAlert('Nie znaleziono żadnych rekordów.');

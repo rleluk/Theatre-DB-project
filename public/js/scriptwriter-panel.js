@@ -2,19 +2,6 @@ window.onload = () => {
     setVisibleNav(document.getElementById('scriptwriter-btn'));
 }
 
-async function editButton(id) {
-    let record = await getData('/admin/scriptwriter/' + id);
-    
-    if(record != null) {
-        changeForm('editScriptwriterForm');
-        document.editScriptwriterForm.id.value = id;
-        document.editScriptwriterForm.name.value = record[0].imie;
-        document.editScriptwriterForm.surname.value = record[0].nazwisko;
-        document.editScriptwriterForm.bday.value = record[0].data_urodzenia.split('T')[0];
-        document.editScriptwriterForm.description.value = record[0].opis;
-    }
-}
-
 document.getElementById('editScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearAlert();
@@ -45,7 +32,7 @@ document.getElementById('searchScriptwriterForm').addEventListener('submit', eve
     getComplexTable('/admin/scriptwriter/search' + queryStr, '/admin/scriptwriter/delete/', 
         ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'], 
         ['scenarzysta_id', 'imie', 'nazwisko', 'data_urodzenia', 'opis'], 
-        editButton
+        editFormButton
     );
 });
 
@@ -62,3 +49,17 @@ document.getElementById('addScriptwriterForm').addEventListener('submit', async 
 
     addRecord('/admin/scriptwriter/add', formData);
 });
+
+/************************************** CUSTOM FUNCTIONS **************************************/
+async function editFormButton(id) {
+    let record = await getData('/admin/scriptwriter/' + id);
+    
+    if(record != null) {
+        changeForm('editScriptwriterForm');
+        document.editScriptwriterForm.id.value = id;
+        document.editScriptwriterForm.name.value = record[0].imie;
+        document.editScriptwriterForm.surname.value = record[0].nazwisko;
+        document.editScriptwriterForm.bday.value = record[0].data_urodzenia.split('T')[0];
+        document.editScriptwriterForm.description.value = record[0].opis;
+    }
+}
