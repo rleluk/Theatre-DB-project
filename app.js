@@ -15,6 +15,7 @@ const technician = require('./routes/technician');
 const hall = require('./routes/hall');
 const performance = require('./routes/performance');
 const ticket = require('./routes/ticket');
+const stagePerformance = require('./routes/stagePerformance');
 
 // app
 const app = express();
@@ -54,6 +55,7 @@ app.use('/admin/technician', technician);
 app.use('/admin/hall', hall);
 app.use('/admin/performance', performance);
 app.use('/admin/ticket', ticket);
+app.use('/admin/stageperformance', stagePerformance);
 
 app.use((req, res, next) => {
     res.status(404).render('404');

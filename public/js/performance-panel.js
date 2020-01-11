@@ -19,6 +19,12 @@ window.onload = () => {
 
     let select = document.querySelector('#technicianContainer .professionSelect');
     updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
+
+    select = document.querySelector('#stagePlayForm .hallSelect');
+    updateSelect(select, '/admin/hall/search?name=', record => `${record.nazwa}`);
+
+    select = document.querySelector('#roleContainer .actorSelect');
+    updateSelect(select, '/admin/actor/search?name=&surname=', record => `${record.aktor_id}. ${record.imie} ${record.nazwisko}`);
 }
 
 /************************************** GENRES **************************************/
@@ -27,7 +33,6 @@ document.getElementById('viewGenres').addEventListener('click', event => {
 
     getSimpleTable('/admin/performance/genre/all', '/admin/performance/genre/delete/', 
         ['ID', 'Nazwa'], 
-        ['gatunek_id', 'nazwa'],
         () => updateGenres()
     );
 });
@@ -50,7 +55,7 @@ document.getElementById('addGenreForm').addEventListener('submit', async event =
 document.getElementById('addPerformanceForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearAlert();
-    console.log(document.querySelector('#addPerformanceForm .genreSelect').value, document.querySelector('#addPerformanceForm .genreSelect').text)
+
     const formData = {
         description: document.addPerformanceForm.description.value,
         title: document.addPerformanceForm.title.value,
@@ -83,11 +88,7 @@ document.getElementById('searchPerformanceForm').addEventListener('submit', even
     queryStr += `&director_name=${searchData.director_name}&director_surname=${searchData.director_surname}`;
     queryStr += `&scriptwriter_name=${searchData.scriptwriter_name}&scriptwriter_surname=${searchData.scriptwriter_surname}`;
 
-    getComplexTable('/admin/performance/search' + queryStr, '/admin/performance/delete/', 
-        ['ID', 'Tytuł', 'Gatunek', 'Imię reżysera', 'Nazwisko reżysera', 'Imię scenarzysty', 'Nazwisko scenarzysty'], 
-        ['spektakl_id', 'tytul', 'gatunek', 'imie_rezysera', 'nazwisko_rezysera', 'imie_scenarzysty', 'nazwisko_scenarzysty'],
-        showEditForm
-    );
+    getPerformanceList('/admin/performance/search' + queryStr);
 });
 
 /************************ EDIT ************************/
@@ -119,11 +120,12 @@ document.getElementById('addRole-btn').addEventListener('click', event => {
 
 document.getElementById('addRoleForm').addEventListener('submit', async event => {
     event.preventDefault();
+    clearAlert();
 
     let formData = {
         name: document.addRoleForm.role.value,
         performance_id: document.editPerformanceForm.id.value, 
-        actor_id: document.addRoleForm.actor_id.value
+        actor_id: document.querySelector('#editContainer .actorSelect').value.split('.')[0]
     }
 
     let isOK = await addRecord('/admin/role/add', formData);
@@ -145,6 +147,7 @@ document.getElementById('addRoleForm').addEventListener('submit', async event =>
 
 document.getElementById('addTechnicianForm').addEventListener('submit', async event => {
     event.preventDefault();
+    clearAlert();
 
     let technician = document.querySelector('#editContainer .technicianSelect');
 
@@ -193,21 +196,49 @@ document.querySelector('.additionalSearch-btn').addEventListener('click', event 
     }
 });
 
-document.getElementById('searchActorForm').addEventListener('submit', event => {
+/************************ STAGE A PLAY ************************/
+document.getElementById('stagePlayForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearDataContainer();
     clearAlert();
 
-    let searchData = {
-        name: document.searchActorForm.name.value, 
-        surname: document.searchActorForm.surname.value
-    };
-    
-    let queryStr = `?name=${searchData.name}&surname=${searchData.surname}`;
-    
-    getSimpleTable('/admin/actor/search' + queryStr, '/admin/actor/delete/', 
-        ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'], 
-        ['aktor_id', 'imie', 'nazwisko', 'data_urodzenia']
+    let formData = {
+        performance_id: document.stagePlayForm.id.value,
+        startDate: document.stagePlayForm.startDate.value, 
+        startTime: document.stagePlayForm.startTime.value,
+        endDate: document.stagePlayForm.endDate.value,
+        endTime: document.stagePlayForm.endTime.value,
+        hall: document.querySelector('#stagePlayForm .hallSelect').value
+    }
+
+    let isOK = await addRecord('/admin/stageperformance/add', formData);
+
+    // if(isOK) {
+    //     changeForm(null);
+    // }
+});
+
+document.getElementById('searchStagePerformanceForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    clearAlert();
+    clearDataContainer();
+
+    const searchData = {
+        startDate: document.searchStagePerformanceForm.startDate.value, 
+        endDate: document.searchStagePerformanceForm.endDate.value,
+    }
+
+    let queryStr = `?startDate=${searchData.startDate}&endDate=${searchData.endDate}`;
+
+    getSimpleTable('/admin/stageperformance/search' + queryStr, '/admin/stageperformance/delete/', 
+        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu']
+    );
+});
+
+document.getElementById('viewStagePerformances').addEventListener('click', async event => {
+    changeForm(null);
+
+    getSimpleTable('/admin/stageperformance/all', '/admin/stageperformance/delete/', 
+        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu']
     );
 });
 
@@ -251,6 +282,11 @@ async function showEditForm(id) {
     }
 }
 
+async function stagePlayForm(id) {
+    changeForm('stagePlayForm');
+    document.stagePlayForm.id.value = id;
+}
+
 async function addRecordCustom(url, dataToSend) {
     let res = await fetch(url, {
         method: 'POST',
@@ -286,14 +322,14 @@ async function getCustomTable(url, deleteUrl, tbody, deleteBtn = false) {
     }
 }
 
-function addTableRow(row, tbody, deleteUrl, deleteBtn = false) {
+function addTableRow(record, tbody, deleteUrl, deleteBtn = false) {
     let tableRow = tbody.insertRow(-1);
     
-    let keys = Object.keys(row);
+    let keys = Object.keys(record);
     let cell;
     for(let i = 0; i < keys.length - 1; i++) {
         cell = tableRow.insertCell(-1);
-        cell.innerHTML = row[keys[i]];
+        cell.innerHTML = record[keys[i]];
     }
 
     // delete button
@@ -303,7 +339,98 @@ function addTableRow(row, tbody, deleteUrl, deleteBtn = false) {
         button.type = 'button';
         button.innerHTML = 'Usuń';
         button.classList.add('action-btn');
-        button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[keys[0]], tableRow));
+        button.addEventListener('click', deleteRecord.bind(this, deleteUrl + record[keys[0]], tableRow));
         cell.appendChild(button);
+    }
+}
+
+async function getPerformanceList(url) {
+    const deleteUrl = '/admin/performance/delete/';
+    let res = await fetch(url);
+    let data = await res.json();
+
+    let tableContainer = document.getElementById('dataContainer');
+    let columnNames = ['ID', 'Tytuł', 'Gatunek sztuki', 'Reżyser', 'Scenarzysta'];
+
+    if(res.status != 200) {
+        sendAlert(data.msg);
+    } else if(data.length < 1) {
+        sendAlert('Nie znaleziono żadnych rekordów.');
+    } else {
+        clearDataContainer();
+
+        for(let record of data) {
+            // THEAD
+            let table = document.createElement('table');
+            let thead = table.createTHead();
+    
+            let theadRow = thead.insertRow(-1);
+            let th;
+            
+            for(let columnName of columnNames) {
+                th = document.createElement('th');
+                th.innerHTML = columnName;
+                theadRow.appendChild(th);
+            }
+    
+            // TBODY
+            let tbody = table.createTBody();
+            let tbodyRow = tbody.insertRow(-1);
+            let cell = tbodyRow.insertCell(-1);
+            cell.innerHTML = record['spektakl_id'];
+            cell = tbodyRow.insertCell(-1);
+            cell.innerHTML = record['tytul'];
+            cell = tbodyRow.insertCell(-1);
+            cell.innerHTML = record['gatunek'];
+            cell = tbodyRow.insertCell(-1);
+            cell.innerHTML = `${record['imie_rezysera']} ${record['nazwisko_rezysera']}`;
+            cell = tbodyRow.insertCell(-1);
+            cell.innerHTML = `${record['imie_scenarzysty']} ${record['nazwisko_scenarzysty']}`;
+
+            // description 'header'
+            tbodyRow = tbody.insertRow(-1);
+            th = document.createElement('th');
+            th.colSpan = '5';
+            th.innerHTML = 'Opis spektaklu';
+            tbodyRow.appendChild(th);
+
+            // description
+            tbodyRow = tbody.insertRow(-1);
+            cell = tbodyRow.insertCell(-1);
+            cell.colSpan = '5';
+            cell.innerHTML = record['opis'];
+            
+            // row for buttons
+            tbodyRow = tbody.insertRow(-1);
+            cell = tbodyRow.insertCell(-1);
+            cell.colSpan = '5';
+            cell.classList.add('center');
+            
+            // edit button
+            let editButton = document.createElement('button');
+            editButton.type = 'button';
+            editButton.innerHTML = 'Edytuj';
+            editButton.classList.add('action-btn');
+            editButton.addEventListener('click', showEditForm.bind(this, record['spektakl_id']));
+            cell.appendChild(editButton);
+
+            // stage a play button
+            let playButton = document.createElement('button');
+            playButton.type = 'button';
+            playButton.innerHTML = 'Wystaw sztukę';
+            playButton.classList.add('action-btn');
+            playButton.addEventListener('click', stagePlayForm.bind(this, record['spektakl_id']));
+            cell.appendChild(playButton);
+
+            // delete button
+            let deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.innerHTML = 'Usuń';
+            deleteButton.classList.add('action-btn');
+            deleteButton.addEventListener('click', deleteRecord.bind(this, deleteUrl + record['spektakl_id'], table));
+            cell.appendChild(deleteButton);
+
+            tableContainer.appendChild(table);
+        }
     }
 }

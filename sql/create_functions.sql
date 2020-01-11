@@ -1,15 +1,15 @@
-CREATE FUNCTION Teatr.Dodaj_sale(VARCHAR, INT, INT)
+CREATE FUNCTION Teatr.Dodaj_sale(sala VARCHAR, liczba_rzedow INT, siedzen_w_rzedzie INT)
 RETURNS INT 
 LANGUAGE 'plpgsql' AS $$
 DECLARE
     id_sali INT;
 BEGIN
     IF $2 < 1 OR $2 > 50 THEN
-        RETURN -1;
+        RAISE EXCEPTION 'Nieprawidłowa liczba rzędów.'; 
     END IF;
 
     IF $3 < 1 OR $3 > 20 THEN
-        RETURN -1;
+        RAISE EXCEPTION 'Nieprawidłowa liczba siedzeń w rzędzie.'; 
     END IF;
 
     INSERT INTO Teatr.Sala(nazwa) 
@@ -21,7 +21,7 @@ BEGIN
 
     FOR i IN 1 .. $2 LOOP
         FOR j IN 1 .. $3 LOOP
-            INSERT INTO Teatr.Miejsce(numer_siedzenia, nzad, nala_id) VALUES((i - 1) * $3 + j, i, id_sali);
+            INSERT INTO Teatr.Miejsce(numer_siedzenia, rzad, sala_id) VALUES((i - 1) * $3 + j, i, id_sali);
         END LOOP;
     END LOOP;
 
@@ -89,6 +89,33 @@ BEGIN
     UPDATE Teatr.Spektakl 
     SET opis = $2, tytul = $3, gatunek_id = id_gatunku, rezyser_id = $5, scenarzysta_id = $6 
     WHERE spektakl_id = $1;
+
+    RETURN 1;
+END
+$$;
+
+CREATE FUNCTION Teatr.Wystaw_spektakl(id_spektaklu INT,
+data_rozpoczecia TIMESTAMP, data_zakonczenia TIMESTAMP, sala VARCHAR)
+RETURNS INT 
+LANGUAGE 'plpgsql' AS $$
+DECLARE
+    id_sali INT;
+BEGIN
+    SELECT sala_id 
+    INTO id_sali 
+    FROM Teatr.Sala 
+    WHERE nazwa = $4;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Nie znaleziono sali o podanej nazwie.'; 
+    END IF;
+
+    IF NOT EXISTS (SELECT * FROM Teatr.Spektakl WHERE spektakl_id = $1) THEN
+        RAISE EXCEPTION 'Nie znaleziono spektaklu o podanym id.'; 
+    END IF;
+
+    INSERT INTO Teatr.Wystawienie_spektaklu(spektakl_id, data_rozpoczecia, data_zakonczenia, sala_id)
+    VALUES($1, $2, $3, id_sali); 
 
     RETURN 1;
 END

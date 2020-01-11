@@ -2,18 +2,19 @@ window.onload = () => {
     setVisibleNav(document.getElementById('director-btn'));
 }
 
-async function editButton(id) {
-    let record = await getData('/admin/director/' + id);
-    
-    if(record != null) {
-        changeForm('editDirectorForm');
-        document.editDirectorForm.id.value = id;
-        document.editDirectorForm.name.value = record[0].imie;
-        document.editDirectorForm.surname.value = record[0].nazwisko;
-        document.editDirectorForm.bday.value = record[0].data_urodzenia.split('T')[0];
-        document.editDirectorForm.description.value = record[0].opis;
+document.getElementById('addDirectorForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    document.getElementById('alert').innerHTML = '';
+
+    const formData = {
+        name: document.addDirectorForm.name.value,
+        surname: document.addDirectorForm.surname.value,
+        bday: document.addDirectorForm.bday.value,
+        description: document.addDirectorForm.description.value
     }
-}
+
+    addRecord('/admin/director/add', formData);
+});
 
 document.getElementById('editDirectorForm').addEventListener('submit', async event => {
     event.preventDefault();
@@ -45,21 +46,20 @@ document.getElementById('searchDirectorForm').addEventListener('submit', event =
     
     getComplexTable('/admin/director/search' + queryStr, '/admin/director/delete/', 
         ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'], 
-        ['rezyser_id', 'imie', 'nazwisko', 'data_urodzenia', 'opis'], 
-        editButton
+        editFormButton
     );
 });
 
-document.getElementById('addDirectorForm').addEventListener('submit', async event => {
-    event.preventDefault();
-    document.getElementById('alert').innerHTML = '';
-
-    const formData = {
-        name: document.addDirectorForm.name.value,
-        surname: document.addDirectorForm.surname.value,
-        bday: document.addDirectorForm.bday.value,
-        description: document.addDirectorForm.description.value
+/************************************** CUSTOM FUNCTIONS **************************************/
+async function editFormButton(id) {
+    let record = await getData('/admin/director/' + id);
+    
+    if(record != null) {
+        changeForm('editDirectorForm');
+        document.editDirectorForm.id.value = id;
+        document.editDirectorForm.name.value = record[0].imie;
+        document.editDirectorForm.surname.value = record[0].nazwisko;
+        document.editDirectorForm.bday.value = record[0].data_urodzenia.split('T')[0];
+        document.editDirectorForm.description.value = record[0].opis;
     }
-
-    addRecord('/admin/director/add', formData);
-});
+}

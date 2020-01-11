@@ -1,18 +1,17 @@
 body, html {
   margin: 0 auto;
   padding: 0;
-  color: #fff;
-  background-color: #06203a; }
-
-.active-nav {
-  background-color: #06203a;
-  border: 2px solid #ebc934; }
+  background-color: #ddd;
+  width: 100%;
+  height: 100%; }
 
 .nav-bar {
-  padding: 20px;
+  color: #fff;
   padding: 0px;
   text-transform: uppercase;
-  background-color: #222930; }
+  background-color: #222930;
+  width: 100%;
+  position: fixed; }
   .nav-bar a {
     display: inline-block;
     color: inherit;
@@ -20,19 +19,34 @@ body, html {
     padding: 20px; }
   .nav-bar a:hover {
     color: #ebc934; }
+  .nav-bar .active-nav {
+    background-color: #ddd;
+    color: #222930; }
+  .nav-bar a.active-nav:hover {
+    color: #222930; }
+  .nav-bar .logout-btn {
+    float: right; }
 
-.logout-btn {
-  float: right; }
+.content {
+  padding-top: 100px; }
+
+.input-wrapper label {
+  font-weight: bold; }
 
 .input-wrapper input, .input-wrapper select, .input-wrapper button, .input-wrapper label {
+  margin: 10px;
   display: block;
   width: 150px; }
+
+.input-wrapper .inline-input {
+  float: left;
+  width: 50px; }
 
 .invisible {
   display: none; }
 
-.jurek {
-  background-color: red; }
+.center {
+  text-align: center; }
 
 table {
   border-radius: 5px; }
@@ -40,13 +54,19 @@ table {
 tr {
   color: #06203a; }
 
+td {
+  padding: 5px; }
+
 tr:nth-child(even) {
-  background-color: #aaa934; }
+  background-color: #ccc; }
 
 tr:nth-child(odd) {
-  background-color: #ebc934; }
+  background-color: #bbb; }
 
 th {
-  padding: 5px;
+  padding: 7px;
   background-color: #777934;
   color: #06203a; }
+
+.action-btn {
+  display: inline-block; }

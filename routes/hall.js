@@ -24,7 +24,7 @@ router.get('/search',
     utils.sessionChecker,
     oneOf([
         check('name').trim().not().exists({checkFalsy: true}),
-        check('name').trim().exists({checkFalsy: true}).isAlpha('pl-PL')
+        check('name').trim().exists({checkFalsy: true}).isAlphanumeric('pl-PL')
     ]),
     utils.checkValidation,
     HallController.searchHall

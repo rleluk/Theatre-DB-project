@@ -56,7 +56,8 @@ exports.searchPerformance = async (req, res) => {
 
 exports.addPerformance = async (req, res) => {
     try {
-        let result = await Performance.add(req.body.description, req.body.title, 
+        let description = (req.body.description === '') ? 'Brak opisu spektaklu.' : req.body.description;
+        let result = await Performance.add(description, req.body.title, 
             req.body.genre, req.body.director_id, req.body.scriptwriter_id);
         res.status(200).send(result);
     } catch(err) {

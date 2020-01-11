@@ -2,6 +2,20 @@ window.onload = () => {
     setVisibleNav(document.getElementById('scriptwriter-btn'));
 }
 
+document.getElementById('addScriptwriterForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    clearAlert();
+    
+    const formData = {
+        name: document.addScriptwriterForm.name.value,
+        surname: document.addScriptwriterForm.surname.value,
+        bday: document.addScriptwriterForm.bday.value,
+        description: document.addScriptwriterForm.description.value
+    }
+
+    addRecord('/admin/scriptwriter/add', formData);
+});
+
 document.getElementById('editScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearAlert();
@@ -30,24 +44,9 @@ document.getElementById('searchScriptwriterForm').addEventListener('submit', eve
     let queryStr = `?name=${searchData.name}&surname=${searchData.surname}`;
     
     getComplexTable('/admin/scriptwriter/search' + queryStr, '/admin/scriptwriter/delete/', 
-        ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'], 
-        ['scenarzysta_id', 'imie', 'nazwisko', 'data_urodzenia', 'opis'], 
+        ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'],
         editFormButton
     );
-});
-
-document.getElementById('addScriptwriterForm').addEventListener('submit', async event => {
-    event.preventDefault();
-    clearAlert();
-    
-    const formData = {
-        name: document.addScriptwriterForm.name.value,
-        surname: document.addScriptwriterForm.surname.value,
-        bday: document.addScriptwriterForm.bday.value,
-        description: document.addScriptwriterForm.description.value
-    }
-
-    addRecord('/admin/scriptwriter/add', formData);
 });
 
 /************************************** CUSTOM FUNCTIONS **************************************/

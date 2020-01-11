@@ -6,8 +6,7 @@ document.getElementById('viewTicketTypes').addEventListener('click', event => {
     changeForm(null);
 
     getSimpleTable('/admin/ticket/type/getall', '/admin/ticket/type/delete/', 
-        ['ID', 'Nazwa', 'Cena'], 
-        ['typ_biletu_id', 'nazwa', 'cena']
+        ['ID', 'Nazwa', 'Cena']
     );
 });
 

@@ -25,7 +25,6 @@ document.getElementById('searchHallForm').addEventListener('submit', event => {
     let queryStr = `?name=${searchData.name}`;
 
     getSimpleTable('/admin/hall/search' + queryStr, '/admin/hall/delete/', 
-        ['ID', 'Nazwa', 'Ilość siedzeń', 'Ilość rzędów'], 
-        ['sala_id', 'nazwa', 'ilosc_siedzen', 'ilosc_rzedow']
+        ['ID', 'Nazwa', 'Ilość siedzeń', 'Ilość rzędów']
     );
 });

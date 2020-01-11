@@ -8,7 +8,9 @@ block content
     button#viewGenres Wyświetl dostępne gatunki
     button(onclick="changeForm('addPerformanceForm')") Dodaj spektakl
     button(onclick="changeForm('searchPerformanceForm')") Wyszukaj spektakl
-
+    button(onclick="changeForm('searchStagePerformanceForm')") Wyszukaj wystawienia spektakli
+    button#viewStagePerformances Wyświetl wszystkie wystawienia spektakli
+    
     #alert
 
     form#addGenreForm.input-form.invisible(name="addGenreForm")
@@ -49,6 +51,14 @@ block content
                 label Nazwisko: 
                 input(type="text", name="scriptwriter_surname")
             button.additionalSearch-btn(type="button") Dodatkowe opcje wyszukiwania
+        button(type="submit") Szukaj
+    
+    form#searchStagePerformanceForm.input-form.invisible(name="searchStagePerformanceForm")
+        .input-wrapper
+            label Data rozpoczęcia:
+            input(type="date", name="startDate")
+            label Data zakończenia:
+            input(type="date", name="endDate")
         button(type="submit") Szukaj
 
     #editContainer.input-form.invisible
@@ -108,18 +118,25 @@ block content
                 .input-wrapper
                     label Nazwa roli:
                     input(type="text", name="role") 
-                    label ID aktora:
-                    input(type="text", name="actor_id")
+                    label Aktor:
+                    select.actorSelect
                 button(type="submit") Dodaj 
 
-        h3 Wyszukaj aktora
-        form#searchActorForm(name="searchActorForm")
-            .input-wrapper
-                label Imię:
-                input(type="text", name="name")
-                label Nazwisko:
-                input(type="text", name="surname")
-            button(type="submit") Szukaj 
+    form#stagePlayForm.input-form.invisible(name="stagePlayForm")
+        .input-wrapper
+            label ID spektaklu:
+            input(type="text", name="id", disabled)
+            label Data rozpoczęcia:
+            input(type="date", name="startDate")
+            label Godzina rozpoczęcia:
+            input(type="time", name="startTime")
+            label Data zakończenia:
+            input(type="date", name="endDate")
+            label Godzina zakończenia:
+            input(type="time", name="endTime")
+            label Sala:
+            select.hallSelect
+        button(type="submit") Dodaj 
 
     #dataContainer
     script(src="/js/performance-panel.js")

@@ -42,6 +42,17 @@ FROM Teatr.Spektakl_technik s
     JOIN Teatr.Profesja p ON t.profesja_id = p.profesja_id;
 
 
+
 CREATE VIEW Teatr.Lista_rol AS
 SELECT r.rola_id, r.nazwa, a.aktor_id, a.imie, a.nazwisko, r.spektakl_id
 FROM Teatr.Rola r JOIN Teatr.Aktor a ON r.aktor_id = a.aktor_id;
+
+
+
+CREATE VIEW Teatr.Lista_wystawien AS
+SELECT w.wystawienie_id, s.tytul, sala.nazwa AS sala, 
+    w.data_rozpoczecia, w.data_zakonczenia, s.spektakl_id 
+FROM Teatr.Wystawienie_spektaklu w 
+    JOIN Teatr.Spektakl s ON w.spektakl_id = s.spektakl_id
+    JOIN Teatr.Sala sala ON sala.sala_id = w.sala_id
+ORDER BY w.data_rozpoczecia;

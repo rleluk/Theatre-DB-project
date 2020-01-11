@@ -2,6 +2,8 @@ DROP SCHEMA IF EXISTS Teatr CASCADE;
 CREATE SCHEMA Teatr;
 SET SEARCH_PATH TO Teatr;
 
+----------------------------------------------------------------------------------------------------------------
+
 CREATE SEQUENCE Teatr.profesja_profesja_id_seq;
 
 CREATE TABLE Teatr.Profesja (
@@ -139,10 +141,10 @@ CREATE SEQUENCE Teatr.wystawienie_spektaklu_wystawienie_id_seq_1;
 
 CREATE TABLE Teatr.Wystawienie_spektaklu (
                 wystawienie_id INTEGER NOT NULL DEFAULT nextval('Teatr.wystawienie_spektaklu_wystawienie_id_seq_1'),
-                Data_wystawienia DATE NOT NULL,
+                Data_rozpoczecia TIMESTAMP NOT NULL,
+                Data_zakonczenia TIMESTAMP NOT NULL,
                 spektakl_id INTEGER NOT NULL,
                 sala_id INTEGER NOT NULL,
-                Czas_trwania TIME NOT NULL,
                 CONSTRAINT wystawienie_spektaklul_pk PRIMARY KEY (wystawienie_id)
 );
 
@@ -168,7 +170,6 @@ CREATE TABLE Teatr.Rola (
                 rola_id INTEGER NOT NULL DEFAULT nextval('Teatr.rola_rola_id_seq'),
                 Nazwa VARCHAR NOT NULL,
                 spektakl_id INTEGER NOT NULL,
-                Opis VARCHAR NOT NULL,
                 aktor_id INTEGER NOT NULL,
                 CONSTRAINT rola_id PRIMARY KEY (rola_id)
 );

@@ -4,17 +4,7 @@ window.onload = () => {
     updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
 }
 
-document.getElementById('viewProfessions').addEventListener('click', event => {
-    changeForm(null);
-
-    let select = document.getElementById('professionSelect');
-    getSimpleTable('/admin/technician/profession/all', '/admin/technician/profession/delete/', 
-        ['ID', 'Nazwa'], 
-        ['profesja_id', 'nazwa'],
-        () => updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`)
-    );
-});
-
+/************************************** PROFESSIONS **************************************/
 document.getElementById('addProfessionForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
@@ -28,6 +18,17 @@ document.getElementById('addProfessionForm').addEventListener('submit', async ev
     updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
 });
 
+document.getElementById('viewProfessions').addEventListener('click', event => {
+    changeForm(null);
+
+    let select = document.getElementById('professionSelect');
+    getSimpleTable('/admin/technician/profession/all', '/admin/technician/profession/delete/', 
+        ['ID', 'Nazwa'],
+        () => updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`)
+    );
+});
+
+/************************************** TECHNICIANS **************************************/
 document.getElementById('addTechnicianForm').addEventListener('submit', event => {
     event.preventDefault();
     clearDataContainer();
@@ -56,7 +57,6 @@ document.getElementById('searchTechnicianForm').addEventListener('submit', event
     let queryStr = `?name=${searchData.name}&surname=${searchData.surname}&profession=${searchData.profession}`;
 
     getSimpleTable('/admin/technician/search' + queryStr, '/admin/technician/delete/', 
-        ['ID', 'Imię', 'Nazwisko', 'Profesja'], 
-        ['technik_id', 'imie', 'nazwisko', 'profesja']
+        ['ID', 'Imię', 'Nazwisko', 'Profesja']
     );
 });

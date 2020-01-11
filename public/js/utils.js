@@ -119,7 +119,7 @@ async function deleteRecord(url, container) {
 }
 
 /************************************** FETCH DATA AND CREATE TABLES - FUNCTIONS **************************************/
-async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, deleteAction = null) {
+async function getSimpleTable(url, deleteUrl, columnNames, deleteAction = null) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
     let table = document.createElement('table');
@@ -131,33 +131,35 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
     } else {
         // THEAD
         let thead = table.createTHead();
-        let headerRow = thead.insertRow(-1);
+        let theadRow = thead.insertRow(-1);
         
-        let cell;
-        for(let element of tableColumns) {
-            cell = headerRow.insertCell(-1);
-            cell.innerHTML = element;
+        let th;
+        for(let columnName of columnNames) {
+            th = document.createElement('th');
+            th.innerHTML = columnName;
+            theadRow.appendChild(th);
         }
 
         // TBODY
         let tbody = table.createTBody();
 
-        for(let i = 0; i < data.length; i++) {
-            let row = data[i];
-            let tableRow = tbody.insertRow(-1);
+        for(let record of data) {
+            let tbodyRow = tbody.insertRow(-1);
 
-            for(let columnName of recordColumns) {
-                cell = tableRow.insertCell(-1);
-                cell.innerHTML = row[columnName];
+            for(let key in record) {
+                cell = tbodyRow.insertCell(-1);
+                cell.innerHTML = record[key];
             }
 
+            let id = record[Object.keys(record)[0]];
+
             // delete button
-            cell = tableRow.insertCell(-1);
+            cell = tbodyRow.insertCell(-1);
             let button = document.createElement('button');
             button.type = 'button';
             button.innerHTML = 'Usuń';
             button.classList.add('action-btn');
-            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], tableRow));
+            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + id, tbodyRow));
 
             if(deleteAction != null) 
                 button.addEventListener('click', deleteAction.bind(this));
@@ -170,7 +172,7 @@ async function getSimpleTable(url, deleteUrl, tableColumns, recordColumns, delet
     }
 }
 
-async function getComplexTable(url, deleteUrl, tableColumns, recordColumns, editAction) {
+async function getComplexTable(url, deleteUrl, columnNames, editAction) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
     let tableContainer = document.getElementById('dataContainer');
@@ -181,60 +183,70 @@ async function getComplexTable(url, deleteUrl, tableColumns, recordColumns, edit
         sendAlert('Nie znaleziono żadnych rekordów.');
     } else {
         clearDataContainer();
-        for(let i = 0; i < data.length; i++) {
+        let size = Object.keys(data[0]).length;
+        for(let record of data) {
             let table = document.createElement('table');
-
-            // HEADER
-            let headerRow = table.insertRow(0);
+            // THEAD
+            let thead = table.createTHead();
+            let theadRow = thead.insertRow(-1);
+            let th;
             
+            for(let columnName of columnNames) {
+                th = document.createElement('th');
+                th.innerHTML = columnName;
+                theadRow.appendChild(th);
+            }
+    
+            // TBODY
+            let tbody = table.createTBody();
+            let tbodyRow = tbody.insertRow(-1);
             let cell;
-            for(let element of tableColumns) {
-                cell = headerRow.insertCell(-1);
-                cell.innerHTML = element;
+            
+            let description = record['opis'];
+            delete record['opis'];
+
+            for(let key in record) {
+                cell = tbodyRow.insertCell(-1);
+                cell.innerHTML = record[key];
             }
 
-            // BODY
-            let row = data[i];
-            let tableRow = table.insertRow(-1);
+            // description 'header'
+            tbodyRow = tbody.insertRow(-1);
+            th = document.createElement('th');
+            th.colSpan = size;
+            th.innerHTML = 'Opis spektaklu';
+            tbodyRow.appendChild(th);
 
-            for(let j = 0; j < tableColumns.length; j++) {
-                cell = tableRow.insertCell(-1);
-                cell.innerHTML = row[recordColumns[j]];
-            }
+            // description
+            tbodyRow = tbody.insertRow(-1);
+            cell = tbodyRow.insertCell(-1);
+            cell.colSpan = size;
+            cell.innerHTML = description;
+            
+            // row for buttons
+            tbodyRow = tbody.insertRow(-1);
+            cell = tbodyRow.insertCell(-1);
+            cell.colSpan = size;
+            cell.classList.add('center');
 
-            // HEADER
-            headerRow = table.insertRow(-1);
-            cell = headerRow.insertCell(-1);
-            cell.colSpan = tableColumns.length;
-            cell.innerHTML = "Opis";
-
-            // BODY
-            tableRow = table.insertRow(-1);
-            cell = tableRow.insertCell(-1);
-            cell.colSpan = tableColumns.length;
-            cell.innerHTML = row[recordColumns[recordColumns.length - 1]];
-
-            // button row
-            tableRow = table.insertRow(-1);
-            cell = tableRow.insertCell(-1);
-            cell.colSpan = tableColumns.length;
-
-            // delete button
-            let button = document.createElement('button');
-            button.type = 'button';
-            button.innerHTML = 'Usuń';
-            button.classList.add('action-btn');
-            button.addEventListener('click', deleteRecord.bind(this, deleteUrl + row[recordColumns[0]], table));
-            cell.appendChild(button);
+            // id
+            let id = record[Object.keys(record)[0]];
 
             // edit button
-            button = document.createElement('button');
-            button.type = 'button';
-            button.innerHTML = 'Edytuj';
-            button.classList.add('action-btn');
-            // console.log(row[recordColumns[0]]);
-            button.addEventListener('click', editAction.bind(this, row[recordColumns[0]]));
-            cell.appendChild(button);
+            let editButton = document.createElement('button');
+            editButton.type = 'button';
+            editButton.innerHTML = 'Edytuj';
+            editButton.classList.add('action-btn');
+            editButton.addEventListener('click', editAction.bind(this, id));
+            cell.appendChild(editButton);
+
+            // delete button
+            let deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.innerHTML = 'Usuń';
+            deleteButton.classList.add('action-btn');
+            deleteButton.addEventListener('click', deleteRecord.bind(this, deleteUrl + id, table));
+            cell.appendChild(deleteButton);
 
             tableContainer.appendChild(table);
         }
