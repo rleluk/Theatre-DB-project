@@ -56,3 +56,17 @@ FROM Teatr.Wystawienie_spektaklu w
     JOIN Teatr.Spektakl s ON w.spektakl_id = s.spektakl_id
     JOIN Teatr.Sala sala ON sala.sala_id = w.sala_id
 ORDER BY w.data_rozpoczecia;
+
+
+
+CREATE VIEW Teatr.Policz_role AS
+SELECT s.spektakl_id, COUNT(*) AS Ilosc_rol
+FROM Teatr.Spektakl s JOIN Teatr.Rola r ON s.spektakl_id = r.spektakl_id
+GROUP BY s.spektakl_id;
+
+
+
+CREATE VIEW Teatr.Policz_pracownikow AS
+SELECT s.spektakl_id, COUNT(*) AS Ilosc_pracownikow
+FROM Teatr.Spektakl s JOIN Teatr.Spektakl_technik st ON s.spektakl_id = st.spektakl_id
+GROUP BY s.spektakl_id;

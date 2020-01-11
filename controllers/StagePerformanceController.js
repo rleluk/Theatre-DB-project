@@ -7,8 +7,12 @@ exports.addStagePerformance = async (req, res) => {
         let result = await StagePerformance.add(req.body.performance_id, startDate, endDate, req.body.hall);
         res.status(200).send(result);
     } catch(err) {
-        console.log(err);
-        res.status(500).send({msg: 'Coś poszło nie tak...'});
+        if(err.code === 'P0001') {
+            res.status(409).send({msg: err.message})
+        } else {
+            console.log(err);
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
+        }
     }
 };
 

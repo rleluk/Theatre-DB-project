@@ -4,6 +4,8 @@ SET SEARCH_PATH TO Teatr;
 
 ----------------------------------------------------------------------------------------------------------------
 
+
+
 CREATE SEQUENCE Teatr.profesja_profesja_id_seq;
 
 CREATE TABLE Teatr.Profesja (
@@ -277,32 +279,9 @@ NOT DEFERRABLE;
 
 ----------------------------------------------------------------------------------------------------------------
 
-ALTER TABLE Teatr.Sala
-ADD unique(nazwa);
-
-ALTER TABLE Teatr.Profesja 
-ADD unique(nazwa);
-
-ALTER TABLE Teatr.Gatunek
-ADD unique(nazwa);
-
-ALTER TABLE Teatr.Typ_biletu 
-ADD unique(nazwa);
-
 CREATE TABLE Teatr.Admin (
                 admin_id INTEGER NOT NULL,
                 login VARCHAR(20) NOT NULL UNIQUE,
                 haslo VARCHAR(20) NOT NULL
 );
 
-ALTER TABLE Teatr.Miejsce
-DROP CONSTRAINT sala_miejsce_fk;
-
-ALTER TABLE Teatr.Miejsce 
-ADD CONSTRAINT sala_miejsce_fk
-FOREIGN KEY (sala_id)
-REFERENCES Teatr.Sala (sala_id)
-ON DELETE CASCADE;
-
-ALTER TABLE Teatr.Spektakl_technik
-  ADD CONSTRAINT unique_spektakl_technik UNIQUE(spektakl_id, technik_id);

@@ -24,6 +24,7 @@ document.getElementById('viewProfessions').addEventListener('click', event => {
     let select = document.getElementById('professionSelect');
     getSimpleTable('/admin/technician/profession/all', '/admin/technician/profession/delete/', 
         ['ID', 'Nazwa'],
+        deleteRecord,
         () => updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`)
     );
 });
@@ -57,6 +58,7 @@ document.getElementById('searchTechnicianForm').addEventListener('submit', event
     let queryStr = `?name=${searchData.name}&surname=${searchData.surname}&profession=${searchData.profession}`;
 
     getSimpleTable('/admin/technician/search' + queryStr, '/admin/technician/delete/', 
-        ['ID', 'Imię', 'Nazwisko', 'Profesja']
+        ['ID', 'Imię', 'Nazwisko', 'Profesja'],
+        deleteRecord_WC
     );
 });

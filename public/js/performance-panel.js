@@ -33,6 +33,7 @@ document.getElementById('viewGenres').addEventListener('click', event => {
 
     getSimpleTable('/admin/performance/genre/all', '/admin/performance/genre/delete/', 
         ['ID', 'Nazwa'], 
+        deleteRecord,
         () => updateGenres()
     );
 });
@@ -209,7 +210,7 @@ document.getElementById('stagePlayForm').addEventListener('submit', async event 
         endTime: document.stagePlayForm.endTime.value,
         hall: document.querySelector('#stagePlayForm .hallSelect').value
     }
-
+    
     let isOK = await addRecord('/admin/stageperformance/add', formData);
 
     // if(isOK) {
@@ -230,7 +231,8 @@ document.getElementById('searchStagePerformanceForm').addEventListener('submit',
     let queryStr = `?startDate=${searchData.startDate}&endDate=${searchData.endDate}`;
 
     getSimpleTable('/admin/stageperformance/search' + queryStr, '/admin/stageperformance/delete/', 
-        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu']
+        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu'],
+        deleteRecord_WC
     );
 });
 
@@ -238,7 +240,8 @@ document.getElementById('viewStagePerformances').addEventListener('click', async
     changeForm(null);
 
     getSimpleTable('/admin/stageperformance/all', '/admin/stageperformance/delete/', 
-        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu']
+        ['ID wystawienia', 'Tytuł', 'Sala', 'Data rozpoczęcia', 'Data zakończenia', 'ID spektaklu'],
+        deleteRecord_WC
     );
 });
 
@@ -427,7 +430,7 @@ async function getPerformanceList(url) {
             deleteButton.type = 'button';
             deleteButton.innerHTML = 'Usuń';
             deleteButton.classList.add('action-btn');
-            deleteButton.addEventListener('click', deleteRecord.bind(this, deleteUrl + record['spektakl_id'], table));
+            deleteButton.addEventListener('click', deleteRecord_WC.bind(this, deleteUrl + record['spektakl_id'], table));
             cell.appendChild(deleteButton);
 
             tableContainer.appendChild(table);

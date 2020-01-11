@@ -1,5 +1,5 @@
 const {Ticket, TicketType} = require('../models/Ticket');
-const {UNIQUE_VIOLATION, FOREIGN_KEY_VIOLATION} = require('pg-error-constants')
+const {UNIQUE_VIOLATION, FOREIGN_KEY_VIOLATION} = require('pg-error-constants');
 
 exports.ticket = (req, res) => {
     res.render('ticket-panel');

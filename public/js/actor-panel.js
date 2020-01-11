@@ -29,7 +29,8 @@ document.getElementById('searchActorForm').addEventListener('submit', event => {
     let queryStr = `?name=${searchData.name}&surname=${searchData.surname}`;
     
     getSimpleTable('/admin/actor/search' + queryStr, '/admin/actor/delete/', 
-        ['ID', 'Imię', 'Nazwisko', 'Data urodzenia']
+        ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'],
+        deleteRecord
     );
 });
 

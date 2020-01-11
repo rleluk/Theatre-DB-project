@@ -82,12 +82,8 @@ exports.deletePerformance = async (req, res) => {
         let result = await Performance.delete(req.params.id);
         res.status(200).send(result);
     } catch(err) {
-        if(err.code === FOREIGN_KEY_VIOLATION)
-            res.status(409).send({msg: 'Wybrany spektakl ma wciąż odwołanie w innych tabelach.'});
-        else {
-            console.log(err);
-            res.status(500).send({msg: 'Coś poszło nie tak...'});
-        }
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
 

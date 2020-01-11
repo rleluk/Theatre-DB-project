@@ -1,4 +1,5 @@
 const Director = require('../models/Director');
+const {UNIQUE_VIOLATION, FOREIGN_KEY_VIOLATION} = require('pg-error-constants');
 
 exports.director = (req, res) => {
     res.render('director-panel');
@@ -29,8 +30,12 @@ exports.deleteDirector = async (req, res) => {
         let result = await Director.delete(req.params.id);
         res.status(200).send(result);
     } catch(err) {
-        console.log(err);
-        res.status(500).send({msg: 'Coś poszło nie tak...'});
+        if(err.code === FOREIGN_KEY_VIOLATION)
+            res.status(409).send({msg: 'Wybrany reżyser ma wciąż odwołanie w tabeli "Spektakl".'});
+        else {
+            console.log(err);
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
+        }
     }
 };
 
