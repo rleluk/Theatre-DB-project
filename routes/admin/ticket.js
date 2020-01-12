@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check, oneOf} = require('express-validator');
-const utils = require('../controllers/utils');
-const TicketController = require('../controllers/TicketController');
+const utils = require('../../controllers/utils');
+const TicketController = require('../../controllers/TicketController');
 
 router.get('/',
     utils.sessionChecker,

@@ -44,7 +44,7 @@ input, button, select, textarea {
     display: inline-block;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
     border: 2px solid #222930;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 10px;
     background-color: #eee;
     cursor: pointer; }
@@ -84,13 +84,6 @@ input, button, select, textarea {
       margin: 10px auto;
       display: block;
       width: 320px; }
-    .input-form .input-wrapper button {
-      margin: 10px auto;
-      display: block;
-      width: 250px; }
-    .input-form .input-wrapper .inline-input {
-      float: left;
-      width: 50px; }
 
 .center {
   text-align: center; }
@@ -153,7 +146,10 @@ table {
 
 .additionalSearch-btn {
   background-color: inherit;
-  border: none; }
+  border: none;
+  margin: 10px auto;
+  display: block;
+  width: 250px; }
 
 .additionalSearch-btn:hover {
   color: #ebc934; }
@@ -161,17 +157,19 @@ table {
 .invisible {
   display: none; }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  transition: opacity 500ms;
-  visibility: hidden;
-  opacity: 0; }
+.action-btn {
+  display: inline-block; }
 
-.overlay:target {
-  visibility: visible;
-  opacity: 1; }
+button[type=submit],
+.action-btn {
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  min-height: 30px;
+  min-width: 60px;
+  background-color: #222930;
+  color: #eee; }
+
+button[type=submit]:hover,
+.action-btn:hover {
+  background-color: #555; }

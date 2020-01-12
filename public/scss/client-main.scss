@@ -1,0 +1,48 @@
+html, body {
+    /* I customized the wicked cool background at SVGBackgrounds.com. */
+    background-color: #f46036;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 60'%3E%3Cg %3E%3Crect fill='%23f46036' width='11' height='11'/%3E%3Crect fill='%23f46335' x='10' width='11' height='11'/%3E%3Crect fill='%23f36534' y='10' width='11' height='11'/%3E%3Crect fill='%23f36833' x='20' width='11' height='11'/%3E%3Crect fill='%23f36b32' x='10' y='10' width='11' height='11'/%3E%3Crect fill='%23f26d31' y='20' width='11' height='11'/%3E%3Crect fill='%23f27030' x='30' width='11' height='11'/%3E%3Crect fill='%23f17230' x='20' y='10' width='11' height='11'/%3E%3Crect fill='%23f1752f' x='10' y='20' width='11' height='11'/%3E%3Crect fill='%23f0772e' y='30' width='11' height='11'/%3E%3Crect fill='%23f0792e' x='40' width='11' height='11'/%3E%3Crect fill='%23ef7c2d' x='30' y='10' width='11' height='11'/%3E%3Crect fill='%23ee7e2c' x='20' y='20' width='11' height='11'/%3E%3Crect fill='%23ee802c' x='10' y='30' width='11' height='11'/%3E%3Crect fill='%23ed832c' y='40' width='11' height='11'/%3E%3Crect fill='%23ed852c' x='50' width='11' height='11'/%3E%3Crect fill='%23ec872b' x='40' y='10' width='11' height='11'/%3E%3Crect fill='%23eb8a2b' x='30' y='20' width='11' height='11'/%3E%3Crect fill='%23ea8c2b' x='20' y='30' width='11' height='11'/%3E%3Crect fill='%23ea8e2b' x='10' y='40' width='11' height='11'/%3E%3Crect fill='%23e9902c' y='50' width='11' height='11'/%3E%3Crect fill='%23e8922c' x='60' width='11' height='11'/%3E%3Crect fill='%23e7942c' x='50' y='10' width='11' height='11'/%3E%3Crect fill='%23e7962d' x='40' y='20' width='11' height='11'/%3E%3Crect fill='%23e6992d' x='30' y='30' width='11' height='11'/%3E%3Crect fill='%23e59b2e' x='20' y='40' width='11' height='11'/%3E%3Crect fill='%23e49d2f' x='10' y='50' width='11' height='11'/%3E%3Crect fill='%23e39f30' x='70' width='11' height='11'/%3E%3Crect fill='%23e3a131' x='60' y='10' width='11' height='11'/%3E%3Crect fill='%23e2a332' x='50' y='20' width='11' height='11'/%3E%3Crect fill='%23e1a533' x='40' y='30' width='11' height='11'/%3E%3Crect fill='%23e0a734' x='30' y='40' width='11' height='11'/%3E%3Crect fill='%23dfa935' x='20' y='50' width='11' height='11'/%3E%3Crect fill='%23deab37' x='80' width='11' height='11'/%3E%3Crect fill='%23ddac38' x='70' y='10' width='11' height='11'/%3E%3Crect fill='%23dcae39' x='60' y='20' width='11' height='11'/%3E%3Crect fill='%23dbb03b' x='50' y='30' width='11' height='11'/%3E%3Crect fill='%23dab23d' x='40' y='40' width='11' height='11'/%3E%3Crect fill='%23d9b43e' x='30' y='50' width='11' height='11'/%3E%3Crect fill='%23d8b640' x='90' width='11' height='11'/%3E%3Crect fill='%23d7b842' x='80' y='10' width='11' height='11'/%3E%3Crect fill='%23d7b944' x='70' y='20' width='11' height='11'/%3E%3Crect fill='%23d6bb46' x='60' y='30' width='11' height='11'/%3E%3Crect fill='%23d5bd48' x='50' y='40' width='11' height='11'/%3E%3Crect fill='%23d4bf4a' x='40' y='50' width='11' height='11'/%3E%3Crect fill='%23d3c14c' x='90' y='10' width='11' height='11'/%3E%3Crect fill='%23d2c24e' x='80' y='20' width='11' height='11'/%3E%3Crect fill='%23d1c450' x='70' y='30' width='11' height='11'/%3E%3Crect fill='%23d0c652' x='60' y='40' width='11' height='11'/%3E%3Crect fill='%23cfc855' x='50' y='50' width='11' height='11'/%3E%3Crect fill='%23cec957' x='90' y='20' width='11' height='11'/%3E%3Crect fill='%23cdcb59' x='80' y='30' width='11' height='11'/%3E%3Crect fill='%23cccd5c' x='70' y='40' width='11' height='11'/%3E%3Crect fill='%23cbce5e' x='60' y='50' width='11' height='11'/%3E%3Crect fill='%23cad060' x='90' y='30' width='11' height='11'/%3E%3Crect fill='%23c9d263' x='80' y='40' width='11' height='11'/%3E%3Crect fill='%23c8d365' x='70' y='50' width='11' height='11'/%3E%3Crect fill='%23c7d568' x='90' y='40' width='11' height='11'/%3E%3Crect fill='%23c6d66a' x='80' y='50' width='11' height='11'/%3E%3Crect fill='%23c5d86d' x='90' y='50' width='11' height='11'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'McLaren', cursive;
+}
+
+.nav-bar {
+    display: block;
+    margin: 50px auto;
+    color: #eee;
+    padding: 0px;
+    text-transform: uppercase;
+    width: 100%;
+    position: fixed; 
+    font-family: 'Bangers', cursive;
+    font-size: 22px;
+
+    a {
+        display: inline-block;
+        color: inherit;
+        text-decoration: none;
+        padding: 20px;
+    }
+
+    .nav-item {
+        float: right;
+        margin: 0 60px;
+    }
+
+    a:hover {
+        color: #434; 
+    }
+
+    .active-nav {
+        color: #434;
+    }
+}
+
+.content {
+    padding-top: 200px;
+}

@@ -5,17 +5,17 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 // routers
-const routes = require('./routes/index');
-const admin = require('./routes/admin');
-const actor = require('./routes/actor');
-const role = require('./routes/role');
-const director = require('./routes/director');
-const scriptwriter = require('./routes/scriptwriter');
-const technician = require('./routes/technician');
-const hall = require('./routes/hall');
-const performance = require('./routes/performance');
-const ticket = require('./routes/ticket');
-const stagePerformance = require('./routes/stagePerformance');
+const routes = require('./routes/client/index');
+const admin = require('./routes/admin/admin');
+const actor = require('./routes/admin/actor');
+const role = require('./routes/admin/role');
+const director = require('./routes/admin/director');
+const scriptwriter = require('./routes/admin/scriptwriter');
+const technician = require('./routes/admin/technician');
+const hall = require('./routes/admin/hall');
+const performance = require('./routes/admin/performance');
+const ticket = require('./routes/admin/ticket');
+const stagePerformance = require('./routes/admin/stagePerformance');
 
 // app
 const app = express();

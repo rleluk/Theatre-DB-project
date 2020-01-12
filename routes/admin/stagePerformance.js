@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check, oneOf} = require('express-validator');
-const utils = require('../controllers/utils');
-const StagePerformanceController = require('../controllers/StagePerformanceController');
+const utils = require('../../controllers/utils');
+const StagePerformanceController = require('../../controllers/StagePerformanceController');
 
 router.post('/add', 
     utils.sessionChecker,

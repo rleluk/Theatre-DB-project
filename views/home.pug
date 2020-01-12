@@ -1,6 +1,22 @@
 doctype html
-html
+html(lang="pl")
     head
-        //- link(rel="stylesheet" href="/css/home.css")
+        meta(charset="utf-8")
+        link(href="https://fonts.googleapis.com/css?family=Bangers&display=swap", rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css?family=McLaren&display=swap", rel="stylesheet")
+        link(rel="stylesheet", type="text/css", href="/css/client-main.css")
+        block css
+
+        script(src="/js/utils.js")
+        block js
+
     body
-        p HOME PAGE
+        .nav-bar
+            a#performances-btn.nav-item(href="/performances") Spektakle
+            a#tickets-btn.nav-item(href="/tickets") Bilety
+            a#halls-btn.nav-item(href="/halls") Sale
+            a#staff-btn.nav-item(href="/staff") Zespół
+
+        .content
+            block content
+        

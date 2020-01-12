@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check, oneOf} = require('express-validator');
-const utils = require('../controllers/utils');
-const HallController = require('../controllers/HallController');
+const utils = require('../../controllers/utils');
+const HallController = require('../../controllers/HallController');
 
 router.get('/', 
     utils.sessionChecker,

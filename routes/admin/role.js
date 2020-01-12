@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check, oneOf} = require('express-validator');
-const RoleController = require('../controllers/RoleController');
-const utils = require('../controllers/utils');
+const RoleController = require('../../controllers/RoleController');
+const utils = require('../../controllers/utils');
 
 router.post('/add',
     utils.sessionChecker,

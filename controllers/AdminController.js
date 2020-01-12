@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
   try {
     let result = await checkCredentials(req.body.login, req.body.password);
     if(result.length == 1) {
-      req.session.user = 'cos'; //req.body.login;
+      req.session.user = req.body.login;
       res.redirect('/admin/dashboard');
     } else {
       res.render('admin-home', {

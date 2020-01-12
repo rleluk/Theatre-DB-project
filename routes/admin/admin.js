@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const {check, oneOf} = require('express-validator');
-const AdminController = require('../controllers/AdminController');
-const utils = require('../controllers/utils');
+const AdminController = require('../../controllers/AdminController');
+const utils = require('../../controllers/utils');
 
 router.get('/', 
     AdminController.home
 );
 
 router.post('/', 
-    // [
-    //     check('login').isLength({min: 1}).withMessage('Login is required.'),
-    //     check('password').isLength({min: 1}).withMessage('Password is required')
-    // ], 
-    // AdminController.checkAdminValidation, 
+    [
+        check('login').isLength({min: 1}).withMessage('Login is required.'),
+        check('password').isLength({min: 1}).withMessage('Password is required')
+    ], 
+    AdminController.checkAdminValidation, 
     AdminController.login
 );
 
