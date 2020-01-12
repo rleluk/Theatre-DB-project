@@ -2,6 +2,7 @@ window.onload = () => {
     setVisibleNav(document.getElementById('technician-btn'));
     let select = document.getElementById('professionSelect');
     updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
+    changeForm(null);
 }
 
 /************************************** PROFESSIONS **************************************/
@@ -10,12 +11,14 @@ document.getElementById('addProfessionForm').addEventListener('submit', async ev
     clearDataContainer();
     clearAlert();
 
-    await addRecord('/admin/technician/profession/add', {
+    const isOK = await addRecord('/admin/technician/profession/add', {
         name: document.addProfessionForm.name.value
     });
-
-    let select = document.getElementById('professionSelect');
-    updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
+    
+    if(isOK) {
+        let select = document.getElementById('professionSelect');
+        updateSelect(select, '/admin/technician/profession/all', record => `${record.nazwa}`);
+    }
 });
 
 document.getElementById('viewProfessions').addEventListener('click', event => {
@@ -30,7 +33,7 @@ document.getElementById('viewProfessions').addEventListener('click', event => {
 });
 
 /************************************** TECHNICIANS **************************************/
-document.getElementById('addTechnicianForm').addEventListener('submit', event => {
+document.getElementById('addTechnicianForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
     clearAlert();
@@ -41,7 +44,9 @@ document.getElementById('addTechnicianForm').addEventListener('submit', event =>
         profession: document.getElementById('professionSelect').value
     }
 
-    addRecord('/admin/technician/add', formData);
+    const isOK = await addRecord('/admin/technician/add', formData);
+
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchTechnicianForm').addEventListener('submit', event => {

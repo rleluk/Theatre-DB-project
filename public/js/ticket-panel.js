@@ -1,5 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('ticket-btn'));
+    changeForm(null);
 }
 
 document.getElementById('viewTicketTypes').addEventListener('click', event => {
@@ -16,8 +17,10 @@ document.getElementById('addTicketTypeForm').addEventListener('submit', async ev
     clearDataContainer();
     clearAlert();
 
-    addRecord('/admin/ticket/type/add', {
+    const isOK = await addRecord('/admin/ticket/type/add', {
         name: document.addTicketTypeForm.name.value,
         price: document.addTicketTypeForm.price.value
     });
+
+    if(isOK) changeForm(null, false);
 });

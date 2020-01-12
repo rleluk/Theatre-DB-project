@@ -28,12 +28,12 @@ function clearInputs() {
     // });
 }
 
-function changeForm(id) {
+function changeForm(id, cAlert = true) {
     let forms = document.getElementsByClassName('input-form');
     Array.prototype.forEach.call(forms, element => element.style.display = 'none');
 
     clearDataContainer();
-    clearAlert();
+    if(cAlert) clearAlert();
     clearInputs();
 
     let form = document.getElementById(id);
@@ -51,16 +51,16 @@ async function updateSelect(select, url, format) {
         return;
     }
 
-    let option = document.createElement('option');
-    // option.disabled = true;
-    // option.selected = true;
-    // option.hidden = true;
-    // option.value = undefined;
-    // select.add(option);
+    let option = new Option('Wybierz', '');
+    option.disabled = true;
+    option.selected = true;
+    option.hidden = true;
+    select.options[0] = option;
 
     data.forEach(record => {
         option = document.createElement('option');
         option.text = format(record);
+        option.value = format(record);
         select.add(option);
     });
 }
@@ -167,6 +167,7 @@ async function getSimpleTable(url, deleteUrl, columnNames, deleteFunction, delet
 
             // delete button
             cell = tbodyRow.insertCell(-1);
+            cell.classList.add('action-cell');
             let button = document.createElement('button');
             button.type = 'button';
             button.innerHTML = 'Usuń';
@@ -226,7 +227,7 @@ async function getComplexTable(url, deleteUrl, columnNames, editAction) {
             tbodyRow = tbody.insertRow(-1);
             th = document.createElement('th');
             th.colSpan = size;
-            th.innerHTML = 'Opis spektaklu';
+            th.innerHTML = 'Opis';
             tbodyRow.appendChild(th);
 
             // description
@@ -234,12 +235,14 @@ async function getComplexTable(url, deleteUrl, columnNames, editAction) {
             cell = tbodyRow.insertCell(-1);
             cell.colSpan = size;
             cell.innerHTML = description;
+            cell.classList.add('description-cell');
             
             // row for buttons
             tbodyRow = tbody.insertRow(-1);
             cell = tbodyRow.insertCell(-1);
             cell.colSpan = size;
             cell.classList.add('center');
+            cell.classList.add('action-cell');
 
             // id
             let id = record[Object.keys(record)[0]];

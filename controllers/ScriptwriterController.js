@@ -7,7 +7,8 @@ exports.scriptwriter = (req, res) => {
   
 exports.addScriptwriter = async (req, res) => {
     try {
-      let result = await Scriptwriter.add(req.body.name, req.body.surname, req.body.bday, req.body.description);
+      let description = (req.body.description === '') ? 'Brak opisu scenarzysty.' : req.body.description;
+      let result = await Scriptwriter.add(req.body.name, req.body.surname, req.body.bday, description);
       res.status(200).send(result);
     } catch(err) {
       console.log(err);

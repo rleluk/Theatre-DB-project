@@ -1,8 +1,9 @@
 extends admin-dashboard.pug
 
 block content
-    button(onclick="changeForm('addTicketTypeForm')") Dodaj typ biletu
-    button#viewTicketTypes Wyświetl dostępne typy biletów
+    .button-nav
+        button(onclick="changeForm('addTicketTypeForm')") Dodaj typ biletu
+        button#viewTicketTypes Wyświetl dostępne typy biletów
 
     #alert
 

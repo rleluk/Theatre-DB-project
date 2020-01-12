@@ -7,9 +7,9 @@ const utils = require('../controllers/utils');
 router.post('/add',
     utils.sessionChecker,
     [
-        check('name').isAlpha('pl-PL').withMessage('Nazwar roli powinna zawierać wyłącznie litery'),
+        check('name').isAlpha('pl-PL').withMessage('Nazwa roli powinna zawierać wyłącznie litery.'),
         check('performance_id').isInt().withMessage('Niepoprawne id spektaklu.'),
-        check('actor_id').isInt().withMessage('Niepoprawne id aktora.')
+        check('actor_id').isInt().withMessage('Nieprawidłowy aktor.')
     ],
     utils.checkValidationVerbose,
     RoleController.addRole

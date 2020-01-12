@@ -1,15 +1,13 @@
 extends admin-dashboard.pug
 
-block css
-    link(rel="stylesheet", type="text/css", href="/css/performance-panel.css")
-
 block content
-    button(onclick="changeForm('addGenreForm')") Dodaj gatunek sztuk teatralnych
-    button#viewGenres Wyświetl dostępne gatunki
-    button(onclick="changeForm('addPerformanceForm')") Dodaj spektakl
-    button(onclick="changeForm('searchPerformanceForm')") Wyszukaj spektakl
-    button(onclick="changeForm('searchStagePerformanceForm')") Wyszukaj wystawienia spektakli
-    button#viewStagePerformances Wyświetl wszystkie wystawienia spektakli
+    .button-nav
+        button(onclick="changeForm('addGenreForm')") Dodaj gatunek sztuk teatralnych
+        button#viewGenres Wyświetl dostępne gatunki
+        button(onclick="changeForm('addPerformanceForm')") Dodaj spektakl
+        button(onclick="changeForm('searchPerformanceForm')") Wyszukaj spektakl
+        button(onclick="changeForm('searchStagePerformanceForm')") Wyszukaj wystawienia spektakli
+        button#viewStagePerformances Wyświetl wszystkie wystawienia spektakli
     
     #alert
 
@@ -30,21 +28,22 @@ block content
             label Scenarzysta:
             select.scriptwriterSelect
             label Opis:
-            input(type="text", name="description")
+            textarea(name="description")
         button(type="submit") Dodaj 
 
     form#searchPerformanceForm.input-form.invisible(name="searchPerformanceForm")
         .input-wrapper
-            label Tytuł spektaklu:
+            h3 Spektakl
+            label Tytuł:
             input(type="text", name="title")
             label Gatunek:
             input(type="text", name="genre")
             .additional-options.invisible
-                h3 Reżyser 
+                h3 Reżyser
                 label Imię: 
-                input(text="text", name="director_name")
-                label Nazwisko:
-                input(text="text", name="director_surname")
+                input(type="text", name="director_name")
+                label Nazwisko: 
+                input(type="text", name="director_surname")
                 h3 Scenarzysta
                 label Imię: 
                 input(type="text", name="scriptwriter_name")
@@ -75,7 +74,7 @@ block content
                 label Scenarzysta:
                 select.scriptwriterSelect
                 label Opis:
-                input(type="text", name="description")
+                textarea(name="description")
             button(type="submit") Edytuj
 
         #technicianContainer

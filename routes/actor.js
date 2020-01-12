@@ -18,7 +18,7 @@ router.post('/add',
         check('surname')
             .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość nazwiska.').bail()
             .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.'),
-        check('bday').isISO8601().withMessage('Nie podano daty urodzenia.')
+        check('bday').isISO8601().withMessage('Nieprawidłowa data urodzenia.')
     ],
     utils.checkValidationVerbose,
     ActorController.addActor

@@ -1,5 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('hall-btn'));
+    changeForm(null);
 }
 
 document.getElementById('addHallForm').addEventListener('submit', async event => {
@@ -12,7 +13,9 @@ document.getElementById('addHallForm').addEventListener('submit', async event =>
         seatsInRow: document.addHallForm.seatsInRow.value
     }
 
-    addRecord('/admin/hall/add', formData);
+    const isOK = await addRecord('/admin/hall/add', formData);
+
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchHallForm').addEventListener('submit', event => {

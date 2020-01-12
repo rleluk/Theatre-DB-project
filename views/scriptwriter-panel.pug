@@ -1,8 +1,9 @@
 extends admin-dashboard.pug
 
 block content
-    button(onclick="changeForm('addScriptwriterForm')") Dodaj scenarzystę
-    button(onclick="changeForm('searchScriptwriterForm')") Wyszukaj scenarzystę
+    .button-nav
+        button(onclick="changeForm('addScriptwriterForm')") Dodaj scenarzystę
+        button(onclick="changeForm('searchScriptwriterForm')") Wyszukaj scenarzystę
 
     #alert
 
@@ -15,7 +16,7 @@ block content
             label Data urodzenia:
             input(type="date" name="bday")
             label Opis:
-            input(type="text" name="description")
+            textarea(name="description")
         button(type="submit") Dodaj 
 
     form#searchScriptwriterForm.input-form.invisible(name="searchScriptwriterForm")
@@ -37,7 +38,7 @@ block content
             label Data urodzenia:
             input(type="date" name="bday")
             label Opis:
-            input(type="text" name="description")
+            textarea(name="description")
         button(type="submit") Edytuj 
 
     #dataContainer

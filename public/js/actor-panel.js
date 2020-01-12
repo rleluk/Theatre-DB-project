@@ -1,5 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('actor-btn'));
+    changeForm(null);
 }
 
 document.getElementById('addActorForm').addEventListener('submit', async event => {
@@ -12,8 +13,10 @@ document.getElementById('addActorForm').addEventListener('submit', async event =
         surname: document.addActorForm.surname.value,
         bday: document.addActorForm.bday.value
     }
-
-    addRecord('/admin/actor/add', formData);
+    
+    let isOK = await addRecord('/admin/actor/add', formData);
+    
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchActorForm').addEventListener('submit', event => {
@@ -33,4 +36,7 @@ document.getElementById('searchActorForm').addEventListener('submit', event => {
         deleteRecord
     );
 });
+
+
+
 

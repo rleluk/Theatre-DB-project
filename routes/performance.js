@@ -11,30 +11,14 @@ router.get('/',
 
 router.post('/add',
     utils.sessionChecker,
-    [
-        check('title')
-            .isLength({min: 1, max: 30}).withMessage('Nieprawidłowy tytuł').bail()
-            .isAlpha('pl-PL').withMessage('Tytuł powinien zawierać wyłącznie litery.'),
-        check('genre')
-            .isAlpha('pl-PL').withMessage('Gatunek powinien zawierać wyłącznie litery.'),
-        check('director_id').isInt().withMessage('Nieprawidłowe id reżysera.'),
-        check('scriptwriter_id').isInt().withMessage('Nieprawidłowe id scenarzysty.')
-    ],
+    utils.checkPerformanceVerbose,
     utils.checkValidationVerbose,
     PerformanceController.addPerformance
 );
 
 router.put('/update',
     utils.sessionChecker,
-    [
-        check('title')
-            .isLength({min: 1, max: 30}).withMessage('Nieprawidłowy tytuł').bail()
-            .isAlpha('pl-PL').withMessage('Tytuł powinien zawierać wyłącznie litery.'),
-        check('genre')
-            .isAlpha('pl-PL').withMessage('Gatunek powinien zawierać wyłącznie litery.'),
-        check('director_id').isInt().withMessage('Nieprawidłowe id reżysera.'),
-        check('scriptwriter_id').isInt().withMessage('Nieprawidłowe id scenarzysty.')
-    ],
+    utils.checkPerformanceVerbose,
     utils.checkValidationVerbose,
     PerformanceController.updatePerformance
 );
@@ -91,7 +75,7 @@ router.delete('/delete/:id',
 router.post('/genre/add',
     utils.sessionChecker,
     [
-        check('name').trim().isAlpha('pl-PL').withMessage('Nazwa profesji powinna zawierać wyłącznie litery.')
+        check('name').trim().isAlpha('pl-PL').withMessage('Nazwa gatunku powinna zawierać wyłącznie litery.')
     ],
     utils.checkValidationVerbose,
     PerformanceController.addGenre
@@ -116,7 +100,7 @@ router.post('/technician/add',
     utils.sessionChecker,
     [
         check('performance_id').isInt().withMessage('Niepoprawne id spektaklu.'),
-        check('technician_id').isInt().withMessage('Niepoprawne id technika.')
+        check('technician_id').isInt().withMessage('Nieprawidłowy technik.')
     ],
     utils.checkValidation,
     PerformanceController.addTechnician

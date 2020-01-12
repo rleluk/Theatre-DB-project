@@ -13,7 +13,7 @@ router.post('/type/add',
     utils.sessionChecker,
     [
         check('name').trim().isAlpha('pl-PL').withMessage('Nazwa typu biletu powinna zawierać wyłącznie litery.'),
-        check('price').isFloat().withMessage('Cena powinna być liczbą rzeczywistą')
+        check('price').isFloat().withMessage('Cena powinna być liczbą rzeczywistą.')
     ],
     utils.checkValidationVerbose,
     TicketController.addTicketType

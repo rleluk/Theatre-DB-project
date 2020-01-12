@@ -1,6 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('performance-btn'));
-   
+    changeForm(null);
     // update all selects
 
     updateGenres();
@@ -43,11 +43,14 @@ document.getElementById('addGenreForm').addEventListener('submit', async event =
     clearDataContainer();
     clearAlert();
 
-    await addRecord('/admin/performance/genre/add', {
+    const isOK = await addRecord('/admin/performance/genre/add', {
         name: document.addGenreForm.name.value
     });
 
-    updateGenres();
+    if(isOK) {
+        changeForm(null, false);
+        updateGenres();
+    }
 });
 
 /************************************** PERFORMANCES **************************************/
@@ -65,6 +68,7 @@ document.getElementById('addPerformanceForm').addEventListener('submit', async e
         scriptwriter_id: document.querySelector('#addPerformanceForm .scriptwriterSelect').value.split('.')[0]
     }   
 
+    console.log(formData);
     let id = await addRecordCustom('/admin/performance/add', formData);
 
     if(id) showEditForm(id);
@@ -79,7 +83,7 @@ document.getElementById('searchPerformanceForm').addEventListener('submit', even
     const searchData = {
         title: document.searchPerformanceForm.title.value,
         genre: document.searchPerformanceForm.genre.value,
-        director_name: document.searchPerformanceForm.director_surname.value,
+        director_name: document.searchPerformanceForm.director_name.value,
         director_surname: document.searchPerformanceForm.director_surname.value,
         scriptwriter_name: document.searchPerformanceForm.scriptwriter_name.value,
         scriptwriter_surname: document.searchPerformanceForm.scriptwriter_surname.value
@@ -142,7 +146,7 @@ document.getElementById('addRoleForm').addEventListener('submit', async event =>
         document.getElementById('addRole-btn').style.display = 'block';
         document.getElementById('addRoleForm').style.display = 'none';
         document.addRoleForm.role.value = '';
-        document.addRoleForm.actor_id.value = '';
+        document.querySelector('#editContainer .actorSelect').value = 'Wybierz';
     }
 });
 
@@ -213,9 +217,7 @@ document.getElementById('stagePlayForm').addEventListener('submit', async event 
     
     let isOK = await addRecord('/admin/stageperformance/add', formData);
 
-    // if(isOK) {
-    //     changeForm(null);
-    // }
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchStagePerformanceForm').addEventListener('submit', async event => {
@@ -338,6 +340,7 @@ function addTableRow(record, tbody, deleteUrl, deleteBtn = false) {
     // delete button
     if(deleteBtn) {
         cell = tableRow.insertCell(-1);
+        cell.classList.add('action-cell2');
         let button = document.createElement('button');
         button.type = 'button';
         button.innerHTML = 'Usuń';
@@ -401,6 +404,7 @@ async function getPerformanceList(url) {
             tbodyRow = tbody.insertRow(-1);
             cell = tbodyRow.insertCell(-1);
             cell.colSpan = '5';
+            cell.classList.add('description-cell');
             cell.innerHTML = record['opis'];
             
             // row for buttons
@@ -408,6 +412,7 @@ async function getPerformanceList(url) {
             cell = tbodyRow.insertCell(-1);
             cell.colSpan = '5';
             cell.classList.add('center');
+            cell.classList.add('action-cell');
             
             // edit button
             let editButton = document.createElement('button');

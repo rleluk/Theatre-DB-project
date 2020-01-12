@@ -1,5 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('director-btn'));
+    changeForm(null);
 }
 
 document.getElementById('addDirectorForm').addEventListener('submit', async event => {
@@ -13,7 +14,9 @@ document.getElementById('addDirectorForm').addEventListener('submit', async even
         description: document.addDirectorForm.description.value
     }
 
-    addRecord('/admin/director/add', formData);
+    const isOK = await addRecord('/admin/director/add', formData);
+
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('editDirectorForm').addEventListener('submit', async event => {
@@ -28,8 +31,9 @@ document.getElementById('editDirectorForm').addEventListener('submit', async eve
         description: document.editDirectorForm.description.value
     }
 
-    editRecord('/admin/director/update', formData);
+    const isOK = await editRecord('/admin/director/update', formData);
     
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchDirectorForm').addEventListener('submit', event => {

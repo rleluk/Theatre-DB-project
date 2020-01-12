@@ -1,5 +1,6 @@
 window.onload = () => {
     setVisibleNav(document.getElementById('scriptwriter-btn'));
+    changeForm(null);
 }
 
 document.getElementById('addScriptwriterForm').addEventListener('submit', async event => {
@@ -13,7 +14,9 @@ document.getElementById('addScriptwriterForm').addEventListener('submit', async 
         description: document.addScriptwriterForm.description.value
     }
 
-    addRecord('/admin/scriptwriter/add', formData);
+    const isOK = await addRecord('/admin/scriptwriter/add', formData);
+    
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('editScriptwriterForm').addEventListener('submit', async event => {
@@ -28,7 +31,9 @@ document.getElementById('editScriptwriterForm').addEventListener('submit', async
         description: document.editScriptwriterForm.description.value
     }
 
-    editRecord('/admin/scriptwriter/update', formData);
+    const isOK = await editRecord('/admin/scriptwriter/update', formData);
+
+    if(isOK) changeForm(null, false);
 });
 
 document.getElementById('searchScriptwriterForm').addEventListener('submit', event => {

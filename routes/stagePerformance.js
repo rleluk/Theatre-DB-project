@@ -11,8 +11,8 @@ router.post('/add',
         check('startTime').matches('^(([01][0-9])|(2[0-3])):[0-5][0-9]$').withMessage('Nie podano czasu rozpoczęcia.'),
         check('endDate').isISO8601().withMessage('Nie podano daty zakończenia.'),
         check('endTime').matches('^(([01][0-9])|(2[0-3])):[0-5][0-9]$').withMessage('Nie podano czasu zakończenia.'),
-        check('hall').isAlphanumeric('pl-PL').withMessage('Niepoprawna sala.'),
-        check('performance_id').isInt().withMessage('Niepoprawne id spektaklu.')
+        check('hall').isAlphanumeric('pl-PL').withMessage('Nieprawidłowa sala.'),
+        check('performance_id').isInt().withMessage('Nieprawidłowe id spektaklu.')
     ],
     utils.checkValidationVerbose,
     StagePerformanceController.addStagePerformance
@@ -21,8 +21,8 @@ router.post('/add',
 router.get('/search', 
     utils.sessionChecker,
     [
-        check('startDate').isISO8601().withMessage('Nie podano daty rozpoczęcia'),
-        check('endDate').isISO8601().withMessage('Nie podano daty zakończenia')
+        check('startDate').isISO8601().withMessage('Nieprawidłowa data rozpoczęcia.'),
+        check('endDate').isISO8601().withMessage('Nieprawidłowa data zakończenia.')
     ],
     utils.checkValidationVerbose,
     StagePerformanceController.searchStagePerformance

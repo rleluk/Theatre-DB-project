@@ -63,7 +63,10 @@ router.delete('/delete/:id',
 router.post('/profession/add',
     utils.sessionChecker,
     [
-        check('name').trim().isAlpha('pl-PL').withMessage('Nazwa profesji powinna zawierać wyłącznie litery.')
+        check('name')
+            .isLength({min: 1, max: 25}).withMessage('Nieprawidłowa długość nazwy.').bail()
+            .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż ]+$/)
+            .withMessage('Nazwa profesji powinna zawierać wyłącznie litery.')
     ],
     utils.checkValidationVerbose,
     TechnicianController.addProfession
