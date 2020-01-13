@@ -47,6 +47,16 @@ class Performance {
         let {rows} = await pool.query('SELECT * FROM Teatr.Rozszerzona_lista_spektakli WHERE spektakl_id = $1', [id]);
         return rows;
     }   
+    
+    static async getDescriptions(id) {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Opisy_do_spektakli WHERE spektakl_id = $1', [id]);
+        return rows;
+    }
+
+    static async getAll() {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Spektakl');
+        return rows;
+    }
 
     static async delete(id) {
         await pool.query('DELETE FROM Teatr.Spektakl WHERE spektakl_id = $1', [id]);

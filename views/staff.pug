@@ -1,5 +1,12 @@
 extends home.pug
 
 block content
-    p staff
+    .button-nav
+        button#viewActors.nav-btn Aktorzy
+        button#viewDirectors.nav-btn Reżyserzy
+        button#viewScriptwriters.nav-btn Scenarzyści
+        button#viewTechnicians.nav-btn Technicy teatralni
+
+    #staffContainer
+    
     script(src="/js/client/staff.js")

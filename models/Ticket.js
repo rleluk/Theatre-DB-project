@@ -5,15 +5,6 @@ class Ticket {
     static async add() {
 
     }
-    
-    static async get() {
-
-    }
-
-    static async delete(id) {
-        await pool.query('DELETE FROM Teatr.Bilet WHERE bilet_id = $1', [id]);
-        return {msg: 'Dane zostały pomyślnie usunięte.'};
-    }
 }
 
 class TicketType {

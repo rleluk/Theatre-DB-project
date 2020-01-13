@@ -82,3 +82,13 @@ exports.deleteProfession = async (req, res) => {
         }
     }
 };
+
+exports.getAllTechnicians = async (req, res) => {
+    try {
+        let result = await Technician.getAll();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+  };

@@ -33,3 +33,13 @@ exports.deleteActor = async (req, res) => {
         res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
+
+exports.getAllActors= async (req, res) => {
+    try {
+        let result = await Actor.getAll();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+  };

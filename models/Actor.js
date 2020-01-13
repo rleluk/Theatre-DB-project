@@ -16,6 +16,11 @@ class Actor {
         await pool.query(`DELETE FROM Teatr.Aktor WHERE aktor_id = '${id}'`);
         return {msg: 'Dane zostały pomyślnie usunięte.'};
     }
+
+    static async getAll() {
+        let {rows} = await pool.query('SELECT * FROM Teatr.Aktor');
+        return rows;
+    }
 }
 
 module.exports = Actor;

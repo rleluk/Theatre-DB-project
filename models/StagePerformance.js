@@ -19,6 +19,12 @@ class StagePerformance {
         return rows;
     }
 
+    static async getCurrent() {
+        let currentDate = new Date();
+        let {rows} = await pool.query('SELECT * FROM Teatr.Lista_wystawien WHERE data_rozpoczecia > $1', [currentDate]);
+        return rows;
+    }
+
     static async delete(id) {
         await pool.query(`DELETE FROM Teatr.Wystawienie_spektaklu WHERE wystawienie_id = $1`, [id]);
         return {msg: 'Dane zostały pomyślnie usunięte.'};

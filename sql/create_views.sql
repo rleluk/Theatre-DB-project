@@ -70,3 +70,15 @@ CREATE VIEW Teatr.Policz_pracownikow AS
 SELECT s.spektakl_id, COUNT(*) AS Ilosc_pracownikow
 FROM Teatr.Spektakl s JOIN Teatr.Spektakl_technik st ON s.spektakl_id = st.spektakl_id
 GROUP BY s.spektakl_id;
+
+
+
+CREATE VIEW Teatr.Opisy_do_spektakli AS
+SELECT s.spektakl_id,
+    r.imie AS imie_rezysera, r.nazwisko AS nazwisko_rezysera,  
+    sc.imie AS imie_scenarzysty, sc.nazwisko AS nazwisko_scenarzysty,
+    s.opis AS opis_spektaklu, r.opis AS opis_rezysera, sc.opis AS opis_scenarzysty
+FROM Teatr.Spektakl s 
+    JOIN Teatr.Rezyser r ON r.rezyser_id = s.rezyser_id
+    JOIN Teatr.Scenarzysta sc ON sc.scenarzysta_id = s.scenarzysta_id
+ORDER BY spektakl_id;   

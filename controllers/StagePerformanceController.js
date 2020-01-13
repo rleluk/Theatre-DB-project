@@ -45,3 +45,13 @@ exports.getAllStagePerformances = async (req, res) => {
         res.status(500).send({msg: 'Coś poszło nie tak...'});
     }
 };
+
+exports.getCurrentStagePerformances = async (req, res) => {
+    try {
+        let result = await StagePerformance.getCurrent();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};

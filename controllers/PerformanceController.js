@@ -101,6 +101,26 @@ exports.getPerformance = async (req, res) => {
     }
 };
 
+exports.getAllPerformances = async (req, res) => {
+    try {
+        let result = await Performance.getAll();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
+exports.getDescriptions = async (req, res) => {
+    try {
+        let result = await Performance.getDescriptions(req.params.id);
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
 exports.addTechnician = async (req, res) => {
     try {
         let result = await Performance.addTechnician(req.body.performance_id, req.body.technician_id);

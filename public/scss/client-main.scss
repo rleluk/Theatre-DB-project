@@ -18,7 +18,7 @@ html, body {
     padding: 0px;
     text-transform: uppercase;
     width: 100%;
-    position: fixed; 
+    position: absolute; 
     font-family: 'Bangers', cursive;
     font-size: 22px;
 
@@ -45,4 +45,145 @@ html, body {
 
 .content {
     padding-top: 200px;
+}
+
+.button-nav {
+    display: block;
+    margin: 50px 50px;
+    text-transform: uppercase;
+    width: 90%;
+
+    button {
+        font-size: 22px;
+        color: #eee;
+        font-family: 'Bangers', cursive;
+        padding: 50px;
+        border: none;
+        background-color: inherit;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        color: #434; 
+    }
+
+    button.active-btn {
+        color: #434; 
+    }
+}
+
+#performancesContainer,
+#staffContainer,
+#detailsContainer,
+#playsContainer {
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    display: grid;
+    grid-gap: 50px;
+}
+
+.performance-item {
+    transition: all .2s ease-in-out;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    width: 400px;
+    height: 400px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    background-image: url('/img/img.jpg');
+    background-repeat: no-repeat;
+    background-size: 400px 400px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    cursor: pointer;
+}
+
+.performance-item:hover {
+    transform: scale(1.1);
+}
+
+.staff-item {
+    transition: all .2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 120px;
+    background-color: rgba(240, 200, 200, 0.2);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    font-size: 25px;
+}
+
+.play-item {
+    width: 70%;
+    background-color: rgba(240, 200, 200, 0.2);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    font-size: 25px;
+    padding: 30px;
+
+    #buyTicket {
+        display: block;
+        margin: 0 auto;
+        font-size: 22px;
+        color: #eee;
+        font-family: 'Bangers', cursive;
+        padding: 10px;
+        border: none;
+        background-color: rgba(240, 200, 200, 0.2);
+        cursor: pointer;
+    }
+
+    #buyTicket:hover {
+        color: #fff;
+        background-color: rgba(220, 200, 200, 0.4);
+    }
+}
+
+.staff-item:hover {
+    transform: scale(1.1);
+}
+
+.description-item {
+    width: 600px;
+    font-size: 20px;
+}
+
+@media (min-width: 400px) {
+    #staffContainer { grid-template-columns: auto; }
+}
+
+@media(min-width: 450px) {
+    #performancesContainer { grid-template-columns: auto; }
+}
+
+@media (min-width: 650px) {
+    #detailsContainer { grid-template-columns: auto; }
+}
+
+@media (min-width: 800px) {
+    #staffContainer { grid-template-columns: auto auto; }
+}
+
+@media(min-width: 900px) {
+    #performancesContainer { grid-template-columns: auto auto; }
+}
+
+@media (min-width: 1200px) {
+    #staffContainer { grid-template-columns: auto auto auto; }
+}
+
+@media(min-width: 1350px) {
+    #performancesContainer { grid-template-columns: auto auto auto; }
+    #detailsContainer { grid-template-columns: auto auto; }
+}
+
+@media (min-width: 1600px) {
+    #staffContainer { grid-template-columns: auto auto auto auto; }
 }
