@@ -9,6 +9,11 @@ router.get('/',
     TicketController.ticket
 );
 
+router.get('/info',
+    utils.sessionChecker,
+    TicketController.getTicketInfo
+);
+
 router.post('/type/add',
     utils.sessionChecker,
     [
@@ -28,7 +33,7 @@ router.delete('/type/delete/:id',
     TicketController.deleteTicketType
 );
 
-router.get('/type/getall',
+router.get('/type/all',
     utils.sessionChecker,
     TicketController.getAllTicketTypes
 );

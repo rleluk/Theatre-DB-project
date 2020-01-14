@@ -82,3 +82,48 @@ FROM Teatr.Spektakl s
     JOIN Teatr.Rezyser r ON r.rezyser_id = s.rezyser_id
     JOIN Teatr.Scenarzysta sc ON sc.scenarzysta_id = s.scenarzysta_id
 ORDER BY spektakl_id;   
+
+
+-- pomocnicze widoki do biletów
+
+CREATE VIEW Teatr.Maksymalna_ilosc_biletow AS
+SELECT ws.wystawienie_id, COUNT(*) AS max_ilosc
+FROM Teatr.Wystawienie_spektaklu ws
+    JOIN Teatr.Sala s ON s.sala_id = ws.sala_id
+    JOIN Teatr.Miejsce m ON m.sala_id = s.sala_id
+GROUP BY (ws.wystawienie_id);
+
+
+
+CREATE VIEW Teatr.Aktualna_ilosc_biletow AS
+SELECT ws.wystawienie_id, COUNT(b.bilet_id) AS akt_ilosc
+FROM Teatr.Bilet b
+    JOIN Teatr.Wystawienie_spektaklu ws ON ws.wystawienie_id = b.wystawienie_id
+GROUP BY (ws.wystawienie_id);
+
+
+
+CREATE VIEW Teatr.Ostatnie_zajete_miejsce AS
+SELECT ws.wystawienie_id, MAX(b.miejsce_id) AS ostatnie_miejsce
+FROM Teatr.Bilet b
+    JOIN Teatr.Wystawienie_spektaklu ws ON ws.wystawienie_id = b.wystawienie_id
+GROUP BY (ws.wystawienie_id);
+
+
+
+CREATE VIEW Teatr.Pierwsze_miejsce_w_sali AS
+SELECT ws.wystawienie_id, MIN(m.miejsce_id) AS pierwsze_miejsce
+FROM Teatr.Wystawienie_spektaklu ws
+    JOIN Teatr.Sala s ON ws.sala_id = s.sala_id
+    JOIN Teatr.Miejsce m ON m.sala_id = s.sala_id
+GROUP BY (ws.wystawienie_id);
+
+
+
+CREATE VIEW Teatr.Dane_statystyczne_wystawien AS
+SELECT ws.wystawienie_id, s.tytul, sala.nazwa AS sala, akt.akt_ilosc, maks.max_ilosc, ws.data_rozpoczecia
+FROM Teatr.Wystawienie_spektaklu ws
+    JOIN Teatr.Sala sala ON sala.sala_id = ws.sala_id
+    JOIN Teatr.Spektakl s ON s.spektakl_id = ws.spektakl_id
+    JOIN Teatr.Aktualna_ilosc_biletow akt ON akt.wystawienie_id = ws.wystawienie_id
+    JOIN Teatr.Maksymalna_ilosc_biletow maks ON maks.wystawienie_id = ws.wystawienie_id;

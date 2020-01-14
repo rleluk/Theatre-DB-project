@@ -10,6 +10,9 @@ html, body {
   height: 100%;
   font-family: 'McLaren', cursive; }
 
+button, select {
+  font-family: 'McLaren', cursive; }
+
 .nav-bar {
   display: block;
   margin: 50px auto;
@@ -54,15 +57,37 @@ html, body {
   .button-nav button.active-btn {
     color: #434; }
 
+#submitPurchaseButton {
+  display: block;
+  margin: 50px auto;
+  width: 100px;
+  height: 30px;
+  font-size: 22px;
+  color: #eee;
+  font-family: 'Bangers', cursive;
+  border: none;
+  background-color: inherit;
+  cursor: pointer; }
+
+#submitPurchaseButton:hover {
+  color: #434; }
+
+#ticketTypeSelect {
+  display: block;
+  margin: 60px auto;
+  width: 200px;
+  height: 40px; }
+
 #performancesContainer,
 #staffContainer,
 #detailsContainer,
 #playsContainer {
   align-items: center;
   justify-items: center;
-  width: 100%;
+  width: calc(100% - 20px);
   display: grid;
-  grid-gap: 50px; }
+  grid-gap: 30px;
+  margin: 20px; }
 
 .performance-item {
   transition: all .2s ease-in-out;
@@ -105,7 +130,8 @@ html, body {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
   font-size: 25px;
   padding: 30px; }
-  .play-item #buyTicket {
+  .play-item #buyTicketButton {
+    border-radius: 5px;
     display: block;
     margin: 0 auto;
     font-size: 22px;
@@ -115,9 +141,9 @@ html, body {
     border: none;
     background-color: rgba(240, 200, 200, 0.2);
     cursor: pointer; }
-  .play-item #buyTicket:hover {
+  .play-item #buyTicketButton:hover {
     color: #fff;
-    background-color: rgba(220, 200, 200, 0.4); }
+    background-color: rgba(200, 200, 200, 0.6); }
 
 .staff-item:hover {
   transform: scale(1.1); }

@@ -29,6 +29,8 @@ BEGIN
 END
 $$;
 
+
+
 CREATE FUNCTION Teatr.Dodaj_spektakl(opis VARCHAR, tytul VARCHAR, gatunek VARCHAR, id_rezysera INT, id_scenarzysty INT)
 RETURNS INT 
 LANGUAGE 'plpgsql' AS $$
@@ -63,6 +65,8 @@ BEGIN
 END
 $$;
 
+
+
 CREATE FUNCTION Teatr.Zmien_spektakl(id_spektaklu INT, opis VARCHAR, tytul VARCHAR, gatunek VARCHAR, id_rezysera INT, id_scenarzysty INT)
 RETURNS INT 
 LANGUAGE 'plpgsql' AS $$
@@ -94,6 +98,8 @@ BEGIN
 END
 $$;
 
+
+
 CREATE FUNCTION Teatr.Wystaw_spektakl(id_spektaklu INT,
 data_rozpoczecia TIMESTAMP, data_zakonczenia TIMESTAMP, sala VARCHAR)
 RETURNS INT 
@@ -120,3 +126,77 @@ BEGIN
     RETURN 1;
 END
 $$;
+
+
+
+CREATE TYPE Teatr.sala_i_miejsce AS (sala VARCHAR, miejsce INT);
+
+CREATE FUNCTION Teatr.Dodaj_bilet(id_wystawienia INT, typ_biletu VARCHAR)
+RETURNS Teatr.sala_i_miejsce
+LANGUAGE 'plpgsql' AS $$
+DECLARE
+    akt_ilosc_biletow INT;
+    max_ilosc_biletow INT;
+    ost_miejsce INT;
+    id_typu INT;
+    s_m Teatr.sala_i_miejsce;
+BEGIN
+    SELECT typ_biletu_id 
+    INTO id_typu 
+    FROM Teatr.Typ_biletu 
+    WHERE nazwa = $2;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Nie znaleziono typu biletu o podanej nazwie.'; 
+    END IF;
+
+    IF NOT EXISTS (SELECT * FROM Teatr.Wystawienie_spektaklu WHERE wystawienie_id = $1) THEN
+        RAISE EXCEPTION 'Nie znaleziono wystawienia spektaklu o podanym id.'; 
+    END IF;
+
+    SELECT akt_ilosc
+    FROM Teatr.Aktualna_ilosc_biletow 
+    INTO akt_ilosc_biletow
+    WHERE wystawienie_id = $1;
+
+    SELECT max_ilosc 
+    FROM Teatr.Maksymalna_ilosc_biletow
+    INTO max_ilosc_biletow
+    WHERE wystawienie_id = $1;
+     
+    IF akt_ilosc_biletow = max_ilosc_biletow THEN
+        RAISE EXCEPTION 'Wszystkie miejsca są już zajęte.';
+    END IF;
+
+    SELECT s.nazwa 
+    INTO s_m.sala
+    FROM Teatr.Wystawienie_spektaklu ws 
+        JOIN Teatr.Sala s ON ws.sala_id = s.sala_id 
+    WHERE wystawienie_id = $1;
+
+    SELECT ostatnie_miejsce
+    FROM Teatr.Ostatnie_zajete_miejsce
+    INTO ost_miejsce
+    WHERE wystawienie_id = $1;
+
+    IF NOT FOUND THEN
+        SELECT pierwsze_miejsce
+        FROM Teatr.Pierwsze_miejsce_w_sali
+        INTO ost_miejsce
+        WHERE wystawienie_id = $1;
+
+        INSERT INTO Teatr.Bilet(typ_biletu_id, miejsce_id, wystawienie_id)
+        VALUES (id_typu, ost_miejsce, $1);
+
+        s_m.miejsce = ost_miejsce;
+    ELSE
+        INSERT INTO Teatr.Bilet(typ_biletu_id, miejsce_id, wystawienie_id)
+        VALUES (id_typu, ost_miejsce + 1, $1);
+
+        s_m.miejsce = ost_miejsce + 1;
+    END IF;
+
+    RETURN (s_m.sala, s_m.miejsce);
+END
+$$;
+

@@ -99,7 +99,7 @@ async function addRecord(url, dataToSend) {
 async function getData(url) {
     let res = await fetch(url, {method: 'GET'});
     let data = await res.json();
-
+    
     if(res.status !== 200) {
         sendAlert(data.msg);
         return null;

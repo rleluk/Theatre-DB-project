@@ -5,6 +5,30 @@ exports.ticket = (req, res) => {
     res.render('ticket-panel');
 };
 
+exports.addTicket = async (req, res) => {
+    try {
+        let result = await Ticket.add(req.body.play_id, req.body.ticketType);
+        res.status(200).send(result);
+    } catch(err) {
+        if(err.code === 'P0001') {
+            res.status(409).send({msg: err.message})
+        } else {
+            console.log(err);
+            res.status(500).send({msg: 'Coś poszło nie tak...'});
+        }
+    }
+};
+
+exports.getTicketInfo = async (req, res) => {
+    try {
+        let result = await Ticket.getTicketInfo();
+        res.status(200).send(result);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send({msg: 'Coś poszło nie tak...'});
+    }
+};
+
 exports.addTicketType = async (req, res) => {
     try {
         let result = await TicketType.add(req.body.name, req.body.price);

@@ -47,7 +47,7 @@ router.get('/performance/all',
 
 router.get('/performance/descriptions/:id',
     [
-        check('id').isInt(),
+        check('id').isInt()
     ],
     utils.checkValidation,
     PerformanceController.getDescriptions
@@ -55,7 +55,7 @@ router.get('/performance/descriptions/:id',
 
 router.get('/performance/technicians/:performance_id',
     [
-        check('performance_id').isInt(),
+        check('performance_id').isInt()
     ],
     utils.checkValidation,
     PerformanceController.getTechnicians
@@ -63,7 +63,7 @@ router.get('/performance/technicians/:performance_id',
 
 router.get('/performance/roles/:performance_id',
     [
-        check('performance_id').isInt(),
+        check('performance_id').isInt()
     ],
     utils.checkValidation,
     RoleController.getRoles
@@ -73,12 +73,17 @@ router.get('/play/current',
     StagePerformanceController.getCurrentStagePerformances
 );
 
-router.post('/tickets/:play_id'
+router.post('/tickets/add',
     [
         check('play_id').isInt(),
+        check('ticketType').isAlpha('pl-PL')
     ],
     utils.checkValidation,
     TicketController.addTicket
+);
+
+router.get('/ticket/type/all',
+    TicketController.getAllTicketTypes
 );
 
 module.exports = router;

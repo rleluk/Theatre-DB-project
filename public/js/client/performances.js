@@ -29,8 +29,7 @@ async function showDetails(id) {
             `<h2> Autor </h2>
             <p> ${performance[0].imie_scenarzysty} ${performance[0].nazwisko_scenarzysty} </p>
             <h2> Reżyser </h2>
-            <p> ${performance[0].imie_rezysera} ${performance[0].nazwisko_rezysera} </p>
-            `;
+            <p> ${performance[0].imie_rezysera} ${performance[0].nazwisko_rezysera} </p>`;
 
         staffDiv.innerHTML += '<h2> Obsada </h2>';    
 
@@ -50,8 +49,7 @@ async function showDetails(id) {
             <h2> O autorze: </h2>
             <p> ${performance[0].opis_scenarzysty}</p>
             <h2> O reżyserze: </h2>
-            <p> ${performance[0].opis_rezysera}</p>
-            `;
+            <p> ${performance[0].opis_rezysera}</p>`;
 
         container.appendChild(staffDiv);
         container.appendChild(descriptionDiv);

@@ -12,7 +12,7 @@ router.get('/',
 router.post('/add',
     utils.sessionChecker,
     [
-        check('name').isAlphanumeric().withMessage('Nazwa sali powinna zawierać wyłącznie znaki alfanumeryczne.'),
+        check('name').isAlphanumeric('pl-PL').withMessage('Nazwa sali powinna zawierać wyłącznie znaki alfanumeryczne.'),
         check('numberOfRows').isInt({gt: 0, lt: 10}).withMessage('Nieprawidłowa ilość rzędów.'),
         check('seatsInRow').isInt({gt: 0, lt: 10}).withMessage('Nieprawidłowa ilość siedzeń w rzędzie.')
     ],
