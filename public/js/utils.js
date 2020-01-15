@@ -69,6 +69,7 @@ async function updateSelect(select, url, format) {
 async function editRecord(url, dataToSend) {
     let res = await fetch(url, {
         method: 'PUT',
+        credentials: 'include', 
         headers: {
             'Content-Type': 'application/json'
         },
@@ -84,6 +85,7 @@ async function editRecord(url, dataToSend) {
 async function addRecord(url, dataToSend) {
     let res = await fetch(url, {
         method: 'POST',
+        credentials: 'include', 
         headers: {
             'Content-Type': 'application/json'
         },
@@ -97,7 +99,10 @@ async function addRecord(url, dataToSend) {
 }
 
 async function getData(url) {
-    let res = await fetch(url, {method: 'GET'});
+    let res = await fetch(url, {
+        method: 'GET', 
+        credentials: 'include'
+    });
     let data = await res.json();
     
     if(res.status !== 200) {
@@ -110,7 +115,7 @@ async function getData(url) {
 
 async function deleteRecord_WC(url, container) {
     if (confirm('Czy na pewno chcesz usunąć rekord, oraz WSZYSTKIE powiązane rekordy w innych tabelach?')) {
-        let res = await fetch(url, {method: 'DELETE'});
+        let res = await fetch(url, {method: 'DELETE', credentials: 'include'});
         let data = await res.json();
         
         if(res.status === 200) 
@@ -121,7 +126,7 @@ async function deleteRecord_WC(url, container) {
 }
 
 async function deleteRecord(url, container) {
-    let res = await fetch(url, {method: 'DELETE'});
+    let res = await fetch(url, {method: 'DELETE', credentials: 'include'});
     let data = await res.json();
     
     if(res.status === 200) 
@@ -132,7 +137,7 @@ async function deleteRecord(url, container) {
 
 /************************************** FETCH DATA AND CREATE TABLES - FUNCTIONS **************************************/
 async function getSimpleTable(url, deleteUrl, columnNames, deleteFunction, deleteAction = null) {
-    let res = await fetch(url, {method: 'GET'});
+    let res = await fetch(url, {method: 'GET', credentials: 'include'});
     let data = await res.json();
     let table = document.createElement('table');
     
@@ -142,6 +147,7 @@ async function getSimpleTable(url, deleteUrl, columnNames, deleteFunction, delet
         sendAlert('Nie znaleziono żadnych rekordów.');
     } else {
         // THEAD
+
         let thead = table.createTHead();
         let theadRow = thead.insertRow(-1);
         
@@ -186,7 +192,7 @@ async function getSimpleTable(url, deleteUrl, columnNames, deleteFunction, delet
 }
 
 async function getComplexTable(url, deleteUrl, columnNames, editAction) {
-    let res = await fetch(url, {method: 'GET'});
+    let res = await fetch(url, {method: 'GET', credentials: 'include'});
     let data = await res.json();
     let tableContainer = document.getElementById('dataContainer');
 

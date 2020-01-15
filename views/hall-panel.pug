@@ -6,22 +6,23 @@ block content
         button(onclick="changeForm('searchHallForm')") Wyszukaj salę
 
     #alert
+    
+    #forms
+        form#addHallForm.input-form.invisible(name="addHallForm")
+            .input-wrapper
+                label Nazwa sali: 
+                input(type="text", name="name") 
+                label Ilość rzędów:
+                input(type="text", name="numberOfRows")
+                label Ilość siedzeń w rzędzie: 
+                input(type="text" name="seatsInRow")
+            button(type="submit") Dodaj 
 
-    form#addHallForm.input-form.invisible(name="addHallForm")
-        .input-wrapper
-            label Nazwa sali: 
-            input(type="text", name="name") 
-            label Ilość rzędów:
-            input(type="text", name="numberOfRows")
-            label Ilość siedzeń w rzędzie: 
-            input(type="text" name="seatsInRow")
-        button(type="submit") Dodaj 
-
-    form#searchHallForm.input-form.invisible(name="searchHallForm")
-        .input-wrapper
-            label Nazwa sali:
-            input(type="text", name="name")
-        button(type="submit") Szukaj 
+        form#searchHallForm.input-form.invisible(name="searchHallForm")
+            .input-wrapper
+                label Nazwa sali:
+                input(type="text", name="name")
+            button(type="submit") Szukaj 
 
     #dataContainer
     script(src="/js/admin/hall-panel.js")

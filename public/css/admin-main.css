@@ -35,8 +35,10 @@ input, button, select, textarea {
     float: right; }
 
 .button-nav {
+  padding-top: 20px;
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  flex-wrap: wrap; }
   .button-nav button {
     width: 160px;
     height: 65px;
@@ -54,10 +56,16 @@ input, button, select, textarea {
     color: #fff; }
 
 .content {
-  padding-top: 100px;
+  padding-top: 80px;
   text-align: center; }
   .content #alert {
-    margin-top: 50px; }
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    position: fixed;
+    color: red; }
+  .content #forms {
+    margin-top: 120px; }
 
 .input-form {
   display: block;

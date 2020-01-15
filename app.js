@@ -5,7 +5,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 // routers
-const routes = require('./routes/client/index');
+const index = require('./routes/client/index');
 const admin = require('./routes/admin/admin');
 const actor = require('./routes/admin/actor');
 const role = require('./routes/admin/role');
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/', routes);
+app.use('/', index);
 app.use('/admin/role', role);
 app.use('/admin', admin);
 app.use('/admin/actor', actor);

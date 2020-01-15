@@ -4,42 +4,43 @@ block content
     .button-nav
         button(onclick="changeForm('addDirectorForm')") Dodaj reżysera
         button(onclick="changeForm('searchDirectorForm')") Wyszukaj reżysera
-
+        
     #alert
 
-    form#addDirectorForm.input-form.invisible(name="addDirectorForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-            label Data urodzenia:
-            input(type="date" name="bday")
-            label Opis:
-            textarea(name="description")
-        button(type="submit") Dodaj 
+    #forms
+        form#addDirectorForm.input-form.invisible(name="addDirectorForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+                label Data urodzenia:
+                input(type="date" name="bday")
+                label Opis:
+                textarea(name="description")
+            button(type="submit") Dodaj 
 
-    form#searchDirectorForm.input-form.invisible(name="searchDirectorForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-        button(type="submit") Szukaj 
+        form#searchDirectorForm.input-form.invisible(name="searchDirectorForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+            button(type="submit") Szukaj 
 
-    form#editDirectorForm.input-form.invisible(name="editDirectorForm")
-        .input-wrapper
-            label ID:
-            input(type="text", name="id", disabled)
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-            label Data urodzenia:
-            input(type="date" name="bday")
-            label Opis:
-            textarea(name="description")
-        button(type="submit") Edytuj 
+        form#editDirectorForm.input-form.invisible(name="editDirectorForm")
+            .input-wrapper
+                label ID:
+                input(type="text", name="id", disabled)
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+                label Data urodzenia:
+                input(type="date" name="bday")
+                label Opis:
+                textarea(name="description")
+            button(type="submit") Edytuj 
 
     #dataContainer
 

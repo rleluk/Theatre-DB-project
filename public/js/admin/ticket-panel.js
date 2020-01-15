@@ -35,7 +35,7 @@ document.getElementById('addTicketTypeForm').addEventListener('submit', async ev
 
 /************************************** CUSTOM FUNCTIONS **************************************/
 async function getCustomTable(url, columnNames) {
-    let res = await fetch(url, {method: 'GET'});
+    let res = await fetch(url, {method: 'GET', credentials: 'include'});
     console.log(res);
     let data = await res.json();
     let table = document.createElement('table');

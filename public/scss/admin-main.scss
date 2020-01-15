@@ -48,8 +48,10 @@ input, button, select, textarea {
 }
 
 .button-nav {
+    padding-top: 20px;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 
     button {
         width: 160px;
@@ -72,11 +74,18 @@ input, button, select, textarea {
 }
 
 .content {
-    padding-top: 100px;
+    padding-top: 80px;
     text-align: center;
-    
     #alert {
-        margin-top: 50px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        position: fixed;
+        color: red;
+    }
+
+    #forms {
+        margin-top: 120px;
     }
 }
 

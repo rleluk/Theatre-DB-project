@@ -7,39 +7,40 @@ block content
 
     #alert
 
-    form#addScriptwriterForm.input-form.invisible(name="addScriptwriterForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-            label Data urodzenia:
-            input(type="date" name="bday")
-            label Opis:
-            textarea(name="description")
-        button(type="submit") Dodaj 
+    #forms
+        form#addScriptwriterForm.input-form.invisible(name="addScriptwriterForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+                label Data urodzenia:
+                input(type="date" name="bday")
+                label Opis:
+                textarea(name="description")
+            button(type="submit") Dodaj 
 
-    form#searchScriptwriterForm.input-form.invisible(name="searchScriptwriterForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-        button(type="submit") Szukaj 
+        form#searchScriptwriterForm.input-form.invisible(name="searchScriptwriterForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+            button(type="submit") Szukaj 
 
-    form#editScriptwriterForm.input-form.invisible(name="editScriptwriterForm")
-        .input-wrapper
-            label ID:
-            input(type="text", name="id", disabled)
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-            label Data urodzenia:
-            input(type="date" name="bday")
-            label Opis:
-            textarea(name="description")
-        button(type="submit") Edytuj 
+        form#editScriptwriterForm.input-form.invisible(name="editScriptwriterForm")
+            .input-wrapper
+                label ID:
+                input(type="text", name="id", disabled)
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+                label Data urodzenia:
+                input(type="date" name="bday")
+                label Opis:
+                textarea(name="description")
+            button(type="submit") Edytuj 
 
     #dataContainer
 

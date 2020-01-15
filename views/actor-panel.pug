@@ -7,23 +7,24 @@ block content
 
     #alert
 
-    form#addActorForm.input-form.invisible(name="addActorForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-            label Data urodzenia:
-            input(type="date" name="bday")
-        button(type="submit") Dodaj 
+    #forms
+        form#addActorForm.input-form.invisible(name="addActorForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+                label Data urodzenia:
+                input(type="date" name="bday")
+            button(type="submit") Dodaj 
 
-    form#searchActorForm.input-form.invisible(name="searchActorForm")
-        .input-wrapper
-            label Imię:
-            input(type="text", name="name")
-            label Nazwisko:
-            input(type="text", name="surname")
-        button(type="submit") Szukaj 
+        form#searchActorForm.input-form.invisible(name="searchActorForm")
+            .input-wrapper
+                label Imię:
+                input(type="text", name="name")
+                label Nazwisko:
+                input(type="text", name="surname")
+            button(type="submit") Szukaj 
 
     #dataContainer
     

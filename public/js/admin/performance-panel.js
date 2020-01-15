@@ -146,7 +146,7 @@ document.getElementById('addRoleForm').addEventListener('submit', async event =>
         document.getElementById('addRole-btn').style.display = 'block';
         document.getElementById('addRoleForm').style.display = 'none';
         document.addRoleForm.role.value = '';
-        document.querySelector('#editContainer .actorSelect').value = 'Wybierz';
+        document.querySelector('#editContainer .actorSelect').value = '';
     }
 });
 
@@ -179,6 +179,10 @@ document.getElementById('addTechnicianForm').addEventListener('submit', async ev
         
         document.getElementById('addTechnician-btn').style.display = 'block';
         document.getElementById('addTechnicianForm').style.display = 'none';
+        document.querySelector('#editContainer .professionSelect').value = '';
+        for (a in technician.options) { 
+            technician.options.remove(0); 
+        }
     }
 });
 
@@ -295,6 +299,7 @@ async function stagePlayForm(id) {
 async function addRecordCustom(url, dataToSend) {
     let res = await fetch(url, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -313,7 +318,7 @@ async function addRecordCustom(url, dataToSend) {
 
 /************************************** FETCH DATA AND CREATE TABLES - FUNCTIONS **************************************/
 async function getCustomTable(url, deleteUrl, tbody, deleteBtn = false) {
-    let res = await fetch(url, {method: 'GET'});
+    let res = await fetch(url, {method: 'GET', credentials: 'include'});
     let data = await res.json();
     tbody.innerHTML = '';
 
@@ -352,7 +357,7 @@ function addTableRow(record, tbody, deleteUrl, deleteBtn = false) {
 
 async function getPerformanceList(url) {
     const deleteUrl = '/admin/performance/delete/';
-    let res = await fetch(url);
+    let res = await fetch(url, {method: 'GET', credentials: 'include'});
     let data = await res.json();
 
     let tableContainer = document.getElementById('dataContainer');
