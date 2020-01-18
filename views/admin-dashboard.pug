@@ -5,12 +5,21 @@ html(lang="pl")
         link(href="https://fonts.googleapis.com/css?family=Bangers&display=swap", rel="stylesheet")
         link(href="https://fonts.googleapis.com/css?family=McLaren&display=swap", rel="stylesheet")
         link(rel="stylesheet", type="text/css", href="/css/admin-main.css")
+        link(rel="stylesheet", type="text/css", href="/css/modal.css")
         block css
 
         script(src="/js/utils.js")
         block js
 
     body
+        .modal
+            .modal-content
+                span.close &times;
+                .modal-body
+
+        script(src="/js/modal.js")  
+
+
         .nav-bar
             a#performance-btn.nav-item(href="/admin/performance") Spektakle
             a#ticket-btn.nav-item(href="/admin/ticket") Bilety
@@ -21,6 +30,7 @@ html(lang="pl")
             a#technician-btn.nav-item(href="/admin/technician") Technicy teatralni
 
             a.logout-btn(href="/admin/logout") Wyloguj  
+
 
         .content
             block content

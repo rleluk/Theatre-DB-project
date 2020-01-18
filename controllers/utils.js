@@ -31,14 +31,14 @@ exports.checkValidation = (req, res, next) => {
 exports.checkPerformanceVerbose = [
     check('title')
         .isLength({min: 1, max: 40}).trim().withMessage('Nieprawidłowa długość tytułu.').bail()
-        .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż0-9.,\- ]+$/)
+        .matches(/^[-AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻżvVxX0-9., ]+$/)
         .withMessage('Tytuł zawiera nieprawidłowe znaki.'),
     check('genre')
         .isAlpha('pl-PL').withMessage('Nieprawidłowy gatunek sztuki.'),
     check('director_id').isInt().withMessage('Nieprawidłowy reżyser.'),
     check('scriptwriter_id').isInt().withMessage('Nieprawidłowy scenarzysta.'),
     check('description')
-        .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż0-9.,\s\-]+$|^$/)
+        .matches(/^[-AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻżvVxX0-9.,\s ]+$|^$/)
         .withMessage('Opis zawiera niepoprawne znaki.')
 ];
 
@@ -51,6 +51,6 @@ exports.checkPersonVerbose = [
         .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.'),
     check('bday').isISO8601().withMessage('Nieprawidłowa data urodzenia.'),
     check('description')
-        .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż0-9.,\s\-]+$|^$/)
+        .matches(/^[-AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż0-9vVxX.,\s ]+$|^$/)
         .withMessage('Opis zawiera niepoprawne znaki.')
 ];

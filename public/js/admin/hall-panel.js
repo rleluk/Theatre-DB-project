@@ -5,7 +5,6 @@ window.onload = () => {
 
 document.getElementById('addHallForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     const formData = {
         name: document.addHallForm.name.value,
@@ -15,12 +14,11 @@ document.getElementById('addHallForm').addEventListener('submit', async event =>
 
     const isOK = await addRecord('/admin/hall/add', formData);
 
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchHallForm').addEventListener('submit', event => {
     event.preventDefault();
-    clearAlert();
     clearDataContainer();
 
     let searchData = {name: document.searchHallForm.name.value};
@@ -28,7 +26,7 @@ document.getElementById('searchHallForm').addEventListener('submit', event => {
     let queryStr = `?name=${searchData.name}`;
 
     getSimpleTable('/admin/hall/search' + queryStr, '/admin/hall/delete/', 
-        ['ID', 'Nazwa', 'Ilość siedzeń', 'Ilość rzędów'],
+        ['ID', 'Nazwa', 'Ilość rzędów', 'Ilość siedzeń'],
         deleteRecord_WC
     );
 });

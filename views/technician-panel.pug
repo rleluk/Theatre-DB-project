@@ -7,34 +7,31 @@ block content
         button(onclick="changeForm('addProfessionForm')") Dodaj profesję
         button#viewProfessions Wyświetl dostępne profesje
     
-    #alert
+    form#addTechnicianForm.input-form.invisible(name="addTechnicianForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Profesja:
+            select#professionSelect
+        button(type="submit") Dodaj 
 
-    #forms
-        form#addTechnicianForm.input-form.invisible(name="addTechnicianForm")
-            .input-wrapper
-                label Imię:
-                input(type="text", name="name")
-                label Nazwisko:
-                input(type="text", name="surname")
-                label Profesja:
-                select#professionSelect
-            button(type="submit") Dodaj 
+    form#searchTechnicianForm.input-form.invisible(name="searchTechnicianForm")
+        .input-wrapper
+            label Imię:
+            input(type="text", name="name")
+            label Nazwisko:
+            input(type="text", name="surname")
+            label Profesja:
+            input(type="text", name="profession")
+        button(type="submit") Szukaj 
 
-        form#searchTechnicianForm.input-form.invisible(name="searchTechnicianForm")
-            .input-wrapper
-                label Imię:
-                input(type="text", name="name")
-                label Nazwisko:
-                input(type="text", name="surname")
-                label Profesja:
-                input(type="text", name="profession")
-            button(type="submit") Szukaj 
-
-        form#addProfessionForm.input-form.invisible(name="addProfessionForm")
-            .input-wrapper
-                label Nazwa profesji:
-                input(type="text", name="name")
-            button(type="submit") Dodaj 
+    form#addProfessionForm.input-form.invisible(name="addProfessionForm")
+        .input-wrapper
+            label Nazwa profesji:
+            input(type="text", name="name")
+        button(type="submit") Dodaj 
 
     #dataContainer
 

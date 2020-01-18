@@ -41,14 +41,13 @@ document.getElementById('viewGenres').addEventListener('click', event => {
 document.getElementById('addGenreForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     const isOK = await addRecord('/admin/performance/genre/add', {
         name: document.addGenreForm.name.value
     });
 
     if(isOK) {
-        changeForm(null, false);
+        changeForm(null);
         updateGenres();
     }
 });
@@ -58,7 +57,6 @@ document.getElementById('addGenreForm').addEventListener('submit', async event =
 /************************ ADD ************************/
 document.getElementById('addPerformanceForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     const formData = {
         description: document.addPerformanceForm.description.value,
@@ -68,16 +66,18 @@ document.getElementById('addPerformanceForm').addEventListener('submit', async e
         scriptwriter_id: document.querySelector('#addPerformanceForm .scriptwriterSelect').value.split('.')[0]
     }   
 
-    console.log(formData);
     let id = await addRecordCustom('/admin/performance/add', formData);
 
-    if(id) showEditForm(id);
+    if(id) {
+        changeForm(null);
+        showEditForm(id);   
+    }
+
 });
 
 /************************ SEARCH ************************/
 document.getElementById('searchPerformanceForm').addEventListener('submit', event => {
     event.preventDefault();
-    clearAlert();
     clearDataContainer();
 
     const searchData = {
@@ -99,7 +99,6 @@ document.getElementById('searchPerformanceForm').addEventListener('submit', even
 /************************ EDIT ************************/
 document.getElementById('editPerformanceForm').addEventListener('submit', event => {
     event.preventDefault();
-    clearAlert();
     
     const formData = {
         performance_id: document.editPerformanceForm.id.value,  
@@ -125,7 +124,6 @@ document.getElementById('addRole-btn').addEventListener('click', event => {
 
 document.getElementById('addRoleForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     let formData = {
         name: document.addRoleForm.role.value,
@@ -152,7 +150,6 @@ document.getElementById('addRoleForm').addEventListener('submit', async event =>
 
 document.getElementById('addTechnicianForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     let technician = document.querySelector('#editContainer .technicianSelect');
 
@@ -208,7 +205,6 @@ document.querySelector('.additionalSearch-btn').addEventListener('click', event 
 /************************ STAGE A PLAY ************************/
 document.getElementById('stagePlayForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     let formData = {
         performance_id: document.stagePlayForm.id.value,
@@ -221,12 +217,11 @@ document.getElementById('stagePlayForm').addEventListener('submit', async event 
     
     let isOK = await addRecord('/admin/stageperformance/add', formData);
 
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchStagePerformanceForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
     clearDataContainer();
 
     const searchData = {

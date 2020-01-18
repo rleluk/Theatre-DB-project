@@ -18,7 +18,9 @@ router.post('/add',
         check('surname')
             .isLength({min: 1, max: 20}).withMessage('Nieprawidłowa długość nazwiska.').bail()
             .isAlpha('pl-PL').withMessage('Nazwisko powinno zawierać wyłącznie litery.'),
-        check('profession').isAlpha('pl-PL').withMessage('Nieprawidłowa profesja.')
+        check('profession')
+            .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż ]+$/)
+            .withMessage('Nieprawidłowa profesja.')
     ],
     utils.checkValidationVerbose,
     TechnicianController.addTechnician
@@ -36,7 +38,8 @@ router.get('/search',
     ]),
     oneOf([
         check('profession').trim().not().exists({checkFalsy: true}),
-        check('profession').exists({checkFalsy: true}).isAlpha('pl-PL')
+        check('profession').exists({checkFalsy: true})
+        .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻżvVxX ]+$/)
     ]),
     utils.checkValidation,
     TechnicianController.searchTechnician
@@ -45,7 +48,8 @@ router.get('/search',
 router.get('/:profession',
     utils.sessionChecker,
     [
-        check('profession').isAlpha('pl-PL')
+        check('profession')
+            .matches(/^[AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻżvVxX ]+$/)
     ],
     utils.checkValidation,
     TechnicianController.getTechnician

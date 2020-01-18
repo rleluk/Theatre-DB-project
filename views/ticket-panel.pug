@@ -6,16 +6,13 @@ block content
         button#viewTicketTypes Wyświetl dostępne typy biletów
         button#viewTicketInfo Informacje o wystawieniach sztuk
 
-    #alert
-
-    #forms
-        form#addTicketTypeForm.input-form.invisible(name="addTicketTypeForm")
-            .input-wrapper
-                label Nazwa typu:
-                input(type="text", name="name")
-                label Cena biletu:
-                input(type="text", name="price")
-            button(type="submit") Dodaj 
+    form#addTicketTypeForm.input-form.invisible(name="addTicketTypeForm")
+        .input-wrapper
+            label Nazwa typu:
+            input(type="text", name="name")
+            label Cena biletu:
+            input(type="text", name="price")
+        button(type="submit") Dodaj 
 
     #dataContainer
 

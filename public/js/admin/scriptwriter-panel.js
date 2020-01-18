@@ -5,7 +5,6 @@ window.onload = () => {
 
 document.getElementById('addScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
     
     const formData = {
         name: document.addScriptwriterForm.name.value,
@@ -16,12 +15,11 @@ document.getElementById('addScriptwriterForm').addEventListener('submit', async 
 
     const isOK = await addRecord('/admin/scriptwriter/add', formData);
     
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('editScriptwriterForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     const formData = {
         id: document.editScriptwriterForm.id.value,
@@ -33,12 +31,11 @@ document.getElementById('editScriptwriterForm').addEventListener('submit', async
 
     const isOK = await editRecord('/admin/scriptwriter/update', formData);
 
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchScriptwriterForm').addEventListener('submit', event => {
     event.preventDefault();
-    clearAlert();
     clearDataContainer();
 
     let searchData = {

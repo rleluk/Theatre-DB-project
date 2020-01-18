@@ -1,8 +1,4 @@
-var sendAlert = (msg) => document.getElementById('alert').innerHTML = msg;
-
 var setDataContainer = (data) => document.getElementById('dataContainer').innerHTML = data;
-
-var clearAlert = () => document.getElementById('alert').innerHTML = '';
 
 var clearDataContainer = () => document.getElementById('dataContainer').innerHTML = '';
 
@@ -28,12 +24,11 @@ function clearInputs() {
     // });
 }
 
-function changeForm(id, cAlert = true) {
+function changeForm(id) {
     let forms = document.getElementsByClassName('input-form');
     Array.prototype.forEach.call(forms, element => element.style.display = 'none');
 
     clearDataContainer();
-    if(cAlert) clearAlert();
     clearInputs();
 
     let form = document.getElementById(id);
@@ -126,13 +121,15 @@ async function deleteRecord_WC(url, container) {
 }
 
 async function deleteRecord(url, container) {
-    let res = await fetch(url, {method: 'DELETE', credentials: 'include'});
-    let data = await res.json();
-    
-    if(res.status === 200) 
-        container.parentNode.removeChild(container);
+    if (confirm('Czy na pewno chcesz usunąć rekord?')) {
+        let res = await fetch(url, {method: 'DELETE', credentials: 'include'});
+        let data = await res.json();
+        
+        if(res.status === 200) 
+            container.parentNode.removeChild(container);
 
-    sendAlert(data.msg);
+        sendAlert(data.msg);
+    }
 }
 
 /************************************** FETCH DATA AND CREATE TABLES - FUNCTIONS **************************************/
@@ -266,7 +263,7 @@ async function getComplexTable(url, deleteUrl, columnNames, editAction) {
             deleteButton.type = 'button';
             deleteButton.innerHTML = 'Usuń';
             deleteButton.classList.add('action-btn');
-            deleteButton.addEventListener('click', deleteRecord.bind(this, deleteUrl + id, table));
+            deleteButton.addEventListener('click', deleteRecord_WC.bind(this, deleteUrl + id, table));
             cell.appendChild(deleteButton);
 
             tableContainer.appendChild(table);

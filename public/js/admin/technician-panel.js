@@ -9,7 +9,6 @@ window.onload = () => {
 document.getElementById('addProfessionForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     const isOK = await addRecord('/admin/technician/profession/add', {
         name: document.addProfessionForm.name.value
@@ -36,7 +35,6 @@ document.getElementById('viewProfessions').addEventListener('click', event => {
 document.getElementById('addTechnicianForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     const formData = {
         name: document.addTechnicianForm.name.value,
@@ -46,13 +44,12 @@ document.getElementById('addTechnicianForm').addEventListener('submit', async ev
 
     const isOK = await addRecord('/admin/technician/add', formData);
 
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchTechnicianForm').addEventListener('submit', event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     let searchData = {
         name: document.searchTechnicianForm.name.value, 

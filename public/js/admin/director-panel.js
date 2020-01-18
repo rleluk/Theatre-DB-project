@@ -16,12 +16,11 @@ document.getElementById('addDirectorForm').addEventListener('submit', async even
 
     const isOK = await addRecord('/admin/director/add', formData);
 
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('editDirectorForm').addEventListener('submit', async event => {
     event.preventDefault();
-    clearAlert();
 
     const formData = {
         id: document.editDirectorForm.id.value,
@@ -33,12 +32,11 @@ document.getElementById('editDirectorForm').addEventListener('submit', async eve
 
     const isOK = await editRecord('/admin/director/update', formData);
     
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchDirectorForm').addEventListener('submit', event => {
     event.preventDefault();
-    clearAlert();
     clearDataContainer();
 
     let searchData = {

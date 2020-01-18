@@ -6,7 +6,6 @@ window.onload = () => {
 document.getElementById('addActorForm').addEventListener('submit', async event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     const formData = {
         name: document.addActorForm.name.value,
@@ -16,13 +15,12 @@ document.getElementById('addActorForm').addEventListener('submit', async event =
     
     let isOK = await addRecord('/admin/actor/add', formData);
     
-    if(isOK) changeForm(null, false);
+    if(isOK) changeForm(null);
 });
 
 document.getElementById('searchActorForm').addEventListener('submit', event => {
     event.preventDefault();
     clearDataContainer();
-    clearAlert();
 
     let searchData = {
         name: document.searchActorForm.name.value, 
@@ -33,7 +31,7 @@ document.getElementById('searchActorForm').addEventListener('submit', event => {
     
     getSimpleTable('/admin/actor/search' + queryStr, '/admin/actor/delete/', 
         ['ID', 'Imię', 'Nazwisko', 'Data urodzenia'],
-        deleteRecord
+        deleteRecord_WC
     );
 });
 

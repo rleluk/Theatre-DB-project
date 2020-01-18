@@ -5,16 +5,26 @@ html(lang="pl")
         link(href="https://fonts.googleapis.com/css?family=Bangers&display=swap", rel="stylesheet")
         link(href="https://fonts.googleapis.com/css?family=McLaren&display=swap", rel="stylesheet")
         link(rel="stylesheet", type="text/css", href="/css/client-main.css")
+        link(rel="stylesheet", type="text/css", href="/css/modal.css")
         block css
 
         script(src="/js/utils.js")
         block js
 
     body
+        .modal
+            .modal-content
+                span.close &times;
+                .modal-body
+
+        script(src="/js/modal.js")  
+
+
         .nav-bar
             a#performances-btn.nav-item(href="/performances") Spektakle
             a#tickets-btn.nav-item(href="/tickets") Bilety
             a#staff-btn.nav-item(href="/staff") Zespół
+
 
         .content
             block content

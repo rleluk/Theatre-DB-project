@@ -8,7 +8,7 @@ async function addTicket(id) {
         play_id: id,
         ticketType: document.getElementById('ticketTypeSelect').value.split(':')[0]
     }
-    console.log(formData);
+    
     let res = await fetch('/tickets/add', {
         method: 'POST',
         headers: {
@@ -21,13 +21,15 @@ async function addTicket(id) {
     let data = await res.json();
 
     if(res.status === 200) {
-        container.innerHTML = `
-            <h2> Bilet został zakupiony. </h2>
+        container.innerHTML = '';
+        
+        let msg = `<p> Bilet został zakupiony. </p>
             <p> Spektakl odbędzie się w sali ${data.sala}. </p> 
-            <p> Numer twojego siedzenia: ${data.miejsce}. </p>    
-            `;
+            <p> Numer twojego siedzenia: ${data.miejsce}. </p>`;
+
+        sendAlert(msg);
     } else {
-        container.innerHTML = `<h1> ${data.msg} </h1>`;
+        sendAlert(data.msg);
     }
 }
 
