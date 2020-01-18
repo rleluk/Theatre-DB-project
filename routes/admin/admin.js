@@ -10,8 +10,8 @@ router.get('/',
 
 router.post('/', 
     [
-        check('login').isLength({min: 1}).withMessage('Login is required.'),
-        check('password').isLength({min: 1}).withMessage('Password is required')
+        check('login').isLength({min: 1}).withMessage('Nie podano loginu.'),
+        check('password').isLength({min: 1}).withMessage('Nie podano hasła.')
     ], 
     AdminController.checkAdminValidation, 
     AdminController.login

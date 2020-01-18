@@ -5,7 +5,6 @@ window.onload = () => {
 
 document.getElementById('addDirectorForm').addEventListener('submit', async event => {
     event.preventDefault();
-    document.getElementById('alert').innerHTML = '';
 
     const formData = {
         name: document.addDirectorForm.name.value,

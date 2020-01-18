@@ -18,10 +18,10 @@ function clearInputs() {
         element.value = '';
     });
     
-    // let selects = document.querySelectorAll('select');
-    // selects.forEach(element => {
-    //     element.value = undefined;
-    // });
+    let selects = document.querySelectorAll('select');
+    selects.forEach(element => {
+        element.value = '';
+    });
 }
 
 function changeForm(id) {
